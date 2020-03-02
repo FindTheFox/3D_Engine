@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/02/20 18:27:02 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/02 16:48:24 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,8 @@ OBJ		=	$(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
-CC		=	gcc -g -fsanitize=address
-CFLAGS	=	#-Wall -Wextra -Werror -Ofast -march=native
+CC		=	gcc #-g -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -Ofast -march=native
 
 ifeq ($(OS), Linux)
 	SDL		=	-lSDL2-2.0

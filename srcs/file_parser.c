@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:13:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/19 20:22:16 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:58:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void        get_vertex(t_env *e, int x)
 {
     float v[3];
-    int i;
     int vcount;
 
     vcount = 0;
@@ -80,10 +79,7 @@ static void     get_triangle(t_env *e, int x, int mi)
             ft_exit(e, "Invalid Filer", 0);
     }
     e->mesh[mi].size = e->parse.ti;
-    e->mesh[mi].tris[e->parse.ti++] = (t_triangle){ 
-        e->parse.vertex[vi[0] - 1],
-        e->parse.vertex[vi[1] - 1],
-        e->parse.vertex[vi[2] - 1] };
+    e->mesh[mi].tris[e->parse.ti++] = (t_triangle){{ e->parse.vertex[vi[0] - 1], e->parse.vertex[vi[1] - 1], e->parse.vertex[vi[2] - 1]}, 0};
 }
 
 static void     check_triangle(t_env *e, int x, int i, int mi)
