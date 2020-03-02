@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:53:59 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/19 21:12:08 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:35:32 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,18 @@
 # include <unistd.h>
 # include <math.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 # define BUFF_SIZE 8
+
+typedef struct	s_dyntab
+{
+	void		*c;
+	void		*tmp;
+	int			cell_size;
+	int			cell_nb;
+	int			byte_size;
+}				t_dyntab;
 
 typedef struct	s_list
 {
