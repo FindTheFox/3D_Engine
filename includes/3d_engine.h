@@ -20,6 +20,9 @@
 # define W_W 800
 # define W_H 800
 
+# define MIN_TO_CLIP 256
+# define MIN_TO_RASTER 16384
+
 # define KEY_NB 16
 # define W 0
 # define A 1
@@ -59,6 +62,15 @@ typedef struct      s_vec
     float   z;
     float   w;
 }                   t_vec;
+
+typedef struct      s_clip
+{
+    t_vec   in[3];
+    t_vec   out[3];
+    int     inside;
+    int     outside;
+    float   d[3];
+}                   t_clip;
 
 typedef struct      s_triangle
 {
@@ -144,6 +156,9 @@ typedef struct      s_env
     float           yaw;
     float           xaw;
     int             key[KEY_NB];
+    t_dyntab        clip_tab[4];
+    t_dyntab        to_clip;
+    t_dyntab        to_raster;
     t_vlist         vlist;
     t_mlist         mlist;
     t_fill          fill;
@@ -175,6 +190,14 @@ void        init_sdl(t_env *env);
 void        init_data(t_env *e);
 void        sdl_render(t_env *e);
 void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
+void        init_dynamic_tab(t_env *e);
+
+/*
+**Clipping
+*/
+
+int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
+
 /*
 **Matrice calcul and init
 */
@@ -203,6 +226,8 @@ t_vec           vectorcrossprod(t_vec v1, t_vec v2);
 t_vec           vectordiv(t_vec v, float a);
 t_vec           vectormult(t_vec v, float a);
 float           vectorlen(t_vec v);
+float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p);
+t_vec           vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend);
 
 /*
 **Triangle Draw

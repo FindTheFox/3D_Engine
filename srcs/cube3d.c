@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/20 18:25:41 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/03 17:30:27 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,61 @@ void            matrix_view(t_env *e)
     quickinversematrix(&e->mlist.matview, matcam);
 }
 
+
+void            clipping(t_env *e, t_triangle tri)
+{
+    //printf("proj color %x\n", tri.color);
+    fill_triangle(e, tri, tri.color);
+    //draw_triangle(e, tri);
+}
+
+void        projection2(t_env *env, t_triangle tview, t_triangle triprojected, int color)
+{
+    triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
+    triprojected.p[0] = vectordiv(triprojected.p[0], triprojected.p[0].w);
+    triprojected.p[1] = vectordiv(triprojected.p[1], triprojected.p[1].w);
+    triprojected.p[2] = vectordiv(triprojected.p[2], triprojected.p[2].w); 
+
+    //Scale
+    triprojected.p[0] = vectoradd(triprojected.p[0], env->vlist.voff_set);
+    triprojected.p[1] = vectoradd(triprojected.p[1], env->vlist.voff_set);
+    triprojected.p[2] = vectoradd(triprojected.p[2], env->vlist.voff_set);
+
+    triprojected.p[0] = center(&triprojected.p[0]);
+    triprojected.p[1] = center(&triprojected.p[1]);
+    triprojected.p[2] = center(&triprojected.p[2]);
+    triprojected.color = color;
+    
+    if (push_dynarray(&env->to_clip, &triprojected, false))
+        ft_exit(env, "push dynamic tab to_clip fail", 0);
+}
+
+void        projection(t_env *env, t_triangle triprojected, int color)
+{
+    t_triangle  clip[2];
+    t_triangle  tview;
+    int         i;
+    float       nclip;
+
+    tview = matrix_mult_triangle(env->mlist.matview, triprojected);
+    tview.color = color;
+    //clip
+    
+    nclip = clip_triangle((t_vec){0,0,0.1f,1.0f}, (t_vec){0,0,1.0f,1.0f}, tview, clip);
+    i = 0;
+    while (i < nclip)
+    {
+        projection2(env, clip[i], triprojected, color);
+        i++;    
+    }
+    projection2(env, tview, triprojected, color); 
+    //***draw and rasterize
+    clipping(env, triprojected);
+    //env->buffer[j] = triprojected;
+    //while (j--)
+    //    clipping(env, env->buffer[j]);
+}
+
 int        normalize(t_env *e, t_triangle tri)
 {
     t_vec   normal;
@@ -79,41 +134,6 @@ int        normalize(t_env *e, t_triangle tri)
     if (vectorproduct(normal, vcamray) < 0)
         return (lumiere(e, normal));
     return (0);
-}
-
-void            clipping(t_env *e, t_triangle tri)
-{
-    //printf("proj color %x\n", tri.color);
-    fill_triangle(e, tri, tri.color);
-    //draw_triangle(e, tri);
-}
-
-void        projection(t_env *env, t_triangle triprojected, int color)
-{
-    t_triangle tview;
-
-    //printf("x1 = %f y1 = %f z1 = %f\n", triprojected.p[0].x, triprojected.p[0].y, triprojected.p[0].z);
-    tview = matrix_mult_triangle(env->mlist.matview, triprojected);
-    //printf("x = %f y = %f z = %f\n", tview.p[0].x, tview.p[0].y, tview.p[0].z);
-    triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
-    triprojected.p[0] = vectordiv(triprojected.p[0], triprojected.p[0].w);
-    triprojected.p[1] = vectordiv(triprojected.p[1], triprojected.p[1].w);
-    triprojected.p[2] = vectordiv(triprojected.p[2], triprojected.p[2].w); 
-
-    //Scale
-    triprojected.p[0] = vectoradd(triprojected.p[0], env->vlist.voff_set);
-    triprojected.p[1] = vectoradd(triprojected.p[1], env->vlist.voff_set);
-    triprojected.p[2] = vectoradd(triprojected.p[2], env->vlist.voff_set);
-
-    triprojected.p[0] = center(&triprojected.p[0]);
-    triprojected.p[1] = center(&triprojected.p[1]);
-    triprojected.p[2] = center(&triprojected.p[2]);
-    triprojected.color = color;
-                //***draw and rasterize
-    clipping(env, triprojected);
-    //env->buffer[j] = triprojected;
-    //while (j--)
-    //    clipping(env, env->buffer[j]);
 }
 
 void        engine_3d(t_env *env)
@@ -132,10 +152,7 @@ void        engine_3d(t_env *env)
         j = -1;
         while (++j < env->mesh[i].size)
         {
-            //if (!(env->buffer = (t_triangle *)ft_memalloc(sizeof(t_triangle) * env->mesh[i].size)))
-            //    ft_exit(env, "Triangle buffer malloc error", 0);
             triprojected = matrix_mult_triangle(env->mlist.matworld, env->mesh[i].tris[j]);
-            //normalize
             if ((color = normalize(env, triprojected)))
                 projection(env, triprojected, color);
         }

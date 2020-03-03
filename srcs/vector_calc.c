@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/19 20:22:16 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/03 17:28:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ float           vectorlen(t_vec v)
     return (sqrtf(vectorproduct(v, v)));
 }
 
+float           vectordot(t_vec v1, t_vec v2)
+{
+    float x;
+
+    x = 0.0f;
+    x += v1.x * v2.x;
+    x += v1.y * v2.y;
+    x += v1.z * v2.z;
+    return (x);
+}
+
 t_vec           vectornormal(t_vec v)
 {
     float len;
@@ -88,4 +99,33 @@ t_vec           matrix_mult_vector(t_matrix m, t_vec i)
     o.z = i.x * m.m[0][2] + i.y * m.m[1][2] + i.z * m.m[2][2] + i.w * m.m[3][2];
     o.w = i.x * m.m[0][3] + i.y * m.m[1][3] + i.z * m.m[2][3] + i.w * m.m[3][3];
     return (o);
+}
+
+float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p)
+{
+    float x;
+
+    plane_n = vectornormal(plane_n); // p ou plane_n
+    x = plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z;
+    x -= vectordot(plane_n, plane_p);
+    return (x);
+}
+
+t_vec            vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend)
+{
+    float plane_d;
+    float ad;
+    float bd;
+    float t;
+    t_vec linestarttoend;
+    t_vec linetointersect;
+
+    plane_n = vectornormal(plane_n);
+    plane_d = -vectorproduct(plane_n, plane_p);
+    ad = vectorproduct(linestart, plane_n);
+    bd = vectorproduct(lineend, plane_n);
+    t = (-plane_d - ad) / (bd - ad);
+    linestarttoend = vectorsub(lineend, linestart);
+    linetointersect = vectormult(linestarttoend, t);
+    return (vectoradd(linestart, linetointersect));
 }

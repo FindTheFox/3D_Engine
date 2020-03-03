@@ -126,6 +126,9 @@ SRC += $(S_PATH)ft_swap.c
 SRC += $(S_PATH)ft_readfile.c
 SRC += $(S_PATH)ft_to_radian.c
 SRC += $(S_PATH)ft_to_degree.c
+SRC += $(S_PATH)dynamic_tab.c
+SRC += $(S_PATH)dynamic_tab2.c
+
 # Objects and Headers
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
