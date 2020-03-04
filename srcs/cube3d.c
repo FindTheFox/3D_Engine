@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/03 17:30:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/04 19:36:32 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int       lumiere(t_env *e, t_vec normal)
     
     e->vlist.light_dir = vectornormal(e->vlist.light_dir);
     dp = vectorproduct(normal, e->vlist.light_dir);
-    return (color_shading(0xffff00, dp));
+    return (color_shading(0x0ffff0, dp));
 }
 
 void            matrix_world(t_env *e)
@@ -72,24 +72,26 @@ void            clipping(t_env *e, t_triangle tri)
     //draw_triangle(e, tri);
 }
 
-void        projection2(t_env *env, t_triangle tview, t_triangle triprojected, int color)
+void        projection2(t_env *env, t_triangle tview, t_triangle *triprojected, int color)
 {
-    triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
-    triprojected.p[0] = vectordiv(triprojected.p[0], triprojected.p[0].w);
-    triprojected.p[1] = vectordiv(triprojected.p[1], triprojected.p[1].w);
-    triprojected.p[2] = vectordiv(triprojected.p[2], triprojected.p[2].w); 
+    *triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
+    triprojected->p[0] = vectordiv(triprojected->p[0], triprojected->p[0].w);
+    triprojected->p[1] = vectordiv(triprojected->p[1], triprojected->p[1].w);
+    triprojected->p[2] = vectordiv(triprojected->p[2], triprojected->p[2].w); 
 
     //Scale
-    triprojected.p[0] = vectoradd(triprojected.p[0], env->vlist.voff_set);
-    triprojected.p[1] = vectoradd(triprojected.p[1], env->vlist.voff_set);
-    triprojected.p[2] = vectoradd(triprojected.p[2], env->vlist.voff_set);
+    triprojected->p[0] = vectoradd(triprojected->p[0], env->vlist.voff_set);
+    triprojected->p[1] = vectoradd(triprojected->p[1], env->vlist.voff_set);
+    triprojected->p[2] = vectoradd(triprojected->p[2], env->vlist.voff_set);
 
-    triprojected.p[0] = center(&triprojected.p[0]);
-    triprojected.p[1] = center(&triprojected.p[1]);
-    triprojected.p[2] = center(&triprojected.p[2]);
-    triprojected.color = color;
-    
-    if (push_dynarray(&env->to_clip, &triprojected, false))
+    triprojected->p[0] = center(&triprojected->p[0]);
+    triprojected->p[1] = center(&triprojected->p[1]);
+    triprojected->p[2] = center(&triprojected->p[2]);
+    triprojected->color = color;
+    // printf("vec1 x = %f | y = %f | z = %f\n", triprojected->p[0].x, triprojected->p[0].y, triprojected->p[0].z);
+    // printf("vec2 x = %f | y = %f | z = %f\n", triprojected->p[1].x, triprojected->p[1].y, triprojected->p[1].z);
+    // printf("vec3 x = %f | y = %f | z = %f\n\n", triprojected->p[2].x, triprojected->p[2].y, triprojected->p[2].z);
+    if (push_dynarray(&env->to_clip, triprojected, false))
         ft_exit(env, "push dynamic tab to_clip fail", 0);
 }
 
@@ -108,15 +110,12 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     i = 0;
     while (i < nclip)
     {
-        projection2(env, clip[i], triprojected, color);
+        projection2(env, clip[i], &triprojected, color);
         i++;    
     }
-    projection2(env, tview, triprojected, color); 
+    // projection2(env, tview, &triprojected, color); 
     //***draw and rasterize
-    clipping(env, triprojected);
-    //env->buffer[j] = triprojected;
-    //while (j--)
-    //    clipping(env, env->buffer[j]);
+    // clipping(env, triprojected);
 }
 
 int        normalize(t_env *e, t_triangle tri)
@@ -142,7 +141,7 @@ void        engine_3d(t_env *env)
     int     j;
     t_triangle triprojected;
     int         color;
-    
+
     //do_camera_rot
     matrix_view(env);
     i = -1;
@@ -158,5 +157,7 @@ void        engine_3d(t_env *env)
         }
         //free((t_triangle *)env->buffer);
     }
+    rasterizer(env, &env->to_clip);
+    clear_dynarray(&env->to_clip);
     sdl_render(env);
 }

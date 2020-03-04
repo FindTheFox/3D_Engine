@@ -191,6 +191,7 @@ void        init_data(t_env *e);
 void        sdl_render(t_env *e);
 void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        init_dynamic_tab(t_env *e);
+void        rasterizer(t_env *e, t_dyntab *to_clip);
 
 /*
 **Clipping
