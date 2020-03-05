@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/05 17:15:35 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:20:31 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     tview.color = color;
     //clip
     
-    nclip = clip_triangle((t_vec){0,0,0.1f,1.0f}, (t_vec){0,0,1.0f,1.0f}, tview, clip);
+    nclip = clip_triangle((t_vec){0,0,2.1f,1.0f}, (t_vec){0,0,1.0f,1.0f}, tview, clip);
     i = 0;
     while (i < nclip)
     {
