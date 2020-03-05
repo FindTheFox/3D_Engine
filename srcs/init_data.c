@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/03 13:53:17 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/05 15:01:45 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void    init_data(t_env *e)
     e->ztheta = 0;
     e->yaw = 0;
     e->xaw = 0;
-    e->zoom = 50;
+    e->zoom = 30;
     ft_bzero((void *)e->key, sizeof(char ) * KEY_NB);
     init_matrice(e);
     init_matrix_rotx(&e->mlist.matrotx, e->xtheta);
