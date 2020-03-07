@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/20 16:02:23 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/07 22:20:52 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static void        setup(t_env *env, int ac, char **av)
 int         main(int ac, char **av)
 {
     t_env   env;
-    
-    
+ 
     ft_memset(&env, 0, sizeof(t_env));
     setup(&env, ac, av);
     while (1)

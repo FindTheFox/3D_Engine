@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/03 17:28:57 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/07 22:21:33 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p)
 {
     float x;
 
-    plane_n = vectornormal(plane_n); // p ou plane_n
+    plane_p = vectornormal(plane_p); // p ou plane_n
     x = plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z;
     x -= vectordot(plane_n, plane_p);
     return (x);
