@@ -16,7 +16,8 @@
 # include "../SDL/SDL.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
- 
+# include <pthread.h>
+
 # define W_W 800
 # define W_H 800
 
@@ -71,6 +72,17 @@ typedef struct      s_clip
     int     outside;
     float   d[3];
 }                   t_clip;
+
+typedef struct      s_thread
+{
+    void            *env;
+    pthread_t       thread;
+    t_dyntab        *tris;
+    int             start;
+    int             end;
+    int             i;
+    int             id;
+}                   t_thread;
 
 typedef struct      s_triangle
 {

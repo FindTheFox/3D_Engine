@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/07 21:36:43 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/08 18:26:45 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangl
     else
     {
         //printf("clipping || ");
-        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, in);
+        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_n, plane_p}, in);
         //printf("out x %f y %f z %f\n", out[0].p[0].x, out[0].p[0].y, out[0].p[0].z);
         return(ret);
     }
@@ -204,6 +204,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
 
     clip_mesh(to_clip, &e->to_raster, e->clip_tab);
     //printf(" %d\n", e->to_raster.cell_nb);
+    thread_init(e);
     i = 0;
     while (i < e->to_raster.cell_nb)
     {

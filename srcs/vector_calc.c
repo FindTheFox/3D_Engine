@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/07 22:21:33 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/08 18:09:19 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p)
     return (x);
 }
 
-t_vec            vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend)
+t_vec            vec_inter_plane(t_vec plane_n, t_vec plane_p, t_vec linestart, t_vec lineend)
 {
     float plane_d;
     float ad;
