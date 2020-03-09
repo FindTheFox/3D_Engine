@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/08 18:11:16 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/09 22:49:05 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int       lumiere(t_env *e, t_vec normal)
 {
     float dp;
     
-    e->vlist.light_dir = vectornormal(e->vlist.light_dir);
+    vectornormal(&e->vlist.light_dir);
     dp = vectorproduct(normal, e->vlist.light_dir);
     return (color_shading(0x0ffff0, dp));
 }
@@ -52,12 +52,10 @@ void            matrix_view(t_env *e)
     
     init_matrix_identity(&camrot);
     camrot = matrix_mult_matrix(e->mlist.camrotx, e->mlist.camroty);
-    //printf("Lx = %f Ly = %f Lz = %f\n", e->vlist.lookdir.x, e->vlist.lookdir.x, e->vlist.lookdir.z);
     
     e->vlist.lookdir = matrix_mult_vector(camrot, target);
     target = vectoradd(e->vlist.vcamera, e->vlist.lookdir);
     
-    //printf("tx = %f ty = %f tz = %f\n", e->vlist.target.x, e->vlist.target.x, e->vlist.target.z);
     up = matrix_mult_vector(camrot, up);
     
     pointatmatrix(&matcam, e->vlist.vcamera, target, up);
@@ -88,9 +86,6 @@ void        projection2(t_env *env, t_triangle tview, t_triangle *triprojected, 
     triprojected->p[1] = center(&triprojected->p[1]);
     triprojected->p[2] = center(&triprojected->p[2]);
     triprojected->color = color;
-    // printf("vec1 x = %f | y = %f | z = %f\n", triprojected->p[0].x, triprojected->p[0].y, triprojected->p[0].z);
-    // printf("vec2 x = %f | y = %f | z = %f\n", triprojected->p[1].x, triprojected->p[1].y, triprojected->p[1].z);
-    // printf("vec3 x = %f | y = %f | z = %f\n\n", triprojected->p[2].x, triprojected->p[2].y, triprojected->p[2].z);
     if (push_dynarray(&env->to_clip, triprojected, false))
         ft_exit(env, "push dynamic tab to_clip fail", 0);
 }
@@ -105,7 +100,6 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     tview = matrix_mult_triangle(env->mlist.matview, triprojected);
     tview.color = color;
     //clip
-    
     nclip = clip_triangle((t_vec){0,0,0.1f,1.0f}, (t_vec){0,0,1.0f,1.0f}, tview, clip);
     i = 0;
     while (i < nclip)
@@ -113,9 +107,6 @@ void        projection(t_env *env, t_triangle triprojected, int color)
         projection2(env, clip[i], &triprojected, color);
         i++;    
     }
-    // projection2(env, tview, &triprojected, color); 
-    //***draw and rasterize
-    // clipping(env, triprojected);
 }
 
 int        normalize(t_env *e, t_triangle tri)
@@ -128,7 +119,7 @@ int        normalize(t_env *e, t_triangle tri)
     line1 = vectorsub(tri.p[1], tri.p[0]);
     line2 = vectorsub(tri.p[2], tri.p[0]);
     normal = vectorcrossprod(line1, line2);
-    normal = vectornormal(normal);
+    vectornormal(&normal);
     vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
         return (lumiere(e, normal));

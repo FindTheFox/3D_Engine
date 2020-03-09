@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/09 18:17:26 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/09 22:17:49 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,8 +110,8 @@ SDL2:
 			brew link sdl2_ttf
 			brew install sdl2_mixer
 			brew link sdl2_mixer
-			cp -rf framework/SDL2_mixer.framework ~/Library/Frameworks
-			cp -rf framework/SDL2_ttf.framework ~/Library/Frameworks
-			cp -rf framework/SDL2.framework ~/Library/Frameworks
+			cp -rf SDL/framework/SDL2_mixer.framework ~/Library/Frameworks
+			cp -rf SDL/framework/SDL2_ttf.framework ~/Library/Frameworks
+			cp -rf SDL/framework/SDL2.framework ~/Library/Frameworks
 
 .PHONY:		all clean fclean re

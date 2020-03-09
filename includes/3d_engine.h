@@ -236,7 +236,7 @@ t_vec           matrix_mult_vector(t_matrix m, t_vec i);
 t_vec           vectoradd(t_vec v1, t_vec v2);
 t_vec           vectorsub(t_vec v1, t_vec v2);
 float           vectorproduct(t_vec v1, t_vec v2);
-t_vec           vectornormal(t_vec v);
+void            vectornormal(t_vec *v);
 t_vec           vectorcrossprod(t_vec v1, t_vec v2);
 t_vec           vectordiv(t_vec v, float a);
 t_vec           vectormult(t_vec v, float a);

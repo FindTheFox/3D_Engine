@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/09 20:08:44 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/09 22:49:01 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ void        sort_triangle(t_clip *clip, t_triangle in)
     }
 }
 
-int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2])
+int         clip_triangle(t_vec plane_p, t_vec plane_n, t_triangle in, t_triangle out[2])
 {
-    t_clip  clip;
+    t_clip      clip;
     
-    // plane_n = vectornormal(plane_n);
-    //plane = (t_vec[2]){plane_p, plane_n};
-
+    vectornormal(&plane_n);
     clip.d[0] = distance_to_plane(plane_n, plane_p, in.p[0]);
     clip.d[1] = distance_to_plane(plane_n, plane_p, in.p[1]);
     clip.d[2] = distance_to_plane(plane_n, plane_p, in.p[2]);
@@ -88,7 +86,7 @@ int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangl
         return (1);
     }
     else
-        return(make_triangle_clipped(&clip, out, (t_vec[2]){plane_n, plane_p}, in));
+        return(make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, in));
 }
 
 void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)

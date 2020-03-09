@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/09 20:25:48 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/09 22:45:28 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,14 @@ float           vectordot(t_vec v1, t_vec v2)
     return (x);
 }
 
-t_vec           vectornormal(t_vec v)
+void           vectornormal(t_vec *v)
 {
     float len;
 
-    len = vectorlen(v);
-    v.x /= len;
-    v.y /= len;
-    v.z /= len;
-    return (v);
+    len = vectorlen(*v);
+    v->x /= len;
+    v->y /= len;
+    v->z /= len;
 }
 
 t_vec           vectorcrossprod(t_vec v1, t_vec v2)
@@ -105,13 +104,13 @@ float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p)
 {
     float x;
 
-    plane_p = vectornormal(plane_p); // p ou plane_n
+    vectornormal(&plane_n); // p ou plane_n
     x = plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z;
     x -= vectordot(plane_n, plane_p);
     return (x);
 }
 
-t_vec            vec_inter_plane(t_vec plane_n, t_vec plane_p, t_vec linestart, t_vec lineend)
+t_vec            vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend)
 {
     float plane_d;
     float ad;
@@ -120,7 +119,7 @@ t_vec            vec_inter_plane(t_vec plane_n, t_vec plane_p, t_vec linestart, 
     t_vec linestarttoend;
     t_vec linetointersect;
 
-    plane_n = vectornormal(plane_n);
+    vectornormal(&plane_n);
     plane_d = -vectorproduct(plane_n, plane_p);
     ad = vectorproduct(linestart, plane_n);
     bd = vectorproduct(lineend, plane_n);
