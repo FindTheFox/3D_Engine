@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/08 18:26:45 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/09 20:08:44 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int         make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec vec[2],
     {
         out[0].color = in.color;
         out[1].color = in.color;
-        
-        //printf("c0 %x | c1 %x\n", out[0].color, out[1].color);
-
         out[0].p[0] = clip->in[0];
         out[0].p[1] = clip->in[1];
         out[0].p[2] = vec_inter_plane(vec[0], vec[1], clip->in[0], clip->out[0]);
@@ -49,8 +46,6 @@ int         make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec vec[2],
         out[1].p[0] = clip->in[1];
         out[1].p[1] = out[0].p[2];
         out[1].p[2] = vec_inter_plane(vec[0], vec[1], clip->in[1], clip->out[0]);
-        // printf("out x %f y %f z %f\n", out[0].p[0].x, out[0].p[0].y, out[0].p[0].z);
-        // printf("out x %f y %f z %f\n", out[1].p[0].x, out[1].p[0].y, out[1].p[0].z);
         return (2);
     }
     return (0);
@@ -76,9 +71,8 @@ void        sort_triangle(t_clip *clip, t_triangle in)
 int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2])
 {
     t_clip  clip;
-    int     ret;
     
-    //plane_n = vectornormal(plane_n);
+    // plane_n = vectornormal(plane_n);
     //plane = (t_vec[2]){plane_p, plane_n};
 
     clip.d[0] = distance_to_plane(plane_n, plane_p, in.p[0]);
@@ -87,25 +81,15 @@ int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangl
 
     sort_triangle(&clip, in);
     if (clip.inside == 0)
-    {
-        //printf("rien dedant || ");
         return (0);
-    }
     else if (clip.inside == 3)
     {
-        //printf("tout dedant || ");
         out[0] = in;
         return (1);
     }
     else
-    {
-        //printf("clipping || ");
-        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_n, plane_p}, in);
-        //printf("out x %f y %f z %f\n", out[0].p[0].x, out[0].p[0].y, out[0].p[0].z);
-        return(ret);
-    }
+        return(make_triangle_clipped(&clip, out, (t_vec[2]){plane_n, plane_p}, in));
 }
-
 
 void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
 {
@@ -115,26 +99,13 @@ void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
 
     to_add = 0;
     if (point == 0)
-    {
         to_add = clip_triangle((t_vec){0,0,0,0}, (t_vec){0,1.0f,0,0}, t, clip);
-        //printf("0 clipped out x %f y %f z %f\n", clip[0].p[0].x, clip[0].p[0].y, clip[0].p[0].z);
-    }
     else if (point == 1)
-    {
         to_add = clip_triangle((t_vec){0,(float)W_H - 1,0,0}, (t_vec){0,-1.0f,0,0}, t, clip);
-        //printf("1 clipped out x %f y %f z %f\n", clip[0].p[0].x, clip[0].p[0].y, clip[0].p[0].z);
-    }
     else if (point == 2)
-    {
         to_add = clip_triangle((t_vec){0,0,0,0}, (t_vec){1.0f,0,0,0}, t, clip);
-        //printf("2 clipped out x %f y %f z %f\n", clip[0].p[0].x, clip[0].p[0].y, clip[0].p[0].z);
-    }
     else if (point == 3)
-    {
         to_add = clip_triangle((t_vec){(float)W_W - 1,0,0,0}, (t_vec){-1.0f,0,0,0}, t, clip);
-        //printf("3 clipped out x %f y %f z %f\n", clip[0].p[0].x, clip[0].p[0].y, clip[0].p[0].z);
-    }
-    //printf("clipped out x %f y %f z %f\n", clip[1].p[0].x, clip[1].p[0].y, clip[1].p[0].z);
     i = 0;
     while (i < to_add)
     {
@@ -160,14 +131,10 @@ static void             init_to_raster(t_dyntab *to_raster, t_dyntab clip_tab[4]
     point = 1;
     while (point < 4)
     {
-        //printf("point %d\n", point);
         i = 0;
         while (i < clip_tab[point - 1].cell_nb)
         {
             tmp = *(t_triangle *)dyacc(&clip_tab[point - 1], i);
-        // printf("vec1 x = %f | y = %f | z = %f\n", tmp.p[0].x, tmp.p[0].y, tmp.p[0].z);
-        // printf("vec2 x = %f | y = %f | z = %f\n", tmp.p[1].x, tmp.p[1].y, tmp.p[1].z);
-        // printf("vec3 x = %f | y = %f | z = %f\n\n", tmp.p[2].x, tmp.p[2].y, tmp.p[2].z);
             clip_edges(&clip_tab[point], tmp, point);            
             i++;
         }
@@ -199,13 +166,26 @@ static void            clip_mesh(t_dyntab *to_clip, t_dyntab *to_raster, t_dynta
 
 void            rasterizer(t_env *e, t_dyntab *to_clip)
 {
-    t_triangle t;
-    int i;
+    t_triangle  t;
+    // t_thread    thread[NB_THREAD];
+    int         i;
 
     clip_mesh(to_clip, &e->to_raster, e->clip_tab);
-    //printf(" %d\n", e->to_raster.cell_nb);
-    thread_init(e);
+    // thread_init(e);
     i = 0;
+    // while (i < NB_THREAD)
+    // {
+    //     thread[i].id = i;
+    //     thread_init(e, &thread[i]);
+    //     ++i;
+    // }
+    // i = 0;
+    // while (i < NB_THREAD)
+    // {
+    //     pthread_join(thread[i].thread, NULL);
+    //     i++;
+    // }
+    
     while (i < e->to_raster.cell_nb)
     {
         t = *(t_triangle *)dyacc(&e->to_raster, i);

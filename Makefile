@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/03 13:49:11 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/09 18:17:26 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRC		=	main.c \
 			line.c \
 			file_parser.c \
 			dynamic_tab.c \
-			clipping.c
+			clipping.c \
+			pthread.c
 	
 INC		=	3d_engine.h
 

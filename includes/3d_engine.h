@@ -24,6 +24,8 @@
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
+# define NB_THREAD 8
+
 # define KEY_NB 16
 # define W 0
 # define A 1
@@ -87,6 +89,7 @@ typedef struct      s_thread
 typedef struct      s_triangle
 {
     t_vec   p[3];
+    t_vec   vt[3];
     int     color;
 }                   t_triangle;
 
@@ -266,5 +269,11 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 t_rgba      hex_to_rgba(int c);
 int         rgba_to_hex(t_rgba rgba);
 int         color_shading(int color, float shade);
+
+/*
+**Threading
+*/
+
+void            thread_init(t_env *e, t_thread *thread);
 
 #endif
