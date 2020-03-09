@@ -89,7 +89,6 @@ typedef struct      s_thread
 typedef struct      s_triangle
 {
     t_vec   p[3];
-    t_vec   vt[3];
     int     color;
 }                   t_triangle;
 
