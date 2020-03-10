@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
+#    By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/09 18:17:26 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/10 02:20:40 by ahippoly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRC		=	main.c \
 			file_parser.c \
 			dynamic_tab.c \
 			clipping.c \
-			pthread.c
+			pthread.c \
+			obj_parser.c
 	
 INC		=	3d_engine.h
 
@@ -61,7 +62,7 @@ CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Wall -Wextra -Werror -Ofast -march=native
 
 ifeq ($(OS), Linux)
-	SDL		=	-lSDL2-2.0
+	SDL		=	-lSDL2
 	DIRSDL	=	
 else
 	SDL		=	-F ~/Library/Frameworks -framework SDL2
@@ -87,7 +88,7 @@ $(FT_LIB):
 			@echo "${GREEN}{LIBRARY COMPILED}${END}"
 
 $(NAME):	$(OBJ) $(FT_LIB)
-			@$(CC) $(CFLAGS) $(OBJ) $(FT_LIB) $(SDL) -lm -lpthread -o $@
+			@$(CC) $(CFLAGS) $(OBJ) $(FT_LIB) `sdl2-config --cflags --libs` -lm -lpthread -o $@
 			@echo "${GREEN}{$@ COMPILED}${END}"
 
 clean:

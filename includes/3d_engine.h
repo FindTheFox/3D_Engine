@@ -66,6 +66,12 @@ typedef struct      s_vec
     float   w;
 }                   t_vec;
 
+typedef struct      s_tex
+{
+    float   u;
+    float   v;
+}                   t_tex;
+
 typedef struct      s_clip
 {
     t_vec   in[3];
@@ -89,6 +95,7 @@ typedef struct      s_thread
 typedef struct      s_triangle
 {
     t_vec   p[3];
+    t_tex   t[3];
     int     color;
 }                   t_triangle;
 
@@ -206,6 +213,7 @@ void        sdl_render(t_env *e);
 void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
+t_mesh      obj_parser(char *file, t_env *e);
 
 /*
 **Clipping

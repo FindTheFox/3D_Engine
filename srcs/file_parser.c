@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:13:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/02 16:58:57 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 05:07:43 by ahippoly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void     get_triangle(t_env *e, int x, int mi)
             ft_exit(e, "Invalid Filer", 0);
     }
     e->mesh[mi].size = e->parse.ti;
-    e->mesh[mi].tris[e->parse.ti++] = (t_triangle){{ e->parse.vertex[vi[0] - 1], e->parse.vertex[vi[1] - 1], e->parse.vertex[vi[2] - 1]}, 0};
+    e->mesh[mi].tris[e->parse.ti++] = (t_triangle){{ e->parse.vertex[vi[0] - 1], e->parse.vertex[vi[1] - 1], e->parse.vertex[vi[2] - 1]}, {{0,0}} ,0};
 }
 
 static void     check_triangle(t_env *e, int x, int i, int mi)

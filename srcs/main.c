@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/08 18:14:28 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 02:21:39 by ahippoly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/3d_engine.h"
 
-static void     framerate(t_env *e)
-{
-    float           oldtime;
-    int             fps;
+// static void     framerate(t_env *e)
+// {
+//     float           oldtime;
+//     int             fps;
 
-    oldtime = e->time;
-    e->time = SDL_GetTicks();
-    e->theta = (e->time - oldtime) / 1000;
-    fps = 1.0 / e->theta;
-    printf("%d\n", fps);
-}
+//     oldtime = e->time;
+//     e->time = SDL_GetTicks();
+//     e->theta = (e->time - oldtime) / 1000;
+//     fps = 1.0 / e->theta;
+//     printf("%d\n", fps);
+// }
 
 static void        setup(t_env *env, int ac, char **av)
 {
@@ -39,6 +39,7 @@ static void        setup(t_env *env, int ac, char **av)
         while (i < ac)
         {
             file_parser(env, av[i], mi);
+            obj_parser(av[i], env);
             mi++;
             i++;
         }
@@ -53,12 +54,12 @@ int         main(int ac, char **av)
  
     ft_memset(&env, 0, sizeof(t_env));
     setup(&env, ac, av);
-    while (1)
-    {
-        framerate(&env);
-        engine_3d(&env);
-        event(&env);
-    }
+    // while (1)
+    // {
+    //     framerate(&env);
+    //     engine_3d(&env);
+    //     event(&env);
+    // }
     return (0);
 }
 
