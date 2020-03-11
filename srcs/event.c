@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/20 18:20:46 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 14:08:23 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ static void         move_events(t_env *e)
 
 static void         camera_move_event(t_env *e)
 {
-    if (e->key[UP] || e->key[DOWN])
+    if (e->key[W] || e->key[S])
     {
         e->vlist.forward = vectormult(e->vlist.lookdir, 8.0 * e->theta);
-        if (e->key[UP])
+        if (e->key[W])
             e->vlist.vcamera = vectoradd(e->vlist.vcamera, e->vlist.forward);
-        else if (e->key[DOWN])
+        else if (e->key[S])
             e->vlist.vcamera = vectorsub(e->vlist.vcamera, e->vlist.forward);
     }
-    if (e->key[W])
+    if (e->key[UP])
         e->vlist.vcamera.y += 8.0 * e->theta;
-    if (e->key[S])
+    if (e->key[DOWN])
         e->vlist.vcamera.y -= 8.0 * e->theta;
     if (e->key[A])
         e->vlist.vcamera.x += 8.0 * e->theta;

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:53:59 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/03 13:40:09 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 15:59:26 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void			ft_swap(void **s1, void **s2);
 int				init_dynarray(t_dyntab *arr, int cell_size, int nb_cells);
 void			clear_dynarray(t_dyntab *arr);
 void			free_dynarray(t_dyntab *arr);
-void			*dyacc(t_dyntab *arr, int index);
+void			*dyaddress(t_dyntab *arr, int index);
 int				push_dynarray(t_dyntab *arr, void *src, bool front);
 int				pop_dynarray(t_dyntab *arr, bool front);
 int				realloc_content(t_dyntab *arr);

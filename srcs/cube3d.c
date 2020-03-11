@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/09 22:49:05 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/11 17:05:47 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int       lumiere(t_env *e, t_vec normal)
     
     vectornormal(&e->vlist.light_dir);
     dp = vectorproduct(normal, e->vlist.light_dir);
-    return (color_shading(0x0ffff0, dp));
+    return (color_shading(0xffffff, dp));
 }
 
 void            matrix_world(t_env *e)
@@ -62,14 +62,6 @@ void            matrix_view(t_env *e)
     quickinversematrix(&e->mlist.matview, matcam);
 }
 
-
-void            clipping(t_env *e, t_triangle tri)
-{
-    //printf("proj color %x\n", tri.color);
-    fill_triangle(e, tri, tri.color);
-    //draw_triangle(e, tri);
-}
-
 void        projection2(t_env *env, t_triangle tview, t_triangle *triprojected, int color)
 {
     *triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
@@ -95,12 +87,12 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     t_triangle  clip[2];
     t_triangle  tview;
     int         i;
-    float       nclip;
+    int         nclip;
 
     tview = matrix_mult_triangle(env->mlist.matview, triprojected);
     tview.color = color;
-    //clip
-    nclip = clip_triangle((t_vec){0,0,0.1f,1.0f}, (t_vec){0,0,1.0f,1.0f}, tview, clip);
+    //clip z plane
+    nclip = clip_triangle((t_vec){0,0,1.0f,1.0f}, (t_vec){0,0,0.1f,1.0f}, tview, clip);
     i = 0;
     while (i < nclip)
     {

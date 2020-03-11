@@ -6,13 +6,13 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 21:29:19 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/02 21:32:53 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 15:53:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void		*dyacc(t_dyntab *arr, int index)
+void		*dyaddress(t_dyntab *arr, int index)
 {
 	if (index > arr->cell_nb || index < 0)
 		return (NULL);

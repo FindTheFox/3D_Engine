@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/09 22:45:28 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/11 17:06:50 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_vec           matrix_mult_vector(t_matrix m, t_vec i)
     return (o);
 }
 
-float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p)
+float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p)
 {
     float x;
 

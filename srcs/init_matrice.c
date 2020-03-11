@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:29:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/09 21:10:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/10 14:56:50 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void        init_matrix_roty(t_matrix *m, float theta)
 
 void       init_matrix_translation(t_matrix *m, float x, float y, float z)
 {
-    m->m[1][1] = 1.0f;
     m->m[0][0] = 1.0f;
+    m->m[1][1] = 1.0f;
     m->m[2][2] = 1.0f;
     m->m[3][3] = 1.0f;
     m->m[3][0] = x;
@@ -68,6 +68,7 @@ void            init_matrix_proj(t_env *e)
     e->mlist.matproj.m[2][2] = e->fFar / (e->fFar - e->fNear);
     e->mlist.matproj.m[3][2] = (-e->fFar * e->fNear) / (e->fFar - e->fNear);
     e->mlist.matproj.m[2][3] = 1.0f;
+    e->mlist.matproj.m[3][3] = 0.0f;
 }
 
 t_matrix        matrix_mult_matrix(t_matrix m1, t_matrix m2)

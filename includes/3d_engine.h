@@ -24,7 +24,7 @@
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
-# define NB_THREAD 8
+# define NB_THREAD 32
 
 # define KEY_NB 16
 # define W 0
@@ -79,7 +79,7 @@ typedef struct      s_thread
 {
     void            *env;
     pthread_t       thread;
-    t_dyntab        *tris;
+    t_dyntab        tris;
     int             start;
     int             end;
     int             i;
@@ -176,10 +176,10 @@ typedef struct      s_env
     t_vlist         vlist;
     t_mlist         mlist;
     t_fill          fill;
-    t_triangle      tris[12];
+    //t_triangle      tris[12];
     //t_triangle      *buffer;
-    t_triangle      tritransform;
-    t_triangle      triprojected;
+    // t_triangle      tritransform;
+    // t_triangle      triprojected;
     t_mesh          *mesh;
     int             nbmesh;
     t_parser        parse;
@@ -248,7 +248,7 @@ t_vec           vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t
 **Triangle Draw
 */
 
-void        fill_triangle(t_env *e, t_triangle tri, int color);
+void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
 
 void        put_pixel(t_env *e, int x, int y, int color);
