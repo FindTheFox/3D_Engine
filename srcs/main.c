@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/10 17:38:28 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/11 18:57:03 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void     framerate(t_env *e)
     e->time = SDL_GetTicks();
     e->theta = (e->time - oldtime) / 1000;
     fps = 1.0 / e->theta;
-    printf("%d\n", fps);
+    //printf("%d\n", fps);
 }
 
 static void        setup(t_env *env, int ac, char **av)
@@ -42,6 +42,11 @@ static void        setup(t_env *env, int ac, char **av)
             mi++;
             i++;
         }
+    }
+    else
+    {
+        env->nbmesh = 1;
+        init_cube(env);
     }
     init_sdl(env);
     init_data(env);

@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/09 22:17:49 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/11 19:37:12 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRC		=	main.c \
 			file_parser.c \
 			dynamic_tab.c \
 			clipping.c \
-			pthread.c
+			pthread.c \
+			engine_tools.c
 	
 INC		=	3d_engine.h
 
@@ -58,7 +59,7 @@ HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
 CC		=	gcc #-g -fsanitize=address
-CFLAGS	=	-Wall -Wextra -Werror -Ofast -march=native
+CFLAGS	=	-Ofast -march=native#-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
 	SDL		=	-lSDL2-2.0

@@ -66,12 +66,23 @@ typedef struct      s_vec
     float   w;
 }                   t_vec;
 
+typedef struct      s_vec2d
+{
+    float   u;
+    float   v;
+    float   w;
+}                   t_vec2d;
+
 typedef struct      s_clip
 {
     t_vec   in[3];
+    t_vec2d tx_in[3];
     t_vec   out[3];
+    t_vec2d tx_out[3];
     int     inside;
+    int     tx_inside;
     int     outside;
+    int     tx_outside;
     float   d[3];
 }                   t_clip;
 
@@ -88,8 +99,9 @@ typedef struct      s_thread
 
 typedef struct      s_triangle
 {
-    t_vec   p[3];
-    int     color;
+    t_vec       p[3];
+    t_vec2d     tx[3];
+    int         color;
 }                   t_triangle;
 
 typedef struct      s_mesh
@@ -193,11 +205,10 @@ typedef struct      s_env
 }                   t_env;
 
 /*
-**Global
+**  Global
 */
 
 void        file_parser(t_env *e, char *file, int mi);
-void        engine_3d(t_env *env);
 void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
@@ -205,31 +216,39 @@ void        init_data(t_env *e);
 void        sdl_render(t_env *e);
 void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        init_dynamic_tab(t_env *e);
-void        rasterizer(t_env *e, t_dyntab *to_clip);
+
 
 /*
-**Clipping
+**  3D Engine
+*/
+
+void        rasterizer(t_env *e, t_dyntab *to_clip);
+void        engine_3d(t_env *env);
+void        take_texture_vec(t_triangle *out, t_triangle in);
+
+/*
+**  Clipping
 */
 
 int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
 
 /*
-**Matrice calcul and init
+**  Matrice calcul and init
 */
 
 void        init_matrix_proj(t_env *e);
 void        init_matrix_rotx(t_matrix *m, float theta);
 void        init_matrix_rotz(t_matrix *m, float theta);
 void        init_matrix_roty(t_matrix *m, float theta);
-t_matrix        matrix_mult_matrix(t_matrix m1, t_matrix m2);
+t_matrix    matrix_mult_matrix(t_matrix m1, t_matrix m2);
 void        init_matrix_translation(t_matrix *m, float x, float y, float z);
 void        init_matrix_identity(t_matrix *m);
-void			quickinversematrix(t_matrix *mat, t_matrix mat_pointat);
-void			pointatmatrix(t_matrix *matrix, t_vec pos, t_vec target, t_vec up);
-t_triangle          matrix_mult_triangle(t_matrix m, t_triangle tri);
+void		quickinversematrix(t_matrix *mat, t_matrix mat_pointat);
+void		pointatmatrix(t_matrix *matrix, t_vec pos, t_vec target, t_vec up);
+t_triangle  matrix_mult_triangle(t_matrix m, t_triangle tri);
 
 /*
-**Vector calcul
+**  Vector calcul
 */
 
 t_vec           matrix_mult_vector(t_matrix m, t_vec i);
@@ -242,10 +261,10 @@ t_vec           vectordiv(t_vec v, float a);
 t_vec           vectormult(t_vec v, float a);
 float           vectorlen(t_vec v);
 float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p);
-t_vec           vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend);
+t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t);
 
 /*
-**Triangle Draw
+**  Triangle Draw
 */
 
 void        fill_triangle(t_env *e, t_triangle *tri, int color);
@@ -254,7 +273,7 @@ void        draw_triangle(t_env *e, t_triangle t);
 void        put_pixel(t_env *e, int x, int y, int color);
 
 /*
-**Events
+**  Events
 */
 
 void        event(t_env *env);
@@ -262,7 +281,7 @@ void        event(t_env *env);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
 
 /*
-**Color
+**  Color
 */
 
 t_rgba      hex_to_rgba(int c);
@@ -270,7 +289,7 @@ int         rgba_to_hex(t_rgba rgba);
 int         color_shading(int color, float shade);
 
 /*
-**Threading
+**  Threading
 */
 
 void            thread_init(t_env *e, t_thread *thread);
