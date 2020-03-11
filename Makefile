@@ -59,7 +59,7 @@ HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
 CC		=	gcc #-g -fsanitize=address
-CFLAGS	=	-Wall -Wextra -Werror -Ofast -march=native
+CFLAGS	=	#-Wall -Wextra -Werror -Ofast -march=native
 
 ifeq ($(OS), Linux)
 	SDL		=	-lSDL2

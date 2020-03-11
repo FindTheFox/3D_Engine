@@ -32,10 +32,10 @@ void            *do_thread(void *param)
 void            thread_init(t_env *e, t_thread *thread)
 {
     int todo;
-    int rest;
+    //int rest;
 
     todo = (e->to_raster.cell_nb / NB_THREAD);
-    rest = (e->to_raster.cell_nb % NB_THREAD);
+    //rest = (e->to_raster.cell_nb % NB_THREAD);
     thread->env = e;
     thread->tris = &e->to_raster;
     thread->start = thread->id * todo;
