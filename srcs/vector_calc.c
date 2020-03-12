@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/11 20:00:55 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/12 20:05:08 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,20 +110,26 @@ float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p)
     return (x);
 }
 
-t_vec            vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t)
+// start 0 end 1
+
+t_vec            vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out)
 {
     float plane_d;
     float ad;
     float bd;
+    float t;
     t_vec linestarttoend;
     t_vec linetointersect;
 
     vectornormal(&vec[1]);
     plane_d = -vectorproduct(vec[1], vec[0]);
+    // printf("plane_d %f\n", plane_d);
     ad = vectorproduct(linestart, vec[1]);
     bd = vectorproduct(lineend, vec[1]);
-    *t = (-plane_d - ad) / (bd - ad);
+    t = (-plane_d - ad) / (bd - ad);
+    *t_out = t;
+    // printf("t_out %f \n", t);
     linestarttoend = vectorsub(lineend, linestart);
-    linetointersect = vectormult(linestarttoend, *t);
+    linetointersect = vectormult(linestarttoend, t);
     return (vectoradd(linestart, linetointersect));
 }

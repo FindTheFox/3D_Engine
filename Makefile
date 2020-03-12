@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/11 19:37:12 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/12 19:26:55 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
 CC		=	gcc #-g -fsanitize=address
-CFLAGS	=	-Ofast -march=native#-Wall -Wextra -Werror
+CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
 	SDL		=	-lSDL2-2.0
