@@ -6,7 +6,7 @@
 /*   By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/03/10 05:10:45 by ahippoly         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:57:14 by ahippoly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 void print_t_list(t_list *list)
 {
-	double *content;
+	float *content;
 	while (list)
 	{
-		content = (double*)list->content;
+		content = (float*)list->content;
 		printf("content of list = %f", *(content));
 		printf(" %f", *(content + 1));
 		printf(" %f\n", *(content + 2));
@@ -35,7 +35,7 @@ char *skip_until_num(char *str)
 
 char *skip_until_space(char *str)
 {
-	while (*str != 0 *str != ' ')
+	while (*str != 0 && *str != ' ')
 		str++;
 	return (str);
 }
@@ -53,10 +53,10 @@ void	*double_array_size(void *data, int unit_size, size_t array_length)
 	return (new_data);
 }
 
-char	*ft_fatoi_ptr(char *str, double *value)
+char	*ft_fatoi_ptr(char *str, float *value)
 {
-	double	nb;
-	double	pow;
+	float	nb;
+	float	pow;
 	int		neg;
 
 	nb = 0;
@@ -73,13 +73,32 @@ char	*ft_fatoi_ptr(char *str, double *value)
 	{
 		str++;
 		pow = 0.1;
-		while (*str >= '0' && *str <= '9')
+		while (*str >= '0' && *str <= '9' && pow > 0.00001)
 		{
 			nb += (*(str++) - '0') * pow;
 			pow /= 10;
 		}
 	}
-	printf("nb = %f\n", nb);
+	//printf("nb = %f\n", nb);
+	*value = nb * neg;
+	return (str);
+}
+
+char	*ft_atoi_ptr(char *str, int *value)
+{
+	int	nb;
+	int	neg;
+
+	nb = 0;
+	neg = 1;
+	while ((*str < 14 && *str > 8) || *str == 32)
+		str++;
+	if (*str == '+')
+		str++;
+	else if (*str == '-')
+		str++ && (neg = -1);
+	while (*str >= '0' && *str <= '9')
+		nb = (nb * 10) + (*(str++) - '0');
 	*value = nb * neg;
 	return (str);
 }
@@ -87,18 +106,21 @@ char	*ft_fatoi_ptr(char *str, double *value)
 t_list *assign_lst_value(char *line, int length)
 {
 	int i;
-	double *values;
+	float *values;
 	int size;
 	t_list *new;
 	
-	size = sizeof(double) * length;
-	values = (double*)ft_memalloc(size);
+	size = sizeof(float) * length;
+	values = (float*)ft_memalloc(size);
 	i = 0;
 	line = skip_until_num(line);
 	while (i < length)
+	{
 		line = ft_fatoi_ptr(line, &values[i++]);
-	printf("value = %f\n", values[0]);
-	printf("line = %s\n", line);
+		line = skip_until_space(line);
+	}
+	//printf("value = %f\n", values[0]);
+	//printf("line = %s\n", line);
 
 	new = ft_lstnew(values, size);
 	free(values);
@@ -118,6 +140,7 @@ t_triangle triangle_init(void)
 	vec.w = 1;
 	tex.u = 0;
 	tex.v = 0;
+	new.color = 0;
 	i = 0;
 	while (i < 3)
 	{
@@ -135,19 +158,43 @@ void assign_from_array(void *data, int length, float *values)
 
 	to_assign = (float*)data;
 	i = 0;
+	//printf("content = ");
 	while (i < length)
+	{
 		to_assign[i] = values[i];
+		//printf("%f ", values[i]);
+		i++;
+	}
+	//printf("\n");
+}
+
+void print_faces_content(t_triangle *tris, int size)
+{
+	int i;
+	int j;
+	i = 0;
+	while (i < size)
+	{
+		printf("   triangle num %i\n", i);
+		j = 0;
+		while (j < 3)
+		{
+			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris->p[j].x, tris->p[j].y, tris->p[j].z, tris->t[j].u, tris->t[j].v);
+			j++;
+		}
+		
+		i++;
+	}
 }
 
 void read_face_line(char *line, t_attr_lst *key_list)
 {
 	t_triangle new;
 	int tmp_id;
-	int text_id;
 	int i;
 	int j;
 
-	if (ft_strnstr(line, "f ", 2))
+	if (ft_strnstr(line, "f ", 3))
 	{
 		if (key_list->tris_curr_id >= key_list->tris_size)
 		{
@@ -160,16 +207,18 @@ void read_face_line(char *line, t_attr_lst *key_list)
 		line = skip_until_num(line);
 		while (i < 3)
 		{
-			line = ft_fatoi_ptr(line, tmp_id);
-			if (vert_id < key_list->v_size)
-				assign_from_array(new.p, 3, key_list->vert[tmp_id]);
+			line = ft_atoi_ptr(line, &tmp_id);
+			//printf("tmp_id = %i\n", tmp_id);
+			if (tmp_id < key_list->v_size)
+				assign_from_array(&new.p[i], 3, key_list->vert[tmp_id - 1]);
 			if (*line == '/')
 			{
-				line = ft_fatoi_ptr(line + 1, tmp_id);
-				if (vert_id < key_list->v_size)
-					assign_from_array(new.t, 2, key_list->text[tmp_id]);
+				line = ft_atoi_ptr(line + 1, &tmp_id);
+				if (tmp_id < key_list->v_size)
+					assign_from_array(&new.t[i], 2, key_list->text[tmp_id - 1]);
 			}
 			line = skip_until_space(line);
+			i++;
 		}
 		key_list->tris[key_list->tris_curr_id++] = new;
 	}
@@ -234,12 +283,13 @@ void init_key_list(t_attr_lst *key_list)
 	key_list->v_size = 0;
 	key_list->vt_size = 0;
 	key_list->vn_size = 0;
+	key_list->tris_curr_id = 0;
 	key_list->tris_size = FACES_ARRAY_SIZE;
 	key_list->tris = (t_triangle*)malloc(sizeof(t_triangle) * FACES_ARRAY_SIZE);
 }
 
 
-void print_array(double **array, int size, int content_size, char *name)
+void print_array(float **array, int size, int content_size, char *name)
 {
 	int i;
 	int j;
@@ -248,7 +298,7 @@ void print_array(double **array, int size, int content_size, char *name)
 	while (i < size)
 	{
 		j = 0;
-		printf("%s = ", name);
+		printf("%s =  ", name);
 		while (j < content_size)
 			printf("%f ", array[i][j++]);
 		i++;
@@ -259,15 +309,11 @@ void print_array(double **array, int size, int content_size, char *name)
 
 void create_triangle_list(t_attr_lst *key_list)
 {
-	float **vert;
-	float **text;
-	float **norm;
-
 	key_list->vert = create_array_from_list(key_list->v, key_list->v_size, 3);
 	key_list->text = create_array_from_list(key_list->vt, key_list->vt_size, 2);
 	key_list->norm = create_array_from_list(key_list->vn, key_list->vn_size, 3);
 
-	print_array(vert, key_list->v_size, 3, "vertices");
+	//print_array(key_list->vert, key_list->v_size, 3, "vertices");
 }
 
 t_mesh	obj_parser(char *file, t_env *e)
@@ -282,18 +328,16 @@ t_mesh	obj_parser(char *file, t_env *e)
 		ft_exit(e, "Invalid file input", 0);
 	init_key_list(&key_list);
 	while (get_next_line(fd, &line) > 0)
-	{
 		if (read_line_key(line, &key_list) == 1)
 			break;
-	}
+	//print_t_list(key_list.v);
 	create_triangle_list(&key_list);
 	while (get_next_line(fd, &line) > 0)
-	{
-		read_line_key(line, &key_list);
-	}
-	print_t_list(key_list.v);
+		read_face_line(line, &key_list);
+	printf("tris curr id = %i\n", key_list.tris_curr_id);
+	//print_faces_content(key_list.tris, key_list.tris_curr_id);
 
-
-	obj.size = 0;
+	obj.tris = key_list.tris;
+	obj.size = key_list.tris_curr_id;
 	return (obj);
 }

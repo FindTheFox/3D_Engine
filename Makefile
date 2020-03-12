@@ -6,7 +6,7 @@
 #    By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/10 02:20:40 by ahippoly         ###   ########.fr        #
+#    Updated: 2020/03/12 12:31:42 by ahippoly         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ OBJ		=	$(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
-CC		=	gcc #-g -fsanitize=address
+CC		=	gcc -g -fsanitize=address
 CFLAGS	=	#-Wall -Wextra -Werror -Ofast -march=native
 
 ifeq ($(OS), Linux)
