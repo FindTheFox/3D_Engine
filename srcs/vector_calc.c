@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/13 06:46:19 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 14:56:12 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,6 @@ float           vectorlen(t_vec v)
     return (sqrtf(vectorproduct(v, v)));
 }
 
-float           vectordot(t_vec v1, t_vec v2)
-{
-    float x;
-
-    x = 0.0f;
-    x += v1.x * v2.x;
-    x += v1.y * v2.y;
-    x += v1.z * v2.z;
-    return (x);
-}
-
 t_vec           vectornormal(t_vec v)
 {
     float len;
@@ -108,7 +97,7 @@ float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p)
 
     plane_n = vectornormal(plane_n); // p ou plane_n
     x = plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z;
-    x -= vectordot(plane_n, plane_p);
+    x -= vectorproduct(plane_n, plane_p);
     return (x);
 }
 

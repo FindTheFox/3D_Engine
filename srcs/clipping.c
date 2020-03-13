@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/13 06:44:43 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 14:56:03 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,30 +122,24 @@ int         clip_triangle_by_plane(t_vec plane_p, t_vec plane_n, t_triangle in, 
     plane_n = vectornormal(plane_n);
     //printf("----start----\nx %f || y %f || z %f\n\n", plane_n.x, plane_n.y, plane_n.z);
 
-    clip.d[0] = distance_to_plane(plane_p, plane_n, in.p[0]);
+    clip.d[0] = vectorproduct(plane_n, in.p[0]) - vectorproduct(plane_n, plane_p);
     clip.d[1] = distance_to_plane(plane_p, plane_n, in.p[1]);
     clip.d[2] = distance_to_plane(plane_p, plane_n, in.p[2]);
 
     sort_triangle(&clip, in);
     if (clip.inside == 0)
-    {
-        printf("////////////////////outside///////////////////\n");
         return (0);
-    }
     else if (clip.inside == 3)
     {
-        //printf(">>>>>>>>>in<<<<<<<<<<<<<\n");
         out[0] = in;
         return (1);
     }
     else
     {
-        printf("-------------------clip---------------------\n");
         ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, in);
         return(ret);
     }
 }
-
 
 void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
 {
@@ -155,14 +149,13 @@ void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
 
     tris_to_add = 0;
     if (point == 0)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,1,0,1}, (t_vec){0,0,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){(float)W_W,0,0,1}, (t_vec){-1.0f,0 , 0, 1}, t, clip);
     else if (point == 1)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,-1,0,1}, (t_vec){0,(float)W_H - 1,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){1,0,0,1}, t, clip);
     else if (point == 2)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,1,0,1}, (t_vec){0,0,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){0,1,0,1}, t, clip);
     else if (point == 3)
-        tris_to_add = clip_triangle_by_plane((t_vec){-1.0f,0,0,1}, (t_vec){(float)W_W - 1,0,0,1}, t, clip);
-    //printf("to_add %d\n", tris_to_add);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,(float)W_H,0,1}, (t_vec){0,1.0f,0,1}, t, clip);
     i = -1;
     while (++i < tris_to_add)
         if (push_dynarray(to_raster, &clip[i], 0))
@@ -181,22 +174,12 @@ static void             init_to_raster(t_env *e, t_dyntab *to_raster, t_triangle
         return ;
     }
     point = 0;
-    /*while (point < 4)
-    {
-        clip_edges(to_raster, t, point);
-        point++;
-    }*/
     clip_edges(&e->clip_tab[0], t, point++);
-    //point = 1;
     while (point < 4)
     {
-        i = 0;
-        while (i < e->clip_tab[point - 1].cell_nb)
-        {
-            tmp = *(t_triangle *)dyaddress(&e->clip_tab[point - 1], i);
-            clip_edges(&e->clip_tab[point], tmp, point);            
-            i++;
-        }
+        i = -1;
+        while (++i < e->clip_tab[point - 1].cell_nb)
+            clip_edges(to_raster, *(t_triangle *)dyaddress(&e->clip_tab[point - 1], i), point);            
         clear_dynarray(&e->clip_tab[point - 1]);
         point++;
     }
