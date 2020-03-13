@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/10 16:02:05 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 06:48:55 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void     init_matrice(t_env *e)
 
 void    init_data(t_env *e)
 {
-    e->fNear = 0.01f;
+    e->fNear = 0.1f;
     e->fFar = 1000.0f;
     e->fFov = 90.0f;
     e->fAspectRatio = (float)W_W / (float)W_H;

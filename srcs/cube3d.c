@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/12 19:33:24 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 06:45:34 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int       lumiere(t_env *e, t_vec normal)
 {
     float dp;
     
-    vectornormal(&e->vlist.light_dir);
+    e->vlist.light_dir = vectornormal(e->vlist.light_dir);
     dp = vectorproduct(normal, e->vlist.light_dir);
     return (color_shading(0xffffff, dp));
 }
@@ -96,7 +96,7 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     take_texture_vec(&tview, triprojected);
     tview.color = color;
     //clip z plane
-    nclip = clip_triangle((t_vec){0,0,1.0f,1.0f}, (t_vec){0,0,0.1f,1.0f}, tview, clip);
+    nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
     i = 0;
     while (i < nclip)
     {
@@ -115,7 +115,7 @@ int        normalize(t_env *e, t_triangle tri)
     line1 = vectorsub(tri.p[1], tri.p[0]);
     line2 = vectorsub(tri.p[2], tri.p[0]);
     normal = vectorcrossprod(line1, line2);
-    vectornormal(&normal);
+    normal = vectornormal(normal);
     vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
         return (lumiere(e, normal));

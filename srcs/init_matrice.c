@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:29:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/10 14:56:50 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 06:46:05 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			pointatmatrix(t_matrix *matrix,	t_vec pos, t_vec target, t_vec up)
 	t_vec	right;
 
 	forward = vectorsub(target, pos);
-	vectornormal(&forward);
+	forward = vectornormal(forward);
 	a = vectormult(forward, vectorproduct(up, forward));
 	up = vectorsub(up, a);
 	right = vectorcrossprod(up, forward);

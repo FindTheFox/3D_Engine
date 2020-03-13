@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/12 20:05:08 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/13 06:46:19 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,16 @@ float           vectordot(t_vec v1, t_vec v2)
     return (x);
 }
 
-void           vectornormal(t_vec *v)
+t_vec           vectornormal(t_vec v)
 {
     float len;
+    t_vec vo;
 
-    len = vectorlen(*v);
-    v->x /= len;
-    v->y /= len;
-    v->z /= len;
+    len = vectorlen(v);
+    vo.x = v.x / len;
+    vo.y = v.y / len;
+    vo.z = v.z / len;
+    return (vo);
 }
 
 t_vec           vectorcrossprod(t_vec v1, t_vec v2)
@@ -104,7 +106,7 @@ float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p)
 {
     float x;
 
-    vectornormal(&plane_n); // p ou plane_n
+    plane_n = vectornormal(plane_n); // p ou plane_n
     x = plane_n.x * p.x + plane_n.y * p.y + plane_n.z * p.z;
     x -= vectordot(plane_n, plane_p);
     return (x);
@@ -121,7 +123,7 @@ t_vec            vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, f
     t_vec linestarttoend;
     t_vec linetointersect;
 
-    vectornormal(&vec[1]);
+    vec[1] = vectornormal(vec[1]);
     plane_d = -vectorproduct(vec[1], vec[0]);
     // printf("plane_d %f\n", plane_d);
     ad = vectorproduct(linestart, vec[1]);

@@ -46,8 +46,13 @@
 
 typedef struct      s_line
 {
-    int             coef;
-    int             i;
+	int		lenght;
+	double	dx;
+	double	dy;
+	double	x;
+	double	y;
+	int		i;
+	double	mix;
 }                   t_line;
 
 typedef struct      s_rgba
@@ -216,7 +221,6 @@ void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
 void        sdl_render(t_env *e);
-void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 
@@ -224,7 +228,7 @@ void        rasterizer(t_env *e, t_dyntab *to_clip);
 **Clipping
 */
 
-int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
+int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
 
 /*
@@ -250,12 +254,12 @@ t_vec           matrix_mult_vector(t_matrix m, t_vec i);
 t_vec           vectoradd(t_vec v1, t_vec v2);
 t_vec           vectorsub(t_vec v1, t_vec v2);
 float           vectorproduct(t_vec v1, t_vec v2);
-void            vectornormal(t_vec *v);
+t_vec           vectornormal(t_vec v);
 t_vec           vectorcrossprod(t_vec v1, t_vec v2);
 t_vec           vectordiv(t_vec v, float a);
 t_vec           vectormult(t_vec v, float a);
 float           vectorlen(t_vec v);
-float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p);
+float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p);
 t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out);
 
 /*
@@ -264,7 +268,7 @@ t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, fl
 
 void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
-
+void        ft_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        put_pixel(t_env *e, int x, int y, int color);
 
 /*
