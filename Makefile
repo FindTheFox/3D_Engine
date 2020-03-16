@@ -58,7 +58,7 @@ OBJ		=	$(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 HEADER	=	$(addprefix $(INCDIR)/,$(INC))
 
 # compiler
-CC		=	gcc -g -fsanitize=address
+CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	#-Wall -Wextra -Werror -Ofast -march=native
 
 ifeq ($(OS), Linux)

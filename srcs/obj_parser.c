@@ -158,14 +158,14 @@ void assign_from_array(void *data, int length, float *values)
 
 	to_assign = (float*)data;
 	i = 0;
-	//printf("content = ");
+	// printf("content = ");
 	while (i < length)
 	{
 		to_assign[i] = values[i];
-		//printf("%f ", values[i]);
+		// printf("%f ", values[i]);
 		i++;
 	}
-	//printf("\n");
+	// printf("\n");
 }
 
 void print_faces_content(t_triangle *tris, int size)
@@ -179,7 +179,7 @@ void print_faces_content(t_triangle *tris, int size)
 		j = 0;
 		while (j < 3)
 		{
-			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris->p[j].x, tris->p[j].y, tris->p[j].z, tris->t[j].u, tris->t[j].v);
+			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris[i].p[j].x, tris[i].p[j].y, tris[i].p[j].z, tris[i].t[j].u, tris[i].t[j].v);
 			j++;
 		}
 		
@@ -209,13 +209,14 @@ void read_face_line(char *line, t_attr_lst *key_list)
 		{
 			line = ft_atoi_ptr(line, &tmp_id);
 			//printf("tmp_id = %i\n", tmp_id);
+			tmp_id--;
 			if (tmp_id < key_list->v_size)
-				assign_from_array(&new.p[i], 3, key_list->vert[tmp_id - 1]);
+				assign_from_array(&new.p[i], 3, key_list->vert[tmp_id]);
 			if (*line == '/')
 			{
 				line = ft_atoi_ptr(line + 1, &tmp_id);
 				if (tmp_id < key_list->v_size)
-					assign_from_array(&new.t[i], 2, key_list->text[tmp_id - 1]);
+					assign_from_array(&new.t[i], 2, key_list->text[tmp_id]);
 			}
 			line = skip_until_space(line);
 			i++;
@@ -287,7 +288,6 @@ void init_key_list(t_attr_lst *key_list)
 	key_list->tris_size = FACES_ARRAY_SIZE;
 	key_list->tris = (t_triangle*)malloc(sizeof(t_triangle) * FACES_ARRAY_SIZE);
 }
-
 
 void print_array(float **array, int size, int content_size, char *name)
 {
