@@ -131,7 +131,7 @@ t_triangle triangle_init(void)
 {
 	t_triangle	new;
 	t_vec		vec;
-	t_tex		tex;
+	t_vec2d		tex;
 	int			i;
 
 	vec.x = 0;
@@ -140,12 +140,13 @@ t_triangle triangle_init(void)
 	vec.w = 1;
 	tex.u = 0;
 	tex.v = 0;
+	tex.w = 1;
 	new.color = 0;
 	i = 0;
 	while (i < 3)
 	{
 		new.p[i] = vec;
-		new.t[i] = tex;
+		new.tx[i] = tex;
 		i++;
 	}
 	return (new);
@@ -179,7 +180,7 @@ void print_faces_content(t_triangle *tris, int size)
 		j = 0;
 		while (j < 3)
 		{
-			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris[i].p[j].x, tris[i].p[j].y, tris[i].p[j].z, tris[i].t[j].u, tris[i].t[j].v);
+			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris[i].p[j].x, tris[i].p[j].y, tris[i].p[j].z, tris[i].tx[j].u, tris[i].tx[j].v);
 			j++;
 		}
 		
@@ -216,7 +217,7 @@ void read_face_line(char *line, t_attr_lst *key_list)
 			{
 				line = ft_atoi_ptr(line + 1, &tmp_id);
 				if (tmp_id < key_list->v_size)
-					assign_from_array(&new.t[i], 2, key_list->text[tmp_id]);
+					assign_from_array(&new.tx[i], 2, key_list->text[tmp_id]);
 			}
 			line = skip_until_space(line);
 			i++;
@@ -330,12 +331,12 @@ t_mesh	obj_parser(char *file, t_env *e)
 	while (get_next_line(fd, &line) > 0)
 		if (read_line_key(line, &key_list) == 1)
 			break;
-	//print_t_list(key_list.v);
+	print_t_list(key_list.v);
 	create_triangle_list(&key_list);
 	while (get_next_line(fd, &line) > 0)
 		read_face_line(line, &key_list);
 	printf("tris curr id = %i\n", key_list.tris_curr_id);
-	//print_faces_content(key_list.tris, key_list.tris_curr_id);
+	// print_faces_content(key_list.tris, key_list.tris_curr_id);
 
 	obj.tris = key_list.tris;
 	obj.size = key_list.tris_curr_id;

@@ -24,7 +24,7 @@
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
-# define NB_THREAD 8
+# define NB_THREAD 32
 
 # define KEY_NB 16
 # define W 0
@@ -46,8 +46,13 @@
 
 typedef struct      s_line
 {
-    int             coef;
-    int             i;
+	int		lenght;
+	double	dx;
+	double	dy;
+	double	x;
+	double	y;
+	int		i;
+	double	mix;
 }                   t_line;
 
 typedef struct      s_rgba
@@ -75,18 +80,23 @@ typedef struct      s_vec2d
 
 typedef struct      s_clip
 {
-    t_vec   in[3];
-    t_vec   out[3];
-    int     inside;
-    int     outside;
-    float   d[3];
+    t_vec       in[3];
+    t_vec2d     tx_in[3];
+    t_vec       out[3];
+    t_vec2d     tx_out[3];
+    int         inside;
+    int         tx_inside;
+    int         outside;
+    int         tx_outside;
+    float       d[3];
+    float       t;
 }                   t_clip;
 
 typedef struct      s_thread
 {
     void            *env;
     pthread_t       thread;
-    t_dyntab        *tris;
+    t_dyntab        tris;
     int             start;
     int             end;
     int             i;
@@ -95,8 +105,8 @@ typedef struct      s_thread
 
 typedef struct      s_triangle
 {
-    t_vec       p[3];
-    t_vec2d     tx[3];
+    t_vec   p[3];
+    t_vec2d tx[3];
     int     color;
 }                   t_triangle;
 
@@ -184,10 +194,10 @@ typedef struct      s_env
     t_vlist         vlist;
     t_mlist         mlist;
     t_fill          fill;
-    t_triangle      tris[12];
+    //t_triangle      tris[12];
     //t_triangle      *buffer;
-    t_triangle      tritransform;
-    t_triangle      triprojected;
+    // t_triangle      tritransform;
+    // t_triangle      triprojected;
     t_mesh          *mesh;
     int             nbmesh;
     t_parser        parse;
@@ -211,7 +221,6 @@ void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
 void        sdl_render(t_env *e);
-void        draw_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
@@ -220,7 +229,8 @@ t_mesh      obj_parser(char *file, t_env *e);
 **Clipping
 */
 
-int         clip_triangle(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
+int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
+void        take_texture_vec(t_triangle *v1, t_triangle v2);
 
 /*
 **Matrice calcul and init
@@ -250,16 +260,16 @@ t_vec           vectorcrossprod(t_vec v1, t_vec v2);
 t_vec           vectordiv(t_vec v, float a);
 t_vec           vectormult(t_vec v, float a);
 float           vectorlen(t_vec v);
-float           distance_to_plane(t_vec plane_n, t_vec plane_p, t_vec p);
-t_vec           vec_inter_plane(t_vec plane_p, t_vec plane_n, t_vec linestart, t_vec lineend);
+float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p);
+t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out);
 
 /*
 **Triangle Draw
 */
 
-void        fill_triangle(t_env *e, t_triangle tri, int color);
+void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
-
+void        ft_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        put_pixel(t_env *e, int x, int y, int color);
 
 /*
