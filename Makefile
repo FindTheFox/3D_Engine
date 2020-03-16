@@ -50,7 +50,8 @@ SRC		=	main.c \
 			dynamic_tab.c \
 			clipping.c \
 			pthread.c \
-			engine_tools.c
+			engine_tools.c \
+			obj_parser.c
 	
 INC		=	3d_engine.h
 
@@ -62,7 +63,7 @@ CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
-	SDL		=	-lSDL2-2.0
+	SDL		=	`sdl2-config --cflags --libs`
 	DIRSDL	=	
 else
 	SDL		=	-F ~/Library/Frameworks -framework SDL2

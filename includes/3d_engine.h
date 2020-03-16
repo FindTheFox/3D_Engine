@@ -223,6 +223,7 @@ void        init_data(t_env *e);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
+t_mesh      obj_parser(char *file, t_env *e);
 
 /*
 **Clipping

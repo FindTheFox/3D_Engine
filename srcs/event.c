@@ -14,37 +14,37 @@
 
 static void         move_events(t_env *e)
 {
-    if (e->event.key.keysym.sym == SDLK_w)
+    if (e->event.key.keysym.scancode == SDL_SCANCODE_W)
         e->key[W] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_s)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_S)
         e->key[S] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_a)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_A)
         e->key[A] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_d)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_D)
         e->key[D] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_q)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_Q)
         e->key[Q] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_e)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_E)
         e->key[E] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_r)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_R)
         e->key[R] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_f)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F)
         e->key[F] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_UP)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_UP)
         e->key[UP] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_DOWN)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_DOWN)
         e->key[DOWN] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_8)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_8)
         e->key[NUM8] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_2)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_2)
         e->key[NUM2] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_4)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_4)
         e->key[NUM4] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_6)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_6)
         e->key[NUM6] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_1)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_1)
         e->key[NUM1] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    else if (e->event.key.keysym.sym == SDLK_KP_3)
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_3)
         e->key[NUM3] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 }
 
@@ -112,7 +112,7 @@ void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        if ((env->event.key.keysym.sym == SDLK_ESCAPE
+        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
 		|| env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);

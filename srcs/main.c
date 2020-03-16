@@ -38,7 +38,8 @@ static void        setup(t_env *env, int ac, char **av)
         mi = 0;
         while (i < ac)
         {
-            file_parser(env, av[i], mi);
+            // file_parser(env, av[i], mi);
+            env->mesh[mi] = obj_parser(av[i], env);
             mi++;
             i++;
         }
