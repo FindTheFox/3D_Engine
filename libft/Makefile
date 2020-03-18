@@ -128,6 +128,7 @@ SRC += $(S_PATH)ft_to_radian.c
 SRC += $(S_PATH)ft_to_degree.c
 SRC += $(S_PATH)dynamic_tab.c
 SRC += $(S_PATH)dynamic_tab2.c
+SRC += $(S_PATH)ft_fswap.c
 
 # Objects and Headers
 

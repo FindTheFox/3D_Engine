@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/13 12:58:06 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/18 03:24:06 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static void     framerate(t_env *e)
     e->time = SDL_GetTicks();
     e->theta = (e->time - oldtime) / 1000;
     fps = 1.0 / e->theta;
-    printf("%d\n", fps);
+    //printf("%d\n", fps);
+    SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
+
 }
 
 static void        setup(t_env *env, int ac, char **av)

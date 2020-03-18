@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/13 06:45:34 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/18 05:50:36 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int       lumiere(t_env *e, t_vec normal)
     return (color_shading(0xffffff, dp));
 }
 
-void            matrix_world(t_env *e)
+void            matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
 {
-    init_matrix_rotz(&e->mlist.matrotz, e->ztheta * 0.5f);
-    init_matrix_rotx(&e->mlist.matrotx, e->xtheta);
-    init_matrix_roty(&e->mlist.matroty, e->ytheta * 0.8);
+    init_matrix_rotz(&e->mlist.matrotz, ztheta * 0.5f);
+    init_matrix_rotx(&e->mlist.matrotx, xtheta);
+    init_matrix_roty(&e->mlist.matroty, ytheta * 0.8);
     init_matrix_translation(&e->mlist.mattranslate, 0.0f, 0.0f, e->zoom);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matroty, e->mlist.matrotx);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
@@ -49,6 +49,9 @@ void            matrix_view(t_env *e)
     e->vlist.lookdir = (t_vec){ 0,0,1,0 };
     up = (t_vec){ 0,-1,0,0 };
     target = (t_vec){ 0,0,1,0 };
+ 
+    init_matrix_roty(&e->mlist.camroty, ft_to_radian(e->yaw) * 21);
+    init_matrix_rotx(&e->mlist.camrotx, ft_to_radian(e->xaw) * 11); 
     
     init_matrix_identity(&camrot);
     camrot = matrix_mult_matrix(e->mlist.camrotx, e->mlist.camroty);
@@ -134,7 +137,8 @@ void        engine_3d(t_env *env)
     i = -1;
     while (++i < env->nbmesh)
     {
-        matrix_world(env);
+        env->mesh_id = i;
+        matrix_world(env, env->mesh[i].xtheta, env->mesh[i].ytheta, env->mesh[i].ztheta);
         j = -1;
         while (++j < env->mesh[i].size)
         {

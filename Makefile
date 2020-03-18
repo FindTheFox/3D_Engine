@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/12 19:26:55 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/18 01:32:07 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,10 @@ SRC		=	main.c \
 			clipping.c \
 			pthread.c \
 			engine_tools.c \
-			obj_parser.c
+			obj_parser.c \
+			textured_tris.c \
+			camera.c \
+			mesh_event.c \
 	
 INC		=	3d_engine.h
 

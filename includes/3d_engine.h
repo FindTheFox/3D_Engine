@@ -18,15 +18,20 @@
 # include <fcntl.h>
 # include <pthread.h>
 
+# include "texturing.h"
+
 # define W_W 800
 # define W_H 800
+
+# define NTXT 1                 // Nombre de texture SDL_Surface
+# define NSPRITE 0              // Nombre de sprites SDL_Surface
 
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
 # define NB_THREAD 32
 
-# define KEY_NB 16
+# define KEY_NB 24
 # define W 0
 # define A 1
 # define S 2
@@ -35,14 +40,27 @@
 # define Q 5
 # define UP 6
 # define DOWN 7
+# define LEFT 16
+# define RIGHT 17
 # define R 8
 # define F 9
-# define NUM8 10
-# define NUM2 11
-# define NUM4 12
-# define NUM6 13
 # define NUM1 14
+# define NUM2 11
 # define NUM3 15
+# define NUM4 12
+# define NUM5 20
+# define NUM6 13
+# define NUM7 22
+# define NUM8 10
+# define NUM9 23
+# define MOUSE 18
+# define SPACE 19
+# define LCTRL 21
+
+typedef struct      s_image
+{
+    SDL_Surface     *sprite;
+}                   t_image;
 
 typedef struct      s_line
 {
@@ -114,6 +132,9 @@ typedef struct      s_mesh
 {
     t_triangle      *tris;
     int             size;
+    float           ztheta;
+    float           ytheta;
+    float           xtheta;
 }                   t_mesh;
 
 typedef struct      s_matrix
@@ -170,45 +191,46 @@ typedef struct      s_parser
     int             mi;
 }                   t_parser;
 
-typedef struct      s_env
+typedef struct              s_env
 {
-    float           ytheta;
-    float           xtheta;
-    float           ztheta;
-    float           theta;
-    float           zoom;
-    float           fNear;
-    float           fFar;
-    float           fFov;
-    float           fAspectRatio;
-    float           fFovRad;
-    float           fps;
-    float           time;
-    float           frametime;
-    float           yaw;
-    float           xaw;
-    int             key[KEY_NB];
-    t_dyntab        clip_tab[4];
-    t_dyntab        to_clip;
-    t_dyntab        to_raster;
-    t_vlist         vlist;
-    t_mlist         mlist;
-    t_fill          fill;
-    //t_triangle      tris[12];
-    //t_triangle      *buffer;
-    // t_triangle      tritransform;
-    // t_triangle      triprojected;
-    t_mesh          *mesh;
-    int             nbmesh;
-    t_parser        parse;
-    t_rgba          rgba;
-    t_line          line;
-    SDL_Window      *window;
-    SDL_Event       event;
-    SDL_Renderer    *rend;
-    SDL_Texture     *screen;
-    SDL_Surface     *winsurf;
-}                   t_env;
+    float                   ytheta;
+    float                   xtheta;
+    float                   ztheta;
+    float                   theta;
+    float                   zoom;
+    float                   fNear;
+    float                   fFar;
+    float                   fFov;
+    float                   fAspectRatio;
+    float                   fFovRad;
+    float                   fps;
+    float                   time;
+    float                   frametime;
+    float                   yaw;
+    float                   xaw;
+    int                     wx;
+    int                     wy;
+    int                     key[KEY_NB];
+    t_dyntab                clip_tab[4];
+    t_dyntab                to_clip;
+    t_dyntab                to_raster;
+    t_vlist                 vlist;
+    t_mlist                 mlist;
+    t_fill                  fill;
+    t_mesh                  *mesh;
+    int                     mesh_id;
+    int                     nbmesh;
+    t_parser                parse;
+    t_rgba                  rgba;
+    t_line                  line;
+    t_image                 txt[NTXT];
+    SDL_MouseMotionEvent    mouse;
+    SDL_Window              *window;
+    SDL_Event               event;
+    SDL_Renderer            *rend;
+    SDL_Texture             *screen;
+    SDL_Surface             *winsurf;
+}                           t_env;
 
 /*
 **Global
@@ -273,11 +295,19 @@ void        ft_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        put_pixel(t_env *e, int x, int y, int color);
 
 /*
+**Fill texture
+*/
+
+void            fill_triangle_texture(t_env *e, t_triangle t);
+uint32_t		get_pixel(SDL_Surface *surface, int tx, int ty);
+
+/*
 **Events
 */
 
 void        event(t_env *env);
-
+void        camera_event(t_env *e);
+void        mesh_rot_event(t_env *e);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
 
 /*

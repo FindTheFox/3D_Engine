@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahippoly <ahippoly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/03/12 15:57:14 by ahippoly         ###   ########.fr       */
+/*   Updated: 2020/03/17 23:12:44 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_list *assign_lst_value(char *line, int length)
 	free(values);
 	return (new);
 }
+
 
 t_triangle triangle_init(void)
 {

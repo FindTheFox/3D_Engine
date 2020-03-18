@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/13 14:56:03 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/18 06:00:17 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     // printf("vec1\nx %f || y %f || z %f\n", vec[1].x, vec[1].y, vec[1].z);
     if (clip->inside == 1 && clip->outside == 2)
     {
-        out[0].color = 0x0000ff;//in.color;
+        out[0].color = in.color;//0x0000ff;
         small_triangle(*clip, out, vec);       
         return (1);
     }
     else if (clip->inside == 2 && clip->outside == 1)
     {
-        out[0].color = 0xff0000;//in.color;
-        out[1].color = 0x00ff00;//in.color;
+        out[0].color = in.color;//0xff0000;
+        out[1].color = in.color;//0x00ff00;
         quad_triangle(*clip, out, vec);
         return (2);
     }
