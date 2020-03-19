@@ -2,7 +2,7 @@
 # define OBJ_PARSER_H
 
 # include "../libft/includes/libft.h"
-# include "../includes/3d_engine.h"
+# include "3d_engine.h"
 
 # define FACES_ARRAY_SIZE 2500
 

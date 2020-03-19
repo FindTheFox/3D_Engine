@@ -6,9 +6,12 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/18 01:32:07 by saneveu          ###   ########.fr        #
+#    Updated: 2020/03/19 22:39:19 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+include includes/def/sources.mk 
+include	includes/def/includes.mk
 
 BLACK	=	\033[30m
 RED		=	\033[31m
@@ -27,39 +30,14 @@ CUT 	=	\033[K
 NAME	=	3D_Engine
 OS		=	$(shell uname)
 
-# directories
-SRCDIR	=	./srcs
-INCDIR	=	./includes
+SRCDIR	=	srcs/
+SRC     =	$(addprefix $(SRCDIR), $(SRCS_FILE))
+
 OBJDIR	=	./obj
+OBJ		=	$(addprefix $(OBJDIR)/, $(SRCS_FILE:.c=.o))
 
-# src / obj files
-SRC		=	main.c \
-			draw.c \
-			event.c \
-			cube_point.c \
-			exit.c \
-			init_matrice.c \
-			init_sdl.c \
-			fill_triangle.c \
-			vector_calc.c \
-			color.c \
-			cube3d.c \
-			init_data.c \
-			line.c \
-			file_parser.c \
-			dynamic_tab.c \
-			clipping.c \
-			pthread.c \
-			engine_tools.c \
-			obj_parser.c \
-			textured_tris.c \
-			camera.c \
-			mesh_event.c \
-	
-INC		=	3d_engine.h
-
-OBJ		=	$(addprefix $(OBJDIR)/,$(SRC:.c=.o))
-HEADER	=	$(addprefix $(INCDIR)/,$(INC))
+INCDIR	=	./includes
+HEADER	=	$(addprefix $(INCDIR)/,$(INC_FILE))
 
 # compiler
 CC		=	gcc #-g -fsanitize=address
@@ -81,19 +59,21 @@ all: 		obj $(FT_LIB) $(NAME)
 
 obj:
 			mkdir -p $(OBJDIR)
+			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init
 
-$(OBJDIR)/%.o:$(SRCDIR)/%.c $(HEADER)
-			@echo "${TUR}compiling [$@] ...${END}"
-			@$(CC) $(CFLAGS) -I $(INCDIR) -c -o $@ $< $(DIRSDL)
-			@printf "$(UP)$(CUT)"
 
 $(FT_LIB):
-			@$(MAKE) -C $(FT)
+			@$(MAKE) -j8 -C $(FT)
 			@echo "${GREEN}{LIBRARY COMPILED}${END}"
 
 $(NAME):	$(OBJ) $(FT_LIB)
-			@$(CC) $(CFLAGS) $(OBJ) $(FT_LIB) $(SDL) -lm -lpthread -o $@
+			@$(CC) $(CFLAGS) -I$(INCDIR) -o $(NAME) $(OBJ) $(FT_LIB) $(SDL)  -lm -lpthread -o $@
 			@echo "${GREEN}{$@ COMPILED}${END}"
+
+$(OBJDIR)/%.o:$(SRCDIR)/%.c $(HEADER)
+			@echo "${TUR}compiling [$@] ...${END}"
+			@$(CC) $(CFLAGS) -I$(INCDIR) -c -o $@ $< $(DIRSDL)
+			@printf "$(UP)$(CUT)"
 
 clean:
 			@/bin/rm -rf $(OBJDIR)
