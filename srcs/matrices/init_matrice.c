@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:29:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 01:45:40 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void        init_matrix_roty(t_matrix *m, float theta)
     m->m[3][3] = 1.0f;
 }
 
-void       init_matrix_translation(t_matrix *m, float x, float y, float z)
+void       init_matrix_translation(t_matrix *m, t_vec v)
 {
     m->m[0][0] = 1.0f;
     m->m[1][1] = 1.0f;
     m->m[2][2] = 1.0f;
     m->m[3][3] = 1.0f;
-    m->m[3][0] = x;
-    m->m[3][1] = y;
-    m->m[3][2] = z;
+    m->m[3][0] = v.x;
+    m->m[3][1] = v.y;
+    m->m[3][2] = v.z;
 }
 
 void            init_matrix_identity(t_matrix *m)

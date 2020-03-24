@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 01:08:25 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 05:41:17 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void     sort_orthogonal(t_triangle *t)
         ft_fswap(&t->tx[2].w,&t->tx[1].w); 
     }
 }
+
 static void     texture_p_image(t_env *e, t_filltex *f, t_triangle *tri, int i)
 {
     float   tstep;
@@ -48,29 +49,28 @@ static void     texture_p_image(t_env *e, t_filltex *f, t_triangle *tri, int i)
     f->tex_u = f->su;
     f->tex_v = f->sv;
 
-    tstep = 1.0f / ((float)(f->bx - f->ax));
+    tstep = 1.0f / (f->bx - f->ax);
     t = 0.0f;
-    j = f->ax - 1;
-    while (++j < f->bx)
+    j = f->ax;
+    while (j < f->bx)
     {
         //printf("j = %f\n", j);
-        f->tex_u = (1.0f - t) * f->su + t * f->eu;
-        f->tex_v = (1.0f - t) * f->sv + t * f->ev;
-        f->tex_w = (1.0f - t) * f->sw + t * f->ew;
+        f->tex_u = (t * f->su) + (t * f->eu);
+        f->tex_v = (t * f->sv) + (t * f->ev);
+        f->tex_w = t * f->sw + t * f->ew;
+        
         //put_pixel(e, i, j, get_pixel(e->txt[0].sprite, f->tex_u, f->tex_v));
         t += tstep;
+        j++;
     }
 
 }
 
-static void     fill_triangle_texture_2bis(t_env *e, t_filltex *f, t_triangle *t)
+static void         step(t_filltex *f, t_triangle *t)
 {
-    int i;
-
-    i = 0;
     if (f->dy1)
     {
-        printf("1\n");
+        //printf("1\n");
         f->dax_s = f->dx1 / f->dy1;
         f->du1_s = f->du1 / f->dy1;
         f->dv1_s = f->dv1 / f->dy1;
@@ -78,35 +78,41 @@ static void     fill_triangle_texture_2bis(t_env *e, t_filltex *f, t_triangle *t
     }
     if (f->dy2)
     {
-        printf("2\n");
+        //printf("2\n");
         f->dbx_s = f->dx2 / f->dy2;
         f->du2_s = f->du2 / f->dy2;
         f->dv2_s = f->dv2 / f->dy2;
         f->dw2_s = f->dw2 / f->dy2;
-
     }
+}
+
+static void     fill_triangle_texture_2bis(t_env *e, t_filltex *f, t_triangle *t)
+{
+    int i;
+    
     i = t->p[1].y - 1;
     while (++i <= t->p[2].y)
     {
-        printf("3\n");
+        //printf("3\n");
         f->ax = t->p[1].x + (float)(i - t->p[1].y) * f->dax_s; 
         f->bx = t->p[0].x + (float)(i - t->p[0].y) * f->dbx_s;
-        printf("ax = %d     bx = %d\n", f->ax, f->bx);
+        //printf("ax = %f     bx = %f\n", f->ax, f->bx);
  
         f->su = t->tx[1].u + (float)(i - t->p[1].y) * f->du1_s; 
         f->sv = t->tx[1].v + (float)(i - t->p[1].y) * f->dv1_s;
         f->sw = t->tx[1].w + (float)(i - t->p[1].y) * f->dv1_s;
+        
         f->eu = t->tx[0].u + (float)(i - t->p[0].y) * f->du2_s; 
         f->ev = t->tx[0].v + (float)(i - t->p[0].y) * f->dv2_s;
         f->ew = t->tx[0].w + (float)(i - t->p[0].y) * f->dw2_s; 
         if (f->ax > f->bx)
         {
-            ft_swap((void*)&f->ax, (void*)&f->bx);
-            ft_swap((void*)&f->su, (void*)&f->eu);
-            ft_swap((void*)&f->sv, (void*)&f->ev);
-            ft_swap((void*)&f->sw, (void*)&f->ew);
+            ft_fswap(&f->ax, &f->bx);
+            ft_fswap(&f->su, &f->eu);
+            ft_fswap(&f->sv, &f->ev);
+            ft_fswap(&f->sw, &f->ew);
         }
-        //texture_p_image(e, f, t, i);
+        texture_p_image(e, f, t, i);
     }
 }
 
@@ -117,32 +123,15 @@ static void     fill_triangle_texture_2(t_env *e, t_filltex *f, t_triangle *t)
     i = 0;
     if (f->dy1)
     {
-        printf("1\n");
-        f->dax_s = f->dx1 / f->dy1;
-        f->du1_s = f->du1 / f->dy1;
-        f->dv1_s = f->dv1 / f->dy1;
-        f->dw1_s = f->dw1 / f->dy1;
-    }
-    if (f->dy2)
-    {
-        printf("2\n");
-        f->dbx_s = f->dx2 / f->dy2;
-        f->du2_s = f->du2 / f->dy2;
-        f->dv2_s = f->dv2 / f->dy2;
-        f->dw2_s = f->dw2 / f->dy2;
-
-    }
-    if (f->dy1)
-    {
-        printf("3\n");
+        //printf("3\n");
 
         i = t->p[0].y - 1;
-        printf("start %f\nend %f\n", t->p[0].y, t->p[1].y);
+        //printf("start %f\nend %f\n", t->p[0].y, t->p[1].y);
         while (++i <= t->p[1].y)
         {
             f->ax = t->p[0].x + (float)(i - t->p[0].y) * f->dax_s; 
             f->bx = t->p[0].x + (float)(i - t->p[0].y) * f->dbx_s;
-        printf("ax = %d     bx = %d\n", f->ax, f->bx);        
+            //printf("ax = %f     bx = %f\n", f->ax, f->bx);        
             f->su = t->tx[0].u + (float)(i - t->p[0].y) * f->du1_s; 
             f->sv = t->tx[0].v + (float)(i - t->p[0].y) * f->dv1_s;
             f->sw = t->tx[0].w + (float)(i - t->p[0].y) * f->dv1_s;
@@ -153,11 +142,12 @@ static void     fill_triangle_texture_2(t_env *e, t_filltex *f, t_triangle *t)
 
             if (f->ax > f->bx)
             {
-                ft_fswap((float*)&f->ax, (float*)&f->bx);
+                ft_fswap(&f->ax, &f->bx);
                 ft_fswap(&f->su, &f->eu);
                 ft_fswap(&f->sv, &f->ev);
+                ft_fswap(&f->sw, &f->ew);
             }
-            //texture_p_image(e, f, t, i);
+            texture_p_image(e, f, t, i);
         }
     }
 }
@@ -173,7 +163,7 @@ void            fill_triangle_texture(t_env *e, t_triangle t)
     fill.dx1 = t.p[1].x - t.p[0].x;
     fill.du1 = t.tx[1].u - t.tx[0].u;
     fill.dv1 = t.tx[1].v - t.tx[0].v;
-    //fill.dw1 = t.tx[1].w - t.tx[0].w;
+    fill.dw1 = t.tx[1].w - t.tx[0].w;
 
     fill.dy2 = t.p[2].y - t.p[0].y;
     fill.dx2 = t.p[2].x - t.p[0].x;
@@ -181,16 +171,22 @@ void            fill_triangle_texture(t_env *e, t_triangle t)
     fill.dv2 = t.tx[2].v - t.tx[0].v;
     //printf("u %f v %f w %f\n", t.tx[2].u, t.tx[2].v, t.tx[2].w);
     //printf("x %f y %f z %f\n", t.p[2].x, t.p[2].y, t.p[2].z);
-    //fill.dw2 = t.tx[2].w - t.tx[0].w;
-    printf("\n----<> Enter Fille triangle Phase 1\n");
+    fill.dw2 = t.tx[2].w - t.tx[0].w;
+    step(&fill, &t); 
+    printf("step\n----> Enter Fille triangle Phase 1\n");
+    
     fill_triangle_texture_2(e, &fill, &t);
-    printf("\n----<> Out\n");
+    
+    printf("\n----< Out\n");
     fill.dy1 = t.p[2].y - t.p[1].y;
     fill.dx1 = t.p[2].x - t.p[1].x;
     fill.du1 = t.tx[2].u - t.tx[1].u;
     fill.dv1 = t.tx[2].v - t.tx[1].v;
     //fill.dv1 = t.tx[2].w - t.tx[1].w;
-    printf("\n----<> Enter Fille triangle Phase 2\n");
+    step(&fill, &t);
+    printf("\nstep\n----> Enter Fille triangle Phase 2\n");
+   
     fill_triangle_texture_2bis(e, &fill, &t);
-    printf("\n----<> Out\n");
+   
+    printf("\n----< Out\n");
 }

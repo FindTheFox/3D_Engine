@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 22:03:22 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 01:59:41 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void         key_tab(t_env *e)
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
             e->key[RIGHT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_0)
+        e->key[NUM0] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_1)
         e->key[NUM1] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_2)
@@ -62,53 +64,16 @@ static void         key_tab(t_env *e)
         e->key[NUM8] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_9)
         e->key[NUM9] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
     else if (e->event.type == SDL_MOUSEMOTION)
         e->key[MOUSE] = 1;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_ENTER)
+        e->key[PAD_ENTER] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_PLUS)
+        e->key[PLUS] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_MINUS)
+        e->key[MINUS] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 }
-
-//static void         camera_move_event(t_env *e)
-//{
-//    if (e->key[W] || e->key[S])
-//    {
-//        e->vlist.forward = vectormult(e->vlist.lookdir, 8.0 * e->theta);
-//        if (e->key[W])
-//            e->vlist.vcamera = vectoradd(e->vlist.vcamera, e->vlist.forward);
-//        else if (e->key[S])
-//            e->vlist.vcamera = vectorsub(e->vlist.vcamera, e->vlist.forward);
-//    }
-//    if (e->key[UP])
-//        e->vlist.vcamera.y += 8.0 * e->theta;
-//    if (e->key[DOWN])
-//        e->vlist.vcamera.y -= 8.0 * e->theta;
-//    if (e->key[A])
-//        e->vlist.vcamera.x += 8.0 * e->theta;
-//    if (e->key[D])
-//        e->vlist.vcamera.x -= 8.0 * e->theta;
-//}
-
-//void                camera_rot_event(t_env *e)
-//{
-//    if (e->key[Q])
-//    {
-//        e->yaw -= 2.0 * e->theta;
-//        init_matrix_roty(&e->mlist.camroty, e->yaw);
-//    }
-//    if (e->key[E])
-//    {
-//        e->yaw += 2.0 * e->theta;
-//        init_matrix_roty(&e->mlist.camroty, e->yaw);    
-//    }
-//    if (e->key[R])
-//    {
-//        e->xaw -= 2.0 * e->theta;
-//        init_matrix_rotx(&e->mlist.camrotx, e->xaw);
-//    }
-//    if (e->key[F])
-//    {
-//        e->xaw += 2.0 * e->theta;
-//        init_matrix_rotx(&e->mlist.camrotx, e->xaw);    
-//    }
-//}
 
 void                event(t_env *env)
 {
@@ -121,5 +86,5 @@ void                event(t_env *env)
         key_tab(env);
     }
     camera_event(env);
-    mesh_rot_event(env);
+    mesh_rot_event(env, env->usr.event_i_mesh);
 }

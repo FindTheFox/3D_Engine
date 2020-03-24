@@ -31,7 +31,7 @@
 
 # define NB_THREAD 32
 
-# define KEY_NB 24
+# define KEY_NB 28
 # define W 0
 # define A 1
 # define S 2
@@ -56,6 +56,10 @@
 # define MOUSE 18
 # define SPACE 19
 # define LCTRL 21
+# define NUM0 24
+# define PAD_ENTER 25
+# define PLUS 26
+# define MINUS 27
 
 typedef struct      s_image
 {
@@ -121,6 +125,11 @@ typedef struct      s_thread
     int             id;
 }                   t_thread;
 
+typedef struct      s_matrix
+{
+    float           m[4][4];
+}                   t_matrix;
+
 typedef struct      s_triangle
 {
     t_vec   p[3];
@@ -135,12 +144,12 @@ typedef struct      s_mesh
     float           ztheta;
     float           ytheta;
     float           xtheta;
+    t_matrix        mattrans;
+    t_vec           dir;
+    int             color;
+    char            *name;                      //FREE
 }                   t_mesh;
 
-typedef struct      s_matrix
-{
-    float           m[4][4];
-}                   t_matrix;
 
 typedef struct      s_fill 
 {
@@ -191,6 +200,17 @@ typedef struct      s_parser
     int             mi;
 }                   t_parser;
 
+typedef struct              s_usr
+{
+    int                     event_i_mesh;
+    int                     opt_mesh;
+}                           t_usr;
+
+typedef struct              s_color
+{
+    int                     *tab;
+}                           t_color;
+
 typedef struct              s_env
 {
     float                   ytheta;
@@ -211,6 +231,8 @@ typedef struct              s_env
     int                     wx;
     int                     wy;
     int                     key[KEY_NB];
+    t_usr                   usr;
+    t_color                 color;
     t_dyntab                clip_tab[4];
     t_dyntab                to_clip;
     t_dyntab                to_raster;
@@ -220,6 +242,7 @@ typedef struct              s_env
     t_mesh                  *mesh;
     int                     mesh_id;
     int                     nbmesh;
+    char                    **mname;
     t_parser                parse;
     t_rgba                  rgba;
     t_line                  line;
@@ -237,15 +260,28 @@ typedef struct              s_env
 */
 
 void        file_parser(t_env *e, char *file, int mi);
-void        engine_3d(t_env *env);
 void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
-void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
+
+/*
+** 3D_ENGINE
+*/
+
+void        engine_3d(t_env *env);
+void        rasterizer(t_env *e, t_dyntab *to_clip);
+void        sort_triangle(t_clip *clip, t_triangle in);
+void        small_triangle(t_clip clip, t_triangle out[2], t_vec vec[2]);
+void        quad_triangle(t_clip clip, t_triangle out[2], t_vec vec[2]);
+int         triangle_in_edges(t_triangle t);
+t_vec       center(t_vec *out);
+int         lumiere(t_env *e, t_vec normal);
+void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
+void        matrix_view(t_env *e);
 
 /*
 **Clipping
@@ -253,6 +289,8 @@ t_mesh      obj_parser(char *file, t_env *e);
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
+void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
+void        clip_edges(t_dyntab *to_raster, t_triangle t, int point);
 
 /*
 **Matrice calcul and init
@@ -263,7 +301,7 @@ void        init_matrix_rotx(t_matrix *m, float theta);
 void        init_matrix_rotz(t_matrix *m, float theta);
 void        init_matrix_roty(t_matrix *m, float theta);
 t_matrix        matrix_mult_matrix(t_matrix m1, t_matrix m2);
-void        init_matrix_translation(t_matrix *m, float x, float y, float z);
+void        init_matrix_translation(t_matrix *m, t_vec v);
 void        init_matrix_identity(t_matrix *m);
 void			quickinversematrix(t_matrix *mat, t_matrix mat_pointat);
 void			pointatmatrix(t_matrix *matrix, t_vec pos, t_vec target, t_vec up);
@@ -307,7 +345,7 @@ uint32_t		get_pixel(SDL_Surface *surface, int tx, int ty);
 
 void        event(t_env *env);
 void        camera_event(t_env *e);
-void        mesh_rot_event(t_env *e);
+void        mesh_rot_event(t_env *e, int index_mesh);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
 
 /*
@@ -317,6 +355,7 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 t_rgba      hex_to_rgba(int c);
 int         rgba_to_hex(t_rgba rgba);
 int         color_shading(int color, float shade);
+int         colorset(t_env *e, int i);
 
 /*
 **Threading

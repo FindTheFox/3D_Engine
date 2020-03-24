@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:53:59 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/15 07:11:50 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 04:56:25 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_list			*ft_create_elem(void *content);
 void			ft_list_push_back(t_list **begin_list, void *content);
 int				get_next_line(int const fd, char **line);
 char			*ft_strfjoin(const char *s1, const char *s2, int choose);
-void			ft_swap(void **s1, void **s2);
+void			ft_swap(int *s1, int *s2);
 int				init_dynarray(t_dyntab *arr, int cell_size, int nb_cells);
 void			clear_dynarray(t_dyntab *arr);
 void			free_dynarray(t_dyntab *arr);

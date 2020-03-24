@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/03/19 22:00:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 03:20:35 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void print_t_list(t_list *list)
 	while (list)
 	{
 		content = (float*)list->content;
-		printf("content of list = %f", *(content));
-		printf(" %f", *(content + 1));
-		printf(" %f\n", *(content + 2));
+		//printf("content of list = %f", *(content));
+		//printf(" %f", *(content + 1));
+		//printf(" %f\n", *(content + 2));
 		list = list->next;
 	}
 }
@@ -177,11 +177,11 @@ void print_faces_content(t_triangle *tris, int size)
 	i = 0;
 	while (i < size)
 	{
-		printf("   triangle num %i\n", i);
+		//printf("   triangle num %i\n", i);
 		j = 0;
 		while (j < 3)
 		{
-			printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris[i].p[j].x, tris[i].p[j].y, tris[i].p[j].z, tris[i].tx[j].u, tris[i].tx[j].v);
+			//printf("x = %f, y = %f, z = %f; u = %f v = %f\n", tris[i].p[j].x, tris[i].p[j].y, tris[i].p[j].z, tris[i].tx[j].u, tris[i].tx[j].v);
 			j++;
 		}
 		
@@ -336,7 +336,7 @@ t_mesh	obj_parser(char *file, t_env *e)
 	create_triangle_list(&key_list);
 	while (get_next_line(fd, &line) > 0)
 		read_face_line(line, &key_list);
-	printf("tris curr id = %i\n", key_list.tris_curr_id);
+	//printf("tris curr id = %i\n", key_list.tris_curr_id);
 	// print_faces_content(key_list.tris, key_list.tris_curr_id);
 
 	obj.tris = key_list.tris;

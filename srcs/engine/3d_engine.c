@@ -1,69 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.c                                           :+:      :+:    :+:   */
+/*   3d_engine.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 04:22:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
-
-static t_vec    center(t_vec *out)
-{
-        out->x *= 0.5f * W_W;
-        out->y *= 0.5f * W_H;
-        return(*out);
-}
-
-int       lumiere(t_env *e, t_vec normal)
-{
-    float dp;
-    
-    e->vlist.light_dir = vectornormal(e->vlist.light_dir);
-    dp = vectorproduct(normal, e->vlist.light_dir);
-    return (color_shading(0xffffff, dp));
-}
-
-void            matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
-{
-    init_matrix_rotz(&e->mlist.matrotz, ztheta * 0.5f);
-    init_matrix_rotx(&e->mlist.matrotx, xtheta);
-    init_matrix_roty(&e->mlist.matroty, ytheta * 0.8);
-    init_matrix_translation(&e->mlist.mattranslate, 0.0f, 0.0f, e->zoom);
-    e->mlist.matworld = matrix_mult_matrix(e->mlist.matroty, e->mlist.matrotx);
-    e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
-    e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.mattranslate);
-}
-
-void            matrix_view(t_env *e)
-{
-    t_matrix        matcam;
-    t_matrix        camrot;
-    t_vec           up;
-    t_vec           target;
-
-    e->vlist.lookdir = (t_vec){ 0,0,1,0 };
-    up = (t_vec){ 0,-1,0,0 };
-    target = (t_vec){ 0,0,1,0 };
- 
-    init_matrix_roty(&e->mlist.camroty, ft_to_radian(e->yaw) * 21);
-    init_matrix_rotx(&e->mlist.camrotx, ft_to_radian(e->xaw) * 11); 
-    
-    init_matrix_identity(&camrot);
-    camrot = matrix_mult_matrix(e->mlist.camrotx, e->mlist.camroty);
-    
-    e->vlist.lookdir = matrix_mult_vector(camrot, target);
-    target = vectoradd(e->vlist.vcamera, e->vlist.lookdir);
-    
-    up = matrix_mult_vector(camrot, up);
-    
-    pointatmatrix(&matcam, e->vlist.vcamera, target, up);
-    quickinversematrix(&e->mlist.matview, matcam);
-}
 
 void        projection2(t_env *env, t_triangle tview, int color)
 {
@@ -99,7 +46,7 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     take_texture_vec(&tview, triprojected);
     tview.color = color;
     //clip z plane
-    nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
+    nclip = clip_triangle_by_plane((t_vec){0,0,0.4,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
     i = 0;
     while (i < nclip)
     {
@@ -108,20 +55,23 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     }
 }
 
-int        normalize(t_env *e, t_triangle tri)
+int        normalize(t_env *e, t_triangle *tri)
 {
     t_vec   normal;
     t_vec   line1;
     t_vec   line2;
     t_vec   vcamray;
 
-    line1 = vectorsub(tri.p[1], tri.p[0]);
-    line2 = vectorsub(tri.p[2], tri.p[0]);
+    line1 = vectorsub(tri->p[1], tri->p[0]);
+    line2 = vectorsub(tri->p[2], tri->p[0]);
     normal = vectorcrossprod(line1, line2);
     normal = vectornormal(normal);
-    vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
+    vcamray = vectorsub(tri->p[0], e->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
-        return (lumiere(e, normal));
+    {
+        tri->color = lumiere(e, normal); 
+        return (1);
+    }
     return (0);
 }
 
@@ -130,7 +80,6 @@ void        engine_3d(t_env *env)
     int     i;
     int     j;
     t_triangle triprojected;
-    int         color;
 
     //do_camera_rot
     matrix_view(env);
@@ -144,8 +93,8 @@ void        engine_3d(t_env *env)
         {
             triprojected = matrix_mult_triangle(env->mlist.matworld, env->mesh[i].tris[j]);
             take_texture_vec(&triprojected, env->mesh[i].tris[j]);
-            if ((color = normalize(env, triprojected)))
-                projection(env, triprojected, color);
+            if (normalize(env, &triprojected))
+                projection(env, triprojected, triprojected.color);
         }
         //free((t_triangle *)env->buffer);
     }

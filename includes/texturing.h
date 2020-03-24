@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 23:43:35 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:56:25 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/23 05:04:01 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct      s_filltex
     float       dv2_s;
     float       dw1_s;
     float       dw2_s;
-    int         ax;
-    int         bx;
+    float       ax;
+    float       bx;
     float       su;
     float       sv;
     float       sw;
