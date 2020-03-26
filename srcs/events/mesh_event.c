@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/23 04:23:54 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 17:14:33 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void                switch_i_mesh(t_env *e)
             ++e->usr.event_i_mesh;
         else
             e->usr.event_i_mesh = 0;
-        printf("event MESH: %s\n", e->mesh[e->usr.event_i_mesh].name);
+        printf("Selected MESH: %s\n", e->mesh[e->usr.event_i_mesh].name);
         e->key[NUM0] = 0;
     }
 }
@@ -34,6 +34,10 @@ static void                switch_mesh_mod(t_env *e)
         else
             e->usr.opt_mesh = 0;
         e->key[PAD_ENTER] = 0;
+        
+        e->usr.opt_mesh == 1 ? printf("OPT: MOVE MESH\n") : 0;
+        e->usr.opt_mesh == 2 ? printf("OPT: ROT MESH\n") : 0;
+        e->usr.opt_mesh == 0 ? printf("OPT: MESH LOCKED\n") : 0;
     }
 }
 
@@ -83,5 +87,5 @@ void                mesh_rot_event(t_env *e, int index_mesh)
     switch_i_mesh(e);
     switch_mesh_mod(e);
     e->usr.opt_mesh == 1 ? move_event(e, e->usr.event_i_mesh) : 0; 
-    e->usr.opt_mesh == 2 ? rot_event(e, e->usr.event_i_mesh) : 0;  
+    e->usr.opt_mesh == 2 ? rot_event(e, e->usr.event_i_mesh) : 0;
 }

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:03:00 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/23 03:23:53 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/19 22:08:31 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void                camera_rot_mouse(t_env *e)
         camera_rot_mouse_calc(e);
         
         if (abs(e->mouse.xrel) > W_W / 2 || abs(e->mouse.yrel) > W_H / 2
-	    || e->mouse.x > e->wx + W_W - 1
+	    || e->mouse.x > e->wx + W_W
 	    || e->mouse.x < e->wx
-	    || e->mouse.y > e->wy + W_H - 1
+	    || e->mouse.y > e->wy + W_H
 	    || e->mouse.y < e->wy)
 	    	SDL_WarpMouseGlobal(e->wx + (W_W / 2),
 	    		e->wy + (W_H / 2));

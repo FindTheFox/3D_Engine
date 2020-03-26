@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/23 05:42:19 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 16:55:35 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void     framerate(t_env *e)
     e->time = SDL_GetTicks();
     e->theta = (e->time - oldtime) / 1000;
     fps = 1.0 / e->theta;
-    printf("FPS: %d\n", fps);
+    //printf("%d\n", fps);
     SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
 
 }
@@ -40,6 +40,7 @@ static void        setup(t_env *env, int ac, char **av)
         mi = 0;
         while (i < ac)
         {
+            // file_parser(env, av[i], mi);
             env->mesh[mi] = obj_parser(av[i], env);
             env->mesh[mi].color = colorset(env, mi);
             env->mesh[mi].name = av[i];

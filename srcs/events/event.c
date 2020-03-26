@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/23 01:59:41 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 17:01:27 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static void         key_tab(t_env *e)
         e->key[NUM8] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_9)
         e->key[NUM9] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-
     else if (e->event.type == SDL_MOUSEMOTION)
         e->key[MOUSE] = 1;
+
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_ENTER)
         e->key[PAD_ENTER] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_PLUS)

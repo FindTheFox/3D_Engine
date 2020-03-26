@@ -6,16 +6,18 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:21:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/23 04:56:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/02/13 21:24:56 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_swap(int *s1, int *s2)
+void	ft_swap(void **s1, void **s2)
 {
-	int		stock;
+	void	*stock;
 
+	if (!s1 || !s2 || !*s1 || !*s2)
+		return ;
 	stock = *s2;
 	*s2 = *s1;
 	*s1 = stock;
