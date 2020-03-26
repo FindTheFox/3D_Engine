@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 16:20:13 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 17:18:00 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         //printf("color %x\n", t->color);
         fill_triangle(e, t, t->color);
         //fill_triangle_texture(e, *t);
-        draw_triangle(e, *t);
+        //draw_triangle(e, *t);
         i++;
     }
     clear_dynarray(&e->to_raster);

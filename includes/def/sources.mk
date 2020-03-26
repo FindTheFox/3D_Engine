@@ -17,7 +17,6 @@ SRCS_FILE	=	main.c \
 				vectors/vector_calc.c \
 				matrices/init_matrice.c \
 				obj_parser/obj_parser.c \
-				obj_parser/file_parser.c \
 				init/init_sdl.c \
 				init/init_data.c \
 				tools.c
