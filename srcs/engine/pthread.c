@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 19:21:54 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void            *do_thread(void *param)
         fill_triangle(e, t, t->color);
         thread->i++;
     }
-    //free_dynarray(&thread->tris);
     pthread_exit(NULL);
 }
 
@@ -40,7 +39,7 @@ void            thread_init(t_env *e, t_thread *thread)
     thread->tris = e->to_raster;
     thread->start = thread->id * todo;
     thread->i = thread->start;
-    thread->end = thread->start + todo;
+    thread->end = thread->start + todo + (thread->id == NB_THREAD - 1 ? rest : 0);
     if (pthread_create(&thread->thread, NULL, do_thread, (void *)thread))
         ft_exit(e, "thread create failed", 0);
 }

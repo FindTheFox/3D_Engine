@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 17:18:00 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 19:22:37 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,14 +205,14 @@ static void            clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raste
 void            rasterizer(t_env *e, t_dyntab *to_clip)
 {
     t_triangle  *t;
-    //t_thread    thread[NB_THREAD];
+    t_thread    thread[NB_THREAD];
     int         i;
 
     clip_mesh(e, to_clip, &e->to_raster);
     //sort(e, &);
     // thread_init(e);
     i = 0;
-    /*
+    
     while (i < NB_THREAD)
     {
         thread[i].id = i;
@@ -225,7 +225,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         pthread_join(thread[i].thread, NULL);
         i++;
     }
-    */
+    /*
     while (i < e->to_raster.cell_nb)
     {
         t = (t_triangle *)dyaddress(&e->to_raster, i);
@@ -234,6 +234,6 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         //fill_triangle_texture(e, *t);
         //draw_triangle(e, *t);
         i++;
-    }
+    }*/
     clear_dynarray(&e->to_raster);
 }

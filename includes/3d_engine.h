@@ -31,7 +31,7 @@
 
 # define NB_THREAD 32
 
-# define KEY_NB 28
+# define KEY_NB 29
 # define W 0
 # define A 1
 # define S 2
@@ -60,6 +60,7 @@
 # define PAD_ENTER 25
 # define PLUS 26
 # define MINUS 27
+# define SHIFT 28
 
 typedef struct      s_image
 {
@@ -187,23 +188,12 @@ typedef struct      s_mlist
     t_matrix        camroty;
     t_matrix        camrotx;
 }                   t_mlist;
-/*
-typedef struct      s_parser
-{
-    char            *str;
-    int             vi;
-    int             ti;
-    t_triangle      *tri;
-    t_vec           *vertex;
-    int             vnb;
-    int             fnb;
-    int             mi;
-}                   t_parser;
-*/
+
 typedef struct              s_usr
 {
     int                     event_i_mesh;
     int                     opt_mesh;
+    int                     shift;
 }                           t_usr;
 
 typedef struct              s_color

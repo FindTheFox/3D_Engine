@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 17:01:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/03/26 19:06:43 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ static void         key_tab(t_env *e)
         e->key[PLUS] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_MINUS)
         e->key[MINUS] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_LSHIFT)
+        e->key[SHIFT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 }
 
 void                event(t_env *env)
