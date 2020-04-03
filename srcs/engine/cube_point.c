@@ -6,22 +6,24 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:32:25 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/03 23:50:25 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-
 void            init_cube(t_env *env)
 {
     if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
-            ft_exit(env, "Mesh Alloc Error", 0);
+            ft_exit(env, "Mesh Alloc Error\n", 0);
     if (!(env->mesh[0].tris = (t_triangle *)ft_memalloc(sizeof(t_triangle)
             * 12)))
-        ft_exit(env, "Malloc Mesh Error", 0);
-    env->mesh[0].size = 12;
+        ft_exit(env, "Malloc Mesh Error\n", 0);
+    if (!(env->mesh[0].img = SDL_LoadBMP("ressources/img/wall.bmp")))
+        ft_exit(env, "Load Bmp Failed\n", 0);
     
+    env->mesh[0].size = 12;
+    env->mesh[0].color = 0xfff0ff;
     //south
     env->mesh[0].tris[0].p[0] = (t_vec){0.0f, 0.0f, 0.0f, 1.0f};
     env->mesh[0].tris[0].p[1] = (t_vec){0.0f, 1.0f, 0.0f, 1.0f};

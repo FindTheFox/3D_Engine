@@ -8,7 +8,7 @@ SRCS_FILE	=	main.c \
 				engine/textured_tris.c \
 				engine/color.c \
 				engine/fill_triangle.c \
-				engine/cube3d.c \
+				engine/3dengine.c \
 				engine/line.c \
 				events/mesh_event.c \
 				events/camera.c \
@@ -17,6 +17,9 @@ SRCS_FILE	=	main.c \
 				vectors/vector_calc.c \
 				matrices/init_matrice.c \
 				obj_parser/obj_parser.c \
+				obj_parser/utils.c \
+				obj_parser/utils2.c \
+				obj_parser/printf_stuff.c \
 				init/init_sdl.c \
 				init/init_data.c \
 				tools.c

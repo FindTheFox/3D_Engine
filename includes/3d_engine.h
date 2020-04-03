@@ -148,7 +148,8 @@ typedef struct      s_mesh
     t_matrix        mattrans;
     t_vec           dir;
     int             color;
-    char            *name;                      //FREE
+    SDL_Surface     *img;
+    char            *name;          //FREE ?
 }                   t_mesh;
 
 

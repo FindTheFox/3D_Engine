@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 19:21:54 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/03 19:04:18 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void            *do_thread(void *param)
     while (thread->i < thread->end)
     {
         t = (t_triangle*)dyaddress(&thread->tris, thread->i);
-        fill_triangle(e, t, t->color);
+        //fill_triangle(e, t, t->color);
+        fill_triangle_texture(e, *t);
+        draw_triangle(e, *t);
         thread->i++;
     }
     pthread_exit(NULL);

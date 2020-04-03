@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 19:22:37 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/03 23:50:45 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
 {
     float   t;
     
-    // printf("vec1\nx %f || y %f || z %f\n", vec[1].x, vec[1].y, vec[1].z);
     if (clip->inside == 1 && clip->outside == 2)
     {
         out[0].color = in.color;//0x0000ff;
@@ -119,7 +118,6 @@ int         clip_triangle_by_plane(t_vec plane_p, t_vec plane_n, t_triangle in, 
     int     ret;
     
     plane_n = vectornormal(plane_n);
-    //printf("----start----\nx %f || y %f || z %f\n\n", plane_n.x, plane_n.y, plane_n.z);
 
     clip.d[0] = vectorproduct(plane_n, in.p[0]) - vectorproduct(plane_n, plane_p);
     clip.d[1] = distance_to_plane(plane_p, plane_n, in.p[1]);
@@ -212,7 +210,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
     //sort(e, &);
     // thread_init(e);
     i = 0;
-    
+    /*
     while (i < NB_THREAD)
     {
         thread[i].id = i;
@@ -225,7 +223,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         pthread_join(thread[i].thread, NULL);
         i++;
     }
-    /*
+    */
     while (i < e->to_raster.cell_nb)
     {
         t = (t_triangle *)dyaddress(&e->to_raster, i);
@@ -234,6 +232,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         //fill_triangle_texture(e, *t);
         //draw_triangle(e, *t);
         i++;
-    }*/
+    }
+    
     clear_dynarray(&e->to_raster);
 }

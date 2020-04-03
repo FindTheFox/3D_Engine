@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:33:38 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:18:22 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/03 20:06:12 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,21 @@ void        put_pixel(t_env *e, int x, int y, int color)
     pixels[x +(y * W_W)] = color;
 }
 
+uint32_t		get_pixel(SDL_Surface *img, int tx, int ty)
+{
+	uint8_t			*p;
+
+    if (img)
+	    p = (uint8_t *)img->pixels + ty * img->pitch
+		    + tx * img->format->BytesPerPixel;
+	return (p[2] | p[1] << 8 | p[0] << 16 | 255 << 24);
+}
+
 void        draw_triangle(t_env *e, t_triangle t)
 {
     ft_line(e, t.p[0], t.p[1], 0xffffff);
+    ft_line(e, t.p[0], t.p[2], 0xffffff);
     ft_line(e, t.p[1], t.p[2], 0xffffff);
-    ft_line(e, t.p[2], t.p[0], 0xffffff);
 }
 
 void        sdl_render(t_env *e)

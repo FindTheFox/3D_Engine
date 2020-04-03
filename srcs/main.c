@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 16:55:35 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/03 19:16:06 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void        setup(t_env *env, int ac, char **av)
     }
     else
     {
+        printf("cube init\n");
         env->nbmesh = 1;
         init_cube(env);
     }
