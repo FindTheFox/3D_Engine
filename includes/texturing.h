@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 23:43:35 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/03 19:53:08 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/09 20:40:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ typedef struct      s_filltex
     //float v1;
     //float v2;
     //float v3;
+    float       simple[6];
+    float       step[6];
+    float       t;
     int         dy1;
     int         dx1;
     float       du1;

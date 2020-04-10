@@ -2,13 +2,15 @@ SRCS_FILE	=	main.c \
 				engine/draw.c \
 				init/dynamic_tab.c \
 				engine/clipping.c \
+				engine/clipping_edges.c \
 				engine/cube_point.c \
 				engine/engine_tools.c \
-				engine/pthread.c \
+				engine/threader.c \
 				engine/textured_tris.c \
 				engine/color.c \
 				engine/fill_triangle.c \
-				engine/3dengine.c \
+				engine/3Dengine.c \
+				engine/3Dengine_bis.c \
 				engine/line.c \
 				events/mesh_event.c \
 				events/camera.c \

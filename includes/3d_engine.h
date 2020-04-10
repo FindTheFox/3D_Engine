@@ -258,6 +258,10 @@ void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
+void        matrix_view(t_env *e);
+void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
+int         lumiere(t_env *e, t_vec normal);
+t_vec       center(t_vec *out);
 
 /*
 **Clipping
@@ -265,6 +269,7 @@ t_mesh      obj_parser(char *file, t_env *e);
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
+void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
 
 /*
 **Matrice calcul and init
