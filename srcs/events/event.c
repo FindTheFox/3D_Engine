@@ -82,9 +82,10 @@ void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+        if (env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
-		|| env->event.type == SDL_QUIT)
+            menu(env->winsurf, 2);
+		if (env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);
         key_tab(env);
     }

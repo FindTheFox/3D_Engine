@@ -47,7 +47,7 @@ ifeq ($(OS), Linux)
 	SDL		=	`sdl2-config --cflags --libs`
 	DIRSDL	=	
 else
-	SDL		=	-F ~/Library/Frameworks -framework SDL2
+	SDL		=	-F ~/Library/Frameworks -framework SDL2 -framework SDL2_ttf -framework SDL2_image
 	DIRSDL	=	-I ./SDL
 endif 
 

@@ -24,7 +24,8 @@ SRCS_FILE	=	main.c \
 				obj_parser/printf_stuff.c \
 				init/init_sdl.c \
 				init/init_data.c \
-				tools.c
+				tools.c\
+				events/menu.c
 
 OBJ_DIRS =		engine \
 				exit \

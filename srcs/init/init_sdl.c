@@ -25,4 +25,29 @@ void        init_sdl(t_env *env)
         ft_exit(env, "create renderer fail", 0);
     env->winsurf = SDL_CreateRGBSurface(0, W_W, W_H, 32, 0, 0, 0, 0);    
     SDL_ShowCursor(SDL_DISABLE);
+
+    //RECUPERATION DE MES IMAGES POUR LES MENUS
+    env->tmp = SDL_LoadBMP("Doom.bmp");
+    if (env->tmp == NULL)
+        ft_exit(env, "SDL_LoadBMP fail", 0);
+    env->menu1 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
+    SDL_FreeSurface(env->tmp);
+    if (env->menu1 == NULL)
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
+
+    env->tmp = SDL_LoadBMP("Doom-pause.bmp");
+    if (env->tmp == NULL)
+        ft_exit(env, "SDL_LoadBMP fail", 0);
+    env->menu2 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
+    SDL_FreeSurface(env->tmp);
+    if (env->menu2 == NULL)
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
+
+    env->tmp = SDL_LoadBMP("Doom-settings.bmp");
+    if (env->tmp == NULL)
+        ft_exit(env, "SDL_LoadBMP fail", 0);
+    env->menu3 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
+    SDL_FreeSurface(env->tmp);
+    if (env->menu3 == NULL)
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
 }

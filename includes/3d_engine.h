@@ -61,6 +61,12 @@
 # define PLUS 26
 # define MINUS 27
 # define SHIFT 28
+//DEFINE TEST MENU
+# define EXIT_MENU 0
+# define MAIN_MENU 1
+# define PAUSE_MENU 2
+# define CONTROLS_MENU 3
+# define BUTTON_MARGE 6
 
 typedef struct      s_image
 {
@@ -242,6 +248,10 @@ typedef struct              s_env
     SDL_Renderer            *rend;
     SDL_Texture             *screen;
     SDL_Surface             *winsurf;
+    SDL_Texture             *menu1;
+    SDL_Texture             *menu2;
+    SDL_Texture             *menu3;
+    SDL_Surface             *tmp;
 }                           t_env;
 
 /*
