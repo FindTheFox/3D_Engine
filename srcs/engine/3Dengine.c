@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3dengine.c                                         :+:      :+:    :+:   */
+/*   3Dengine.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 19:54:30 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/11 17:56:37 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void        projection2(t_env *env, t_triangle tview, int color)
     triprojected.p[1] = vectoradd(triprojected.p[1], env->vlist.voff_set);
     triprojected.p[2] = vectoradd(triprojected.p[2], env->vlist.voff_set);
 
-    triprojected.p[0] = center(&triprojected.p[0]);
-    triprojected.p[1] = center(&triprojected.p[1]);
-    triprojected.p[2] = center(&triprojected.p[2]);
+    center(&triprojected.p[0]);
+    center(&triprojected.p[1]);
+    center(&triprojected.p[2]);
+    
     triprojected.color = color;
     if (push_dynarray(&env->to_clip, &triprojected, false))
         ft_exit(env, "push dynamic tab to_clip fail", 0);
@@ -46,7 +47,7 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     take_texture_vec(&tview, triprojected);
     tview.color = color;
     //clip z plane
-    nclip = clip_triangle_by_plane((t_vec){0,0,0.3f,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
+    nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
     i = -1;
     while (++i < nclip)
         projection2(env, clip[i], color);

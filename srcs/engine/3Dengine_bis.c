@@ -6,17 +6,17 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 19:57:51 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/12 15:22:21 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-t_vec       center(t_vec *out)
+void       center(t_vec *out)
 {
         out->x *= 0.5f * W_W;
         out->y *= 0.5f * W_H;
-        return(*out);
+        //return(*out);
 }
 
 int         lumiere(t_env *e, t_vec normal)

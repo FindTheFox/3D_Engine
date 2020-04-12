@@ -261,7 +261,7 @@ t_mesh      obj_parser(char *file, t_env *e);
 void        matrix_view(t_env *e);
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
 int         lumiere(t_env *e, t_vec normal);
-t_vec       center(t_vec *out);
+void        center(t_vec *out);
 
 /*
 **Clipping
@@ -316,7 +316,7 @@ void        put_pixel(t_env *e, int x, int y, int color);
 */
 
 void            fill_triangle_texture(t_env *e, t_triangle t);
-uint32_t		get_pixel(SDL_Surface *surface, int tx, int ty);
+uint32_t		get_pixel(SDL_Surface *surface, float tx, float ty);
 
 /*
 **Events

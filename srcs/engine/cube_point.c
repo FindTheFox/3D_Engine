@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:32:25 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/03 23:50:25 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:45:23 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void            init_cube(t_env *env)
     if (!(env->mesh[0].tris = (t_triangle *)ft_memalloc(sizeof(t_triangle)
             * 12)))
         ft_exit(env, "Malloc Mesh Error\n", 0);
-    if (!(env->mesh[0].img = SDL_LoadBMP("ressources/img/wall.bmp")))
+    if (!(env->mesh[0].img = SDL_LoadBMP("doom.bmp")))
         ft_exit(env, "Load Bmp Failed\n", 0);
     
     env->mesh[0].size = 12;

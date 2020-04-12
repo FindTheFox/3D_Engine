@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pthread.c                                          :+:      :+:    :+:   */
+/*   threader.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 19:46:14 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/12 15:38:35 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void            *do_thread(void *param)
         t = (t_triangle*)dyaddress(&thread->tris, thread->i);
         fill_triangle(e, t, t->color);
         //fill_triangle_texture(e, *t);
-        draw_triangle(e, *t);
+        //draw_triangle(e, *t);
         thread->i++;
     }
     pthread_exit(NULL);

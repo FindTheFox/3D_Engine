@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 19:45:44 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:44:04 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void          quad_triangle(t_clip clip, t_triangle out[2], t_vec vec[2])
     out[0].tx[2].w = t * (clip.tx_out[0].w - clip.tx_in[0].w) + clip.tx_in[0].w;
 
     out[1].p[0] = clip.in[1];
-    out[1].p[1] = out[0].p[2];
     out[1].tx[0] = clip.tx_in[1];
+    out[1].p[1] = out[0].p[2];
     out[1].tx[1] = out[0].tx[2];
 
     out[1].p[2] = vec_inter_plane(vec, clip.in[1], clip.out[0], &t);
