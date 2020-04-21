@@ -4,7 +4,7 @@
 int menu(SDL_Surface* screen, int menu)//Menu
 {
     int continuer = 1, buttonRequest = 1; //buttonRequest renvoie une valeur selon où a cliqué l'utilisateur
-    SDL_Surface *button = NULL, *text = NULL, *saveScreen = NULL;
+    SDL_Surface *button, *text, *saveScreen;
     SDL_Color textColor = {51, 153, 204}, bgColor = {0, 0, 0};
     SDL_Rect button1Pos, button2Pos, button3Pos, textPos;
     SDL_Event event;
@@ -14,11 +14,11 @@ int menu(SDL_Surface* screen, int menu)//Menu
     while(menu)
     {
  
-        printf("TEST\n");
         if(menu == MAIN_MENU)
         {
+            printf("TEST\n");
             // clearScreen(screen); // REMPLIR L'ECRAN DE L'IMAGE MEUNU
-            TTF_Font* font = TTF_OpenFont("assets/AmazDooMLeft.ttf", 100);
+            TTF_Font* font = TTF_OpenFont("includes/assets/AmazDooMLeft.ttf", 100);
             text = TTF_RenderText_Shaded(font, "DooM", textColor, bgColor);
             printf("text w = %d\n", text->w);
             textPos.x = (screen->w - text->w) / 2;
@@ -41,8 +41,10 @@ int menu(SDL_Surface* screen, int menu)//Menu
         }
         else if(menu == CONTROLS_MENU)
         {
+            printf("TEST1\n");
+
             // clearScreen(screen); // REMPLIR L'ECRAN DE L'IMAGE CONTROLS MENU
-            TTF_Font* font = TTF_OpenFont("assets/AmazDooMLeft.ttf", 50);
+            TTF_Font *font = TTF_OpenFont("assets/AmazDooMLeft.ttf", 50);
  
             textPos.x = screen->w / 3.5;
             textPos.y = ((screen->h - 140) / 8) - (text->h / 2) + 40; //Blitage des définitions
@@ -106,12 +108,17 @@ int menu(SDL_Surface* screen, int menu)//Menu
         }
         else if(menu == PAUSE_MENU)
         {
+
             // saveScreen = SDL_DisplayFormat(screen);
             button = IMG_Load("includes/assets/tiles/buttonStock1d.png");
+            //button = SDL_LoadBMP("doom.bmp");
+            printf("caca");
+            printf("TEST2\n s->w %d\n", screen->w);
             button1Pos.x = button2Pos.x = (screen->w - button->w) / 2;
             button1Pos.y = (screen->h - BUTTON_MARGE) / 2 - button->h;
             SDL_BlitSurface(button, NULL, screen, &button1Pos);
             button = IMG_Load("includes/assets/tiles/buttonStock1d.png");
+            
             button2Pos.y = (screen->h + BUTTON_MARGE) / 2;
             SDL_BlitSurface(button, NULL, screen, &button2Pos);
  

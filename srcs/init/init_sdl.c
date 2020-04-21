@@ -6,13 +6,37 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:27:32 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/21 22:15:13 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-void        init_sdl(t_env *env)
+static void     init_menu(t_env *env)
+{
+    SDL_Surface *tmp;
+
+    //RECUPERATION DE MES IMAGES POUR LES MENUS
+    if (!(tmp = SDL_LoadBMP("Doom-menu.bmp")))
+        ft_exit(env, "SDL_LoadBMP fail1", 0);
+    if (!(env->menu1 = SDL_CreateTextureFromSurface(env->rend, tmp)))
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
+    SDL_FreeSurface(tmp);
+
+    if (!(tmp = SDL_LoadBMP("Doom-pause.bmp")))
+        ft_exit(env, "SDL_LoadBMP fail2", 0);
+    if (!(env->menu2 = SDL_CreateTextureFromSurface(env->rend, tmp)))
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
+    SDL_FreeSurface(tmp);
+
+    if (!(tmp = SDL_LoadBMP("Doom-settings.bmp")))
+        ft_exit(env, "SDL_LoadBMP fail3", 0);
+    if (!(env->menu3 = SDL_CreateTextureFromSurface(env->rend, tmp)))
+        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
+    SDL_FreeSurface(tmp);
+}
+
+void            init_sdl(t_env *env)
 {
     if (SDL_Init(SDL_INIT_VIDEO) == -1)
 		ft_exit(env, "SDL_Init fail", 0);
@@ -25,29 +49,4 @@ void        init_sdl(t_env *env)
         ft_exit(env, "create renderer fail", 0);
     env->winsurf = SDL_CreateRGBSurface(0, W_W, W_H, 32, 0, 0, 0, 0);    
     SDL_ShowCursor(SDL_DISABLE);
-
-    //RECUPERATION DE MES IMAGES POUR LES MENUS
-    env->tmp = SDL_LoadBMP("Doom.bmp");
-    if (env->tmp == NULL)
-        ft_exit(env, "SDL_LoadBMP fail", 0);
-    env->menu1 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
-    SDL_FreeSurface(env->tmp);
-    if (env->menu1 == NULL)
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
-
-    env->tmp = SDL_LoadBMP("Doom-pause.bmp");
-    if (env->tmp == NULL)
-        ft_exit(env, "SDL_LoadBMP fail", 0);
-    env->menu2 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
-    SDL_FreeSurface(env->tmp);
-    if (env->menu2 == NULL)
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
-
-    env->tmp = SDL_LoadBMP("Doom-settings.bmp");
-    if (env->tmp == NULL)
-        ft_exit(env, "SDL_LoadBMP fail", 0);
-    env->menu3 = SDL_CreateTextureFromSurface(env->rend, env->tmp);
-    SDL_FreeSurface(env->tmp);
-    if (env->menu3 == NULL)
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
 }

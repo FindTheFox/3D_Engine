@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/04/03 23:38:26 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/12 16:51:03 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list *assign_lst_value(char *line, int length)
 	return (new);
 }
 
-int read_face_line(char *line, t_attr_lst *key_list)
+static void		read_face_line(char *line, t_attr_lst *key_list)
 {
 	t_triangle new;
 	int tmp_id;

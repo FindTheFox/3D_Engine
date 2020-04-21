@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/03/19 22:39:19 by saneveu          ###   ########.fr        #
+#    Updated: 2020/04/12 17:38:42 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
-	SDL		=	`sdl2-config --cflags --libs`
+	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 	DIRSDL	=	
 else
 	SDL		=	-F ~/Library/Frameworks -framework SDL2 -framework SDL2_ttf -framework SDL2_image

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 19:06:43 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/21 22:28:22 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        if (env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+        if (env->event.key.keysym.scancode == SDLK_m
 		&& env->event.type == SDL_KEYDOWN)
-            menu(env->winsurf, 2);
-		if (env->event.type == SDL_QUIT)
+            printf("MENU\n");
+            //menu(env->winsurf, 2);
+        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+		&& env->event.type == SDL_KEYDOWN)
+        || env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);
         key_tab(env);
     }

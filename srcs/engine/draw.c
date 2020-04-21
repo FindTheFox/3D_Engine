@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:33:38 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 21:18:00 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/21 18:05:28 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void        sdl_render(t_env *e)
     i = -1;
     while (++i < W_W * W_H)
         pixels[i] = (0 | 0 << 8 | 0 << 16 | 255 << 24);
-    //SDL_SetRenderDrawColor(e->rend, 0, 0, 0, 0);
-    //SDL_RenderClear(e->rend);
+    SDL_SetRenderDrawColor(e->rend, 0, 0, 0, 0);
+    SDL_RenderClear(e->rend);
 }
