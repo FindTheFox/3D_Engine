@@ -11,3 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/3d_engine.h"
+
+void        swap_vec(t_vec *v1, t_vec *v2)
+{
+    ft_fswap(&v1->x, &v2->x);
+    ft_fswap(&v1->y, &v2->y);    
+    ft_fswap(&v1->z, &v2->z);    
+}
