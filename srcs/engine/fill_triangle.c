@@ -122,18 +122,18 @@ void            fill_triangle(t_env *e, t_triangle *tri, int color)
     v0 = tri->p[0];
     v1 = tri->p[1];
     v2 = tri->p[2];
-    v1.y < v0.y ? ft_swap((void *)&v0, (void *)&v1) : 0;
-    v2.y < v1.y ? ft_swap((void *)&v1, (void *)&v2) : 0;
-    v1.y < v0.y ? ft_swap((void *)&v0, (void *)&v1) : 0;
+    v1.y < v0.y ? swap_vec(&v0, &v1) : 0;
+    v2.y < v1.y ? swap_vec(&v1, &v2) : 0;
+    v1.y < v0.y ? swap_vec(&v0, &v1) : 0;
     if (v0.y == v1.y)
     {
-        v1.x < v0.x ? ft_swap((void *)&v0, (void *)&v1) : 0;
+        v1.x < v0.x ? swap_vec(&v0, &v1) : 0;
         triangle = triangle_init(v0, v1, v2);
         fill_tri_top(e, triangle, color, fill); 
     }
     else if (v1.y == v2.y)
     {
-        v2.x < v1.x ? ft_swap((void *)&v1, (void *)&v2) : 0;
+        v2.x < v1.x ? swap_vec(&v1, &v2) : 0;
         triangle = triangle_init(v0, v1, v2);
         fill_tri_bot(e, triangle, color, fill);
     }

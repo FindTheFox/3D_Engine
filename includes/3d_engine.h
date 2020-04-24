@@ -311,7 +311,7 @@ t_vec           vectormult(t_vec v, float a);
 float           vectorlen(t_vec v);
 float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p);
 t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out);
-
+void            swap_vec(t_vec *v1, t_vec *v2);
 /*
 **Triangle Draw
 */

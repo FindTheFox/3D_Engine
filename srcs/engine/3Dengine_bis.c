@@ -31,13 +31,16 @@ int         lumiere(t_env *e, t_vec normal)
 
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
 {
-    init_matrix_rotz(&e->mlist.matrotz, ztheta * 0.5f);
+    t_vec tmp;
+
+    init_matrix_rotz(&e->mlist.matrotz, ztheta);
     init_matrix_rotx(&e->mlist.matrotx, xtheta);
-    init_matrix_roty(&e->mlist.matroty, ytheta * 0.8);
-    //init_matrix_translation(&e->mlist.mattranslate, (t_vec){0.0f, 0.0f, e->zoom});
-    init_matrix_translation(&e->mesh[e->mesh_id].mattrans, e->mesh[e->mesh_id].dir);
+    init_matrix_roty(&e->mlist.matroty, ytheta);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matroty, e->mlist.matrotx);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
+    
+    tmp = vectoradd(e->mesh[e->mesh_id].dir, (t_vec){0.0f, 0.0f, e->zoom});
+    init_matrix_translation(&e->mesh[e->mesh_id].mattrans, tmp);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mesh[e->mesh_id].mattrans);
 }
 
