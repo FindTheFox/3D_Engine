@@ -61,14 +61,14 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     
     if (clip->inside == 1 && clip->outside == 2)
     {
-        out[0].color = 0x0000ff;//in.color;
-        small_triangle(*clip, out, vec);       
-        return (1);
+        out[0].color = in.color;
+        small_triangle(*clip, out, vec);
+		return (1);
     }
     else if (clip->inside == 2 && clip->outside == 1)
     {
-        out[0].color = 0xff0000;//in.color;
-        out[1].color = 0x00ff00;//in.color;
+        out[0].color = in.color;
+        out[1].color = in.color;
         quad_triangle(*clip, out, vec);
         return (2);
     }
