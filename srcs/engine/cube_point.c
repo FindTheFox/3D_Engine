@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_point.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:32:25 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 20:45:23 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 00:52:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void            init_cube(t_env *env)
 {
+    int i = 0;
+    
     if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
             ft_exit(env, "Mesh Alloc Error\n", 0);
     if (!(env->mesh[0].tris = (t_triangle *)ft_memalloc(sizeof(t_triangle)
             * 12)))
         ft_exit(env, "Malloc Mesh Error\n", 0);
-    if (!(env->mesh[0].img = SDL_LoadBMP("doom.bmp")))
+    if (!(env->mesh[0].img = SDL_LoadBMP("ressources/img/wall.bmp")))
         ft_exit(env, "Load Bmp Failed\n", 0);
     
     env->mesh[0].size = 12;
@@ -125,4 +127,8 @@ void            init_cube(t_env *env)
     env->mesh[0].tris[11].tx[0] = (t_vec2d){1.0f, 0.0f, 1.0f};
     env->mesh[0].tris[11].tx[1] = (t_vec2d){0.0f, 0.0f, 1.0f};
     env->mesh[0].tris[11].tx[2] = (t_vec2d){1.0f, 0.0f, 1.0f};
+
+    i = -1;
+    while (++i < 12)
+        env->mesh[0].tris[i].tex = 1;
 }

@@ -6,9 +6,11 @@ SRCS_FILE	=	main.c \
 				engine/cube_point.c \
 				engine/engine_tools.c \
 				engine/threader.c \
-				engine/textured_tris.c \
+				engine/tri_texbis.c \
 				engine/color.c \
-				engine/fill_triangle.c \
+				engine/fill.c \
+				engine/fill_texture.c \
+				engine/fill_texture_bis.c \
 				engine/3Dengine.c \
 				engine/3Dengine_bis.c \
 				engine/line.c \

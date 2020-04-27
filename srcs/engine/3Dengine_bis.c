@@ -25,8 +25,8 @@ int         lumiere(t_env *e, t_vec normal)
  
     e->vlist.light_dir = vectornormal(e->vlist.light_dir);
     dp = vectorproduct(normal, e->vlist.light_dir);
-    return (color_shading(e->mesh[e->mesh_id].color, dp));
-    //return (color_shading(0xffffff, dp));
+    //return (color_shading(e->mesh[e->mesh_id].color, dp));
+    return (color_shading(0xffffff, dp));
 }
 
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)

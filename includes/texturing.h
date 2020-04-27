@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texturing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 23:43:35 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/09 20:40:57 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 00:43:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,24 @@ typedef struct      s_filltex
     float       simple[6];
     float       step[6];
     float       t;
-    int         dy1;
-    int         dx1;
+    float       dy1;
+    float       dx1;
     float       du1;
     float       dv1;
-    int         dy2;
-    int         dx2;
+    float       dy2;
+    float       dx2;
     float       du2;
     float       dv2;
     float       dw1;
     float       dw2;
-    float       dax_s;
-    float       dbx_s;
-    float       du1_s;
-    float       du2_s;
-    float       dv1_s;
-    float       dv2_s;
-    float       dw1_s;
-    float       dw2_s;
+    float       ax_s;
+    float       bx_s;
+    float       u1_s;
+    float       u2_s;
+    float       v1_s;
+    float       v2_s;
+    float       w1_s;
+    float       w2_s;
     float       ax;
     float       bx;
     float       su;

@@ -20,8 +20,9 @@
 
 # include "texturing.h"
 
-# define W_W 800
-# define W_H 800
+# define W_W 1280
+# define W_H 720
+# define PX_NB W_W * W_H
 
 # define NTXT 1                 // Nombre de texture SDL_Surface
 # define NSPRITE 0              // Nombre de sprites SDL_Surface
@@ -136,6 +137,7 @@ typedef struct      s_triangle
 {
     t_vec   p[3];
     t_vec2d tx[3];
+    Uint8   tex;
     int     color;
 }                   t_triangle;
 
@@ -225,6 +227,7 @@ typedef struct              s_env
     float                   frametime;
     float                   yaw;
     float                   xaw;
+    float                   *depth_buff;
     int                     wx;
     int                     wy;
     int                     key[KEY_NB];
@@ -272,6 +275,7 @@ void        matrix_view(t_env *e);
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
 int         lumiere(t_env *e, t_vec normal);
 void        center(t_vec *out);
+void        reset_pbuffer(t_env *e);
 
 /*
 **Clipping
@@ -320,6 +324,7 @@ void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
 void        ft_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        put_pixel(t_env *e, int x, int y, int color);
+void        put_pixel_txt(t_env *e, int pos, int color);
 
 /*
 **Fill texture
@@ -327,6 +332,15 @@ void        put_pixel(t_env *e, int x, int y, int color);
 
 void            fill_triangle_texture(t_env *e, t_triangle t);
 uint32_t		get_pixel(SDL_Surface *surface, float tx, float ty);
+
+
+void	set_line_bounds_bot(t_filltex *fill, t_triangle t, float currents[2]);
+void	set_line_bounds_top(t_filltex *fill, t_triangle t, float current);
+void	compute_gradients(t_filltex *fill, t_triangle t, bool flatbot);
+void	compute_steps(t_filltex *fill, bool t);
+void	starting_swap(t_triangle *t);
+
+
 
 /*
 **Events
