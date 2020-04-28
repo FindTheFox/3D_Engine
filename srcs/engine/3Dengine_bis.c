@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/12 15:22:21 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 01:57:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ void       center(t_vec *out)
 
 int         lumiere(t_env *e, t_vec normal)
 {
-    float dp;
- 
+    float   dp;
+    
     e->vlist.light_dir = vectornormal(e->vlist.light_dir);
-    dp = vectorproduct(normal, e->vlist.light_dir);
-    //return (color_shading(e->mesh[e->mesh_id].color, dp));
-    return (color_shading(0xffffff, dp));
+    dp = (vectorproduct(normal, e->vlist.light_dir) + 1) / 2;
+    //dp = vectorproduct(normal, e->vlist.light_dir);
+    
+    return (color_shading(e->mesh[e->mesh_id].color, dp));
+    //return (color_shading(0xffffff, dp));
 }
 
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
