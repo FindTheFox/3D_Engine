@@ -6,7 +6,6 @@ SRCS_FILE	=	main.c \
 				engine/cube_point.c \
 				engine/engine_tools.c \
 				engine/threader.c \
-				engine/tri_texbis.c \
 				engine/color.c \
 				engine/fill.c \
 				engine/fill_texture.c \
@@ -27,7 +26,8 @@ SRCS_FILE	=	main.c \
 				init/init_sdl.c \
 				init/init_data.c \
 				tools.c\
-				events/menu.c
+				events/menu.c \
+				platform/select_platform.c
 
 OBJ_DIRS =		engine \
 				exit \

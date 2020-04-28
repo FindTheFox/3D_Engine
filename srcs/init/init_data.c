@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/27 23:08:01 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/28 22:56:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ static void     init_matrice(t_env *e)
 
 }
 
+static void     init_usr(t_env *e)
+{
+    int i;
+
+    e->usr.platform = GAME;
+    
+    e->usr.f[0] = menu_start; //MENU
+    e->usr.f[1] = gameplay;
+    e->usr.f[2] = menu_pause;
+    e->usr.f[3] = menu_option;
+    e->usr.f[4] = forge;
+}
+
 void    init_data(t_env *e)
 {
     e->fNear = 0.01f;
@@ -69,4 +82,5 @@ void    init_data(t_env *e)
     if (!(e->depth_buff = ft_memalloc(sizeof(float) * W_H * W_W)))
         ft_exit(e, "DooM: depth_buffer init fail\n", 0);
     reset_pbuffer(e);
+    init_usr(e);
 }

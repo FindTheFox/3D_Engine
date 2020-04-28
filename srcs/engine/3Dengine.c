@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/27 20:33:56 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/28 22:53:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,4 @@ void        engine_3d(t_env *env)
     }
     rasterizer(env, &env->to_clip);
     clear_dynarray(&env->to_clip);
-    sdl_render(env);
 }

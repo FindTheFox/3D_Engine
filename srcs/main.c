@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/27 23:23:19 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/28 23:04:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void     framerate(t_env *e)
     e->time = SDL_GetTicks();
     e->theta = (e->time - oldtime) / 1000;
     fps = 1.0 / e->theta;
-    //printf("FPS: %d\n", fps);
+    printf("FPS: %d\n", fps);
     SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
 
 }
@@ -40,7 +40,6 @@ static void        setup(t_env *env, int ac, char **av)
         mi = 0;
         while (i < ac)
         {
-            // file_parser(env, av[i], mi);
             env->mesh[mi] = obj_parser(av[i], env);
             env->mesh[mi].color = colorset(env, mi);
             env->mesh[mi].name = av[i];
@@ -64,12 +63,12 @@ int         main(int ac, char **av)
  
     ft_memset(&env, 0, sizeof(t_env));
     setup(&env, ac, av);
-    while (1)
+    env.end = 1;
+    while (env.end)
     {
         framerate(&env);
-        reset_pbuffer(&env);
-        engine_3d(&env);
         event(&env);
+        (env.usr.f[env.usr.platform])((void*)&env);
     }
     return (0);
 }

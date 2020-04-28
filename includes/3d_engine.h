@@ -62,12 +62,19 @@
 # define PLUS 26
 # define MINUS 27
 # define SHIFT 28
+
 //DEFINE TEST MENU
 # define EXIT_MENU 0
 # define MAIN_MENU 1
 # define PAUSE_MENU 2
 # define CONTROLS_MENU 3
 # define BUTTON_MARGE 6
+
+# define MENU 0
+# define GAME 1
+# define PAUSE 2
+# define OPTION 3
+# define FORGE 4
 
 typedef struct      s_image
 {
@@ -198,20 +205,24 @@ typedef struct      s_mlist
     t_matrix        camrotx;
 }                   t_mlist;
 
-typedef struct              s_usr
-{
-    int                     event_i_mesh;
-    int                     opt_mesh;
-    int                     shift;
-}                           t_usr;
 
 typedef struct              s_color
 {
     int                     *tab;
 }                           t_color;
 
+typedef struct              s_usr
+{
+    int                     event_i_mesh;
+    int                     opt_mesh;
+    int                     shift;
+    unsigned int            platform;
+    void                    (*f[5])(void *);
+}                           t_usr;
+
 typedef struct              s_env
 {
+    bool                    end;
     float                   ytheta;
     float                   xtheta;
     float                   ztheta;
@@ -258,7 +269,7 @@ typedef struct              s_env
 }                           t_env;
 
 /*
-**Global
+**  Global
 */
 
 void        file_parser(t_env *e, char *file, int mi);
@@ -278,7 +289,17 @@ void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 
 /*
-**Clipping
+**  Platforming
+*/
+
+void                gameplay(void *env);
+void                forge(void *env);
+void                menu_option(void *env);
+void                menu_pause(void *env);
+void                menu_start(void *env);
+
+/*
+**  Clipping
 */
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
