@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/04/28 23:01:39 by user42           ###   ########.fr        #
+#    Updated: 2020/04/28 23:28:50 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ UP 		=	\033[A
 CUT 	=	\033[K
 
 # project
-NAME	=	3D_Engine
+NAME	=	DooM
 OS		=	$(shell uname)
 
 SRCDIR	=	srcs/

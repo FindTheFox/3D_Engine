@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 20:44:04 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/29 00:19:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     if (clip->inside == 1 && clip->outside == 2)
     {
         out[0].color = in.color;//0x0000ff;
+        out[0].tex = in.tex;
         small_triangle(*clip, out, vec);       
         return (1);
     }
@@ -69,6 +70,8 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     {
         out[0].color = in.color;//0xff0000;
         out[1].color = in.color;//0x00ff00;
+        out[0].tex = in.tex;
+        out[1].tex = in.tex;
         quad_triangle(*clip, out, vec);
         return (2);
     }

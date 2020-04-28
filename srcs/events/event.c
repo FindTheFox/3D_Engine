@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/21 22:28:22 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/29 00:01:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ static void         key_tab(t_env *e)
 
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_LSHIFT)
         e->key[SHIFT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F1)
+        e->key[F1] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F2)
+        e->key[F2] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F3)
+        e->key[F3] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 }
 
 void                event(t_env *env)
@@ -86,7 +93,7 @@ void                event(t_env *env)
 		&& env->event.type == SDL_KEYDOWN)
             printf("MENU\n");
             //menu(env->winsurf, 2);
-        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
         || env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);
@@ -94,4 +101,5 @@ void                event(t_env *env)
     }
     camera_event(env);
     mesh_rot_event(env, env->usr.event_i_mesh);
+    user_events(env);
 }

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 22:14:13 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/29 00:08:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ void            *do_thread(void *param)
 
     thread = (t_thread *)param;
     e = (t_env*)thread->env;
-    while (thread->i < thread->end)
+    while (++thread->i < thread->end)
     {
         t = (t_triangle*)dyaddress(&thread->tris, thread->i);
         //printf("w1: %f, w2: %f, w3: %f\n", t->tx[0].w, t->tx[1].w, t->tx[2].w);
         //fill_triangle(e, t, t->color);
-        fill_triangle_texture(e, *t);
-        //draw_triangle(e, *t);
-        thread->i++;
+        if (thread->mode == 0 || thread->mode == 1)
+            fill_triangle_texture(e, *t);
+        if (thread->mode == 1)
+            draw_triangle(e, *t);
     }
     pthread_exit(NULL);
 }
@@ -39,9 +40,10 @@ void            thread_init(t_env *e, t_thread *thread)
     todo = (e->to_raster.cell_nb / NB_THREAD);
     rest = (e->to_raster.cell_nb % NB_THREAD);
     thread->env = e;
+    thread->mode = e->usr.mode;
     thread->tris = e->to_raster;
     thread->start = thread->id * todo;
-    thread->i = thread->start;
+    thread->i = thread->start - 1;
     thread->end = thread->start + todo + (thread->id == NB_THREAD - 1 ? rest : 0);
     if (pthread_create(&thread->thread, NULL, do_thread, (void *)thread))
         ft_exit(e, "thread create failed", 0);

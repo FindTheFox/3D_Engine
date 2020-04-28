@@ -1,0 +1,1 @@
+./DooM ressources/katana.obj ressources/female.obj ressources/demon.obj ressources/lemur.obj ressources/male.obj ressources/space_ship ressources/torus.obj ressources/tuple.obj ressources/wolf.obj ressources/space_ship ressources/sphere.obj

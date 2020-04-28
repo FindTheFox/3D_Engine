@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sdl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:27:32 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/21 22:15:13 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 23:29:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void            init_sdl(t_env *env)
 {
     if (SDL_Init(SDL_INIT_VIDEO) == -1)
 		ft_exit(env, "SDL_Init fail", 0);
-    if (!(env->window = SDL_CreateWindow("saneveu cube3d",
+    if (!(env->window = SDL_CreateWindow("DooM NukeM",
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			W_W, W_H, 0)))

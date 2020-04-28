@@ -32,7 +32,7 @@
 
 # define NB_THREAD 32
 
-# define KEY_NB 29
+# define KEY_NB 32
 # define W 0
 # define A 1
 # define S 2
@@ -62,6 +62,9 @@
 # define PLUS 26
 # define MINUS 27
 # define SHIFT 28
+# define F1 29
+# define F2 30
+# define F3 31
 
 //DEFINE TEST MENU
 # define EXIT_MENU 0
@@ -75,6 +78,10 @@
 # define PAUSE 2
 # define OPTION 3
 # define FORGE 4
+
+# define GAMING 0
+# define DEV 1
+# define TEST 2 
 
 typedef struct      s_image
 {
@@ -138,6 +145,7 @@ typedef struct      s_thread
     int             end;
     int             i;
     int             id;
+    Uint8           mode;
 }                   t_thread;
 
 typedef struct      s_triangle
@@ -218,6 +226,7 @@ typedef struct              s_usr
     int                     shift;
     unsigned int            platform;
     void                    (*f[5])(void *);
+    Uint8                  mode;
 }                           t_usr;
 
 typedef struct              s_env
@@ -371,6 +380,7 @@ void        event(t_env *env);
 void        camera_event(t_env *e);
 void        mesh_rot_event(t_env *e, int event_i_mesh);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
+void        user_events(t_env *e);
 
 /*
 **Color
