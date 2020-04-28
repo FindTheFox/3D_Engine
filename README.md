@@ -15,6 +15,6 @@ Project game Doom-Nukem like, for 42 school Paris
 
    <strong>OBJ Movement</strong>
 * Change selected obj:  PNUM_0
-* Change Mode (Lock 0 / Rotation 1 / Movement 2:
+* Change Mode (Lock 0 / Rotation 1 / Movement 2):
                         PNUM_ENTER
 * Action: PNUM_[1-9]
