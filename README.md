@@ -5,15 +5,15 @@ Project game Doom-Nukem like, for 42 school Paris
   C language, SDL2 library
 
 ## Utilisation
-   
-   <strong>Player</strong>
+
+     <strong>Player</strong>
 * Movement:   WASD
 * Camera:   ARROW / MOUSE
 * Up:   SPACE
 * Down:   RCTRL
 * Sprint:   LSHIFT
 
-    <strong>OBJ MOVEMENT</strong>
+     <strong>OBJ Movement</strong>
 * Change selected obj:  PNUM_0
 * Change Mode (Lock 0 / Rotation 1 / Movement 2:
                         PNUM_ENTER
