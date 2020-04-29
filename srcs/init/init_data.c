@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 22:56:28 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:05:28 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void    init_data(t_env *e)
     e->fFov = 80.0f;
     e->fAspectRatio = ((float)W_W / (float)W_H) - 0.9;
     e->fFovRad = 1.0f / tanf(e->fFov * 0.5 / 180 * 3.14159f);
-    e->vlist.voff_set = (t_vec){ 1,1,1,1 };
-    e->vlist.light_dir = (t_vec){ 5.0f, 10.0f, -5, 1 };
+	e->vlist.vcamera = (t_vec) {0, 12.0f, -46.0f};
+	e->vlist.voff_set = (t_vec){ 1,1,1,1 };
+	e->vlist.light_dir = (t_vec){ 5.0f, 10.0f, -5, 1 };
     //e->xtheta = 0;
     //e->ytheta = 0;
     //e->ztheta = 0;

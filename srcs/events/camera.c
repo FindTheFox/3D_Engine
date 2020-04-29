@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:03:00 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 19:17:36 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/27 14:57:33 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void                camera_rot_mouse(t_env *e)
     }
 }
 
-
 void                camera_rot_event(t_env *e)
 {
     camera_rot_mouse(e);
@@ -87,17 +86,35 @@ static void         camera_move_event(t_env *e)
     forward = vectormult(e->vlist.lookdir, 8.0 * e->theta * e->usr.shift);
     right = vectormult((t_vec){forward.z, 0, -forward.x, forward.w}, 0.5f);
     if (e->key[W])
-        e->vlist.vcamera = vectoradd(e->vlist.vcamera, forward);
-    if (e->key[S])
-        e->vlist.vcamera = vectorsub(e->vlist.vcamera, forward);
-    if (e->key[A])
-        e->vlist.vcamera = vectoradd(e->vlist.vcamera, right);
-    if (e->key[D])
-        e->vlist.vcamera = vectorsub(e->vlist.vcamera, right); 
-    if (e->key[SPACE])
-        e->vlist.vcamera.y += 8.0 * e->theta;
-    if (e->key[LCTRL])
-        e->vlist.vcamera.y -= 8.0 * e->theta;
+	{
+		e->vlist.vcamera = vectoradd(e->vlist.vcamera, forward);
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+	}
+	if (e->key[S])
+	{
+		e->vlist.vcamera = vectorsub(e->vlist.vcamera, forward);
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+    }
+	if (e->key[A])
+	{
+		e->vlist.vcamera = vectoradd(e->vlist.vcamera, right);
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+    }
+	if (e->key[D])
+	{
+		e->vlist.vcamera = vectorsub(e->vlist.vcamera, right); 
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+	}
+	if (e->key[SPACE])
+	{
+		e->vlist.vcamera.y += 8.0 * e->theta;
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+    }
+	if (e->key[LCTRL])
+	{
+		e->vlist.vcamera.y -= 8.0 * e->theta;
+		printf("Px : %f\nPy : %f\nPz : %f\n\n", e->vlist.vcamera.x, e->vlist.vcamera.y, e->vlist.vcamera.z);
+	}
 }
 
 void                camera_event(t_env *e)
