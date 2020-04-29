@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 17:14:33 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 01:38:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static void         move_event(t_env *e, int i)
     t_vec   right;
 
     forward = vectormult(e->vlist.lookdir, 8.0 * e->theta);
+    vectormult(forward, 0.5);
     right = vectormult((t_vec){forward.z, 0, -forward.x, forward.w}, 0.5f);
+    vectormult(right, 0.5);
     if (e->key[NUM8])
         e->mesh[i].dir = vectoradd(e->mesh[i].dir, forward);
     if (e->key[NUM5])

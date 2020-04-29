@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:33:38 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/21 18:05:28 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/27 20:02:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,30 @@ void        put_pixel(t_env *e, int x, int y, int color)
     pixels = (unsigned int *)e->winsurf->pixels;
     pixels[x + y * W_W] = color;
 }
+void        put_pixel_txt(t_env *e, int pos, int color)
+{
+    unsigned int     *pixels;
+
+    if (pos > PX_NB)
+        return ;
+    //pos *= 4;
+    pixels = (unsigned int *)e->winsurf->pixels;
+    pixels[pos] = color;
+}
 
 uint32_t		get_pixel(SDL_Surface *img, float tx, float ty)
 {
 	uint8_t			*p;
+    int             color;
+	int             sx;
+    int             sy;
 
-	p = (uint8_t *)img->pixels + (int)(ty * img->h) * img->pitch
-	    + (int)(tx * img->w) * img->format->BytesPerPixel;
+    if (tx > 1 || ty > 1 || tx < 0 || ty < 0)
+		return (0);
+    sx = tx * img->w;
+    sy = ty * img->h;
+    p = (uint8_t *)img->pixels + sy * img->pitch
+	    + sx * img->format->BytesPerPixel;
 	return (p[2] | p[1] << 8 | p[0] << 16 | 255 << 24);
 }
 

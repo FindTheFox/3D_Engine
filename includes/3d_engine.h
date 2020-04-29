@@ -20,8 +20,9 @@
 
 # include "texturing.h"
 
-# define W_W 800
-# define W_H 800
+# define W_W 1280
+# define W_H 720
+# define PX_NB W_W * W_H
 
 # define NTXT 1                 // Nombre de texture SDL_Surface
 # define NSPRITE 0              // Nombre de sprites SDL_Surface
@@ -31,7 +32,7 @@
 
 # define NB_THREAD 32
 
-# define KEY_NB 29
+# define KEY_NB 32
 # define W 0
 # define A 1
 # define S 2
@@ -61,12 +62,26 @@
 # define PLUS 26
 # define MINUS 27
 # define SHIFT 28
+# define F1 29
+# define F2 30
+# define F3 31
+
 //DEFINE TEST MENU
 # define EXIT_MENU 0
 # define MAIN_MENU 1
 # define PAUSE_MENU 2
 # define CONTROLS_MENU 3
 # define BUTTON_MARGE 6
+
+# define MENU 0
+# define GAME 1
+# define PAUSE 2
+# define OPTION 3
+# define FORGE 4
+
+# define GAMING 0
+# define DEV 1
+# define TEST 2 
 
 typedef struct      s_image
 {
@@ -130,12 +145,14 @@ typedef struct      s_thread
     int             end;
     int             i;
     int             id;
+    Uint8           mode;
 }                   t_thread;
 
 typedef struct      s_triangle
 {
     t_vec   p[3];
     t_vec2d tx[3];
+    Uint8   tex;
     int     color;
 }                   t_triangle;
 
@@ -196,20 +213,25 @@ typedef struct      s_mlist
     t_matrix        camrotx;
 }                   t_mlist;
 
-typedef struct              s_usr
-{
-    int                     event_i_mesh;
-    int                     opt_mesh;
-    int                     shift;
-}                           t_usr;
 
 typedef struct              s_color
 {
     int                     *tab;
 }                           t_color;
 
+typedef struct              s_usr
+{
+    int                     event_i_mesh;
+    int                     opt_mesh;
+    int                     shift;
+    unsigned int            platform;
+    void                    (*f[5])(void *);
+    Uint8                  mode;
+}                           t_usr;
+
 typedef struct              s_env
 {
+    bool                    end;
     float                   ytheta;
     float                   xtheta;
     float                   ztheta;
@@ -225,6 +247,7 @@ typedef struct              s_env
     float                   frametime;
     float                   yaw;
     float                   xaw;
+    float                   *depth_buff;
     int                     wx;
     int                     wy;
     int                     key[KEY_NB];
@@ -255,7 +278,7 @@ typedef struct              s_env
 }                           t_env;
 
 /*
-**Global
+**  Global
 */
 
 void        file_parser(t_env *e, char *file, int mi);
@@ -272,9 +295,20 @@ void        matrix_view(t_env *e);
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
 int         lumiere(t_env *e, t_vec normal);
 void        center(t_vec *out);
+void        reset_pbuffer(t_env *e);
 
 /*
-**Clipping
+**  Platforming
+*/
+
+void                gameplay(void *env);
+void                forge(void *env);
+void                menu_option(void *env);
+void                menu_pause(void *env);
+void                menu_start(void *env);
+
+/*
+**  Clipping
 */
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
@@ -320,6 +354,7 @@ void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
 void        ft_line(t_env *e, t_vec v1, t_vec v2, int color);
 void        put_pixel(t_env *e, int x, int y, int color);
+void        put_pixel_txt(t_env *e, int pos, int color);
 
 /*
 **Fill texture
@@ -327,6 +362,15 @@ void        put_pixel(t_env *e, int x, int y, int color);
 
 void            fill_triangle_texture(t_env *e, t_triangle t);
 uint32_t		get_pixel(SDL_Surface *surface, float tx, float ty);
+
+
+void	set_line_bounds_bot(t_filltex *fill, t_triangle t, float currents[2]);
+void	set_line_bounds_top(t_filltex *fill, t_triangle t, float current);
+void	compute_gradients(t_filltex *fill, t_triangle t, bool flatbot);
+void	compute_steps(t_filltex *fill, bool t);
+void	starting_swap(t_triangle *t);
+
+
 
 /*
 **Events
@@ -336,6 +380,7 @@ void        event(t_env *env);
 void        camera_event(t_env *e);
 void        mesh_rot_event(t_env *e, int event_i_mesh);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
+void        user_events(t_env *e);
 
 /*
 **Color

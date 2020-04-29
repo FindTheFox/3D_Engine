@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/04 01:16:32 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 22:56:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,40 @@ static void     init_matrice(t_env *e)
 
 }
 
+static void     init_usr(t_env *e)
+{
+    int i;
+
+    e->usr.platform = GAME;
+    
+    e->usr.f[0] = menu_start; //MENU
+    e->usr.f[1] = gameplay;
+    e->usr.f[2] = menu_pause;
+    e->usr.f[3] = menu_option;
+    e->usr.f[4] = forge;
+}
+
 void    init_data(t_env *e)
 {
     e->fNear = 0.01f;
     e->fFar = 1000.0f;
-    e->fFov = 90.0f;
-    e->fAspectRatio = (float)W_W / (float)W_H;
+    e->fFov = 80.0f;
+    e->fAspectRatio = ((float)W_W / (float)W_H) - 0.9;
     e->fFovRad = 1.0f / tanf(e->fFov * 0.5 / 180 * 3.14159f);
     e->vlist.voff_set = (t_vec){ 1,1,1,1 };
-    e->vlist.light_dir = (t_vec){ 4.0f, 1.0f, 5.0f, 0.0f };
-    e->xtheta = 0;
-    e->ytheta = 0;
-    e->ztheta = 0;
+    e->vlist.light_dir = (t_vec){ 5.0f, 10.0f, -5, 1 };
+    //e->xtheta = 0;
+    //e->ytheta = 0;
+    //e->ztheta = 0;
     e->yaw = 0;
     e->xaw = 0;
     e->zoom = 10;
     ft_bzero((void *)e->key, sizeof(char ) * KEY_NB);
     init_matrice(e);
-    //init_matrix_rotx(&e->mlist.matrotx, e->xtheta);
-    //init_matrix_roty(&e->mlist.matroty, e->ytheta);
-    //init_matrix_rotz(&e->mlist.matrotz, e->ztheta);
     init_matrix_proj(e);
-    init_matrix_translation(&e->mlist.mattranslate, (t_vec){0.0f, 0.0f, e->zoom});
     init_dynamic_tab(e);
+    if (!(e->depth_buff = ft_memalloc(sizeof(float) * W_H * W_W)))
+        ft_exit(e, "DooM: depth_buffer init fail\n", 0);
+    reset_pbuffer(e);
+    init_usr(e);
 }

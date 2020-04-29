@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/04/12 17:38:42 by saneveu          ###   ########.fr        #
+#    Updated: 2020/04/28 23:28:50 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ UP 		=	\033[A
 CUT 	=	\033[K
 
 # project
-NAME	=	3D_Engine
+NAME	=	DooM
 OS		=	$(shell uname)
 
 SRCDIR	=	srcs/
@@ -59,7 +59,7 @@ all: 		obj $(FT_LIB) $(NAME)
 
 obj:
 			mkdir -p $(OBJDIR)
-			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init
+			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform
 
 
 $(FT_LIB):

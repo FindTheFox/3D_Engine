@@ -3,21 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/11 17:56:37 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/28 22:53:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
+
+void        texture_perspective(t_env *env, t_triangle *t)
+{
+    t->tx[0].u /= t->p[0].w;
+    t->tx[1].u /= t->p[1].w;
+    t->tx[2].u /= t->p[2].w;
+
+    t->tx[0].v /= t->p[0].w;
+    t->tx[1].v /= t->p[1].w;
+    t->tx[2].v /= t->p[2].w;
+
+    t->tx[0].w = 1.0f / t->p[0].w;
+    t->tx[1].w = 1.0f / t->p[1].w;
+    t->tx[2].w = 1.0f / t->p[2].w;
+}
 
 void        projection2(t_env *env, t_triangle tview, int color)
 {
     t_triangle triprojected;
 
     triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
+    
     take_texture_vec(&triprojected, tview);
+    texture_perspective(env, &triprojected);
+    
     triprojected.p[0] = vectordiv(triprojected.p[0], triprojected.p[0].w);
     triprojected.p[1] = vectordiv(triprojected.p[1], triprojected.p[1].w);
     triprojected.p[2] = vectordiv(triprojected.p[2], triprojected.p[2].w); 
@@ -26,6 +44,11 @@ void        projection2(t_env *env, t_triangle tview, int color)
     triprojected.p[0] = vectoradd(triprojected.p[0], env->vlist.voff_set);
     triprojected.p[1] = vectoradd(triprojected.p[1], env->vlist.voff_set);
     triprojected.p[2] = vectoradd(triprojected.p[2], env->vlist.voff_set);
+
+    //X/Y are inverted ?
+    //triprojected.p[0] = vectormult(triprojected.p[0], -1.0f);
+    //triprojected.p[1] = vectormult(triprojected.p[1], -1.0f);
+    //triprojected.p[2] = vectormult(triprojected.p[2], -1.0f);
 
     center(&triprojected.p[0]);
     center(&triprojected.p[1]);
@@ -53,7 +76,7 @@ void        projection(t_env *env, t_triangle triprojected, int color)
         projection2(env, clip[i], color);
 }
 
-int        normalize(t_env *e, t_triangle tri)
+static int        normalize(t_env *e, t_triangle tri, int *color)
 {
     t_vec   normal;
     t_vec   line1;
@@ -66,7 +89,10 @@ int        normalize(t_env *e, t_triangle tri)
     normal = vectornormal(normal);
     vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
-        return (lumiere(e, normal));
+    {
+        *color = lumiere(e, normal);
+        return (1);
+    }
     return (0);
 }
 
@@ -90,11 +116,10 @@ void        engine_3d(t_env *env)
         {
             triprojected = matrix_mult_triangle(env->mlist.matworld, env->mesh[i].tris[j]);
             take_texture_vec(&triprojected, env->mesh[i].tris[j]);
-            if ((color = normalize(env, triprojected)))
+            if (normalize(env, triprojected, &color) == 1)
                 projection(env, triprojected, color);
         }
     }
     rasterizer(env, &env->to_clip);
     clear_dynarray(&env->to_clip);
-    sdl_render(env);
 }
