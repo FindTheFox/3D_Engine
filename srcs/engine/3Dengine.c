@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 22:53:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/30 00:01:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void        projection2(t_env *env, t_triangle tview, int color)
     t_triangle triprojected;
 
     triprojected = matrix_mult_triangle(env->mlist.matproj, tview);
-    
+
     take_texture_vec(&triprojected, tview);
+    pass_data(&triprojected, tview);
+
     texture_perspective(env, &triprojected);
     
     triprojected.p[0] = vectordiv(triprojected.p[0], triprojected.p[0].w);
@@ -53,7 +55,7 @@ void        projection2(t_env *env, t_triangle tview, int color)
     center(&triprojected.p[0]);
     center(&triprojected.p[1]);
     center(&triprojected.p[2]);
-    
+
     triprojected.color = color;
     if (push_dynarray(&env->to_clip, &triprojected, false))
         ft_exit(env, "push dynamic tab to_clip fail", 0);
@@ -68,9 +70,10 @@ void        projection(t_env *env, t_triangle triprojected, int color)
 
     tview = matrix_mult_triangle(env->mlist.matview, triprojected);
     take_texture_vec(&tview, triprojected);
-    tview.color = color;
+    pass_data(&tview, triprojected);
     //clip z plane
-    nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, tview, clip);
+    nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, &tview, clip);
+        
     i = -1;
     while (++i < nclip)
         projection2(env, clip[i], color);

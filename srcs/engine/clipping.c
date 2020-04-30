@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/29 00:19:05 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/30 00:01:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     {
         out[0].color = in.color;//0x0000ff;
         out[0].tex = in.tex;
+        pass_data(&out[0], in);
         small_triangle(*clip, out, vec);       
         return (1);
     }
@@ -72,6 +73,8 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
         out[1].color = in.color;//0x00ff00;
         out[0].tex = in.tex;
         out[1].tex = in.tex;
+        pass_data(&out[0], in);
+        pass_data(&out[1], in);
         quad_triangle(*clip, out, vec);
         return (2);
     }
@@ -103,28 +106,28 @@ void        sort_triangle(t_clip *clip, t_triangle in)
     }
 }
 
-int         clip_triangle_by_plane(t_vec plane_p, t_vec plane_n, t_triangle in, t_triangle out[2])
+int         clip_triangle_by_plane(t_vec plane_p, t_vec plane_n, t_triangle *in, t_triangle out[2])
 {
     t_clip  clip;
     int     ret;
     
     plane_n = vectornormal(plane_n);
 
-    clip.d[0] = vectorproduct(plane_n, in.p[0]) - vectorproduct(plane_n, plane_p);
-    clip.d[1] = distance_to_plane(plane_p, plane_n, in.p[1]);
-    clip.d[2] = distance_to_plane(plane_p, plane_n, in.p[2]);
+    clip.d[0] = vectorproduct(plane_n, in->p[0]) - vectorproduct(plane_n, plane_p);
+    clip.d[1] = distance_to_plane(plane_p, plane_n, in->p[1]);
+    clip.d[2] = distance_to_plane(plane_p, plane_n, in->p[2]);
 
-    sort_triangle(&clip, in);
+    sort_triangle(&clip, *in);
     if (clip.inside == 0)
         return (0);
     else if (clip.inside == 3)
     {
-        out[0] = in;
+        out[0] = *in;
         return (1);
     }
     else
     {
-        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, in);
+        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, *in);
         return(ret);
     }
 }

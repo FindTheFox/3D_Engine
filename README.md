@@ -9,21 +9,24 @@ Project game Doom-Nukem like, for 42 school Paris
 ## Utilisation
 
    <strong>    Interface</strong>
-*  Quit:       ECHAP
-*  GAMING:     F1    (default)
-*  DEV:        F2
-*  [Rien]:     F3
-*  Menus       M
+*  Quit:                   `ECHAP`
+*  Forge:                  `F1`           (1 OU 0)
+*  Draw Texture:           `F2`           (1 OU 0)
+*  Draw Line:              `F3`           (1 OU 0)
+*  Allow mouse cam:        `F4`           (1 OU 0)
+*  Show FPS:               `F5`           (1 OU 0)
+*  Mesh Rndom color:       `F6`           (1 OU 0)
+*  Menus                   `M`
 
    <strong>    Player</strong>
-*  Movement:   WASD
-*  Camera:     ARROW / MOUSE
-*  Up:         SPACE
-*  Down:       RCTRL
-*  Sprint:     LSHIFT
+*  Movement:   `WASD`
+*  Camera:     `ARROW` / `MOUSE`
+*  Up:         `SPACE`
+*  Down:       `RCTRL`
+*  Sprint:     `LSHIFT`
 
-   <strong>    OBJ Movement</strong>
-*  Change selected obj:                    PNUM_0
-*  Change Move Mode 
-      (Lock 0 / Rotation 1 / Movement 2):  PNUM_ENTER
-*  Action: PNUM_[1-9]
+   <strong>    Forge</forge>
+*  Select Object:                      `RIGHT_MOUSE` / `PNUM_0`
+*  Change Move Mode: (Rot 0 / Mov 1)   `PNUM_ENTER`
+*  Action:                             `PNUM_[1-9]`
+*  

@@ -28,6 +28,7 @@ SRCS_FILE	=	main.c \
 				tools.c\
 				events/menu.c \
 				events/user.c \
+				events/dev_events.c \
 				platform/select_platform.c
 
 OBJ_DIRS =		engine \

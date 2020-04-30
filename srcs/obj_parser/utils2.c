@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 23:16:04 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/27 20:23:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/29 21:25:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_atoi_ptr(char *str, int *value)
 	return (str);
 }
 
-t_triangle triangle_init(void)
+t_triangle triangle_init(int mi)
 {
 	t_triangle	new;
 	t_vec		vec;
@@ -83,6 +83,7 @@ t_triangle triangle_init(void)
 		new.tx[i] = tex;
 		i++;
 	}
+	new.mesh_id = mi;
 	return (new);
 }
 

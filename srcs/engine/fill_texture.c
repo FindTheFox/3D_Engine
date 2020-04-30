@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 00:59:09 by user42            #+#    #+#             */
-/*   Updated: 2020/04/28 02:16:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/29 23:58:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ int			sample_pixel(SDL_Surface *s, t_vec2d px)
 	return (ret);
 }
 
-static void	write_pixel(t_env *env, t_filltex *fill, t_triangle t, int dist[3])
+static void	write_pixel(t_env *env, t_filltex *fill, t_triangle *t, int dist[3])
 {
 	SDL_Surface *sp;
 	int			color;
 
 	if (dist[2] <= PX_NB && fill->tex_w > env->depth_buff[dist[2]])
 	{
-		if (t.tex == 1 && (sp = env->mesh[env->mesh_id].img))
+		if (t->tex == 1 && (sp = env->mesh[env->mesh_id].img))
 			color = get_pixel(sp, fill->tex_u / fill->tex_w, fill->tex_v / fill->tex_w);
 		else
-			color = t.color;
+			color = t->color;
 		env->depth_buff[dist[2]] = fill->tex_w;
+		env->pixel_buff[dist[2]] = t->mesh_id;
 		put_pixel_txt(env, dist[2], color);
 	}
 }
@@ -72,13 +73,13 @@ static void	refresh_step(float steps[6], float simples[6])
 static void	do_step(t_env *env, t_filltex *fill, t_triangle t, int i)
 {
 	int		j;
-	int		px;
+	int		dist;
 	float	steps[6];
 	float	simples[6];
 
 	j = fill->ax;
 	fill->tstep = 1.0f / (fill->bx - fill->ax);
-	px = j + abs(i - 1) * W_W;
+	dist = j + abs(i - 1) * W_W;
 	compute_step(fill, steps, simples);
 	while (j < fill->bx)
 	{
@@ -89,8 +90,9 @@ static void	do_step(t_env *env, t_filltex *fill, t_triangle t, int i)
 		}
 		fill->tex_w = simples[4] + simples[5];
 		refresh_step(steps, simples);
-		write_pixel(env, fill, t, (int[3]){i, j, px});
-		px++;
+		if (dist < PX_NB)
+			write_pixel(env, fill, &t, (int[3]){i, j, dist});
+		dist++;
 		j++;
 	}
 }

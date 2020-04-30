@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_matrice.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:29:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 16:45:12 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/29 21:30:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_triangle          matrix_mult_triangle(t_matrix m, t_triangle tri)
 {
     t_triangle triout;
 
+    triout = tri;
     triout.p[0] = matrix_mult_vector(m, tri.p[0]);
     triout.p[1] = matrix_mult_vector(m, tri.p[1]);
     triout.p[2] = matrix_mult_vector(m, tri.p[2]);

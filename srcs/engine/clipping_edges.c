@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping_edges.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:41:15 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/10 19:43:22 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/29 23:25:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
 
     tris_to_add = 0;
     if (point == 0)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,(float)W_H,0,1}, (t_vec){0,-1.0f,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,(float)W_H,0,1}, (t_vec){0,-1.0f,0,1}, &t, clip);
     else if (point == 1)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){0,1,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){0,1,0,1}, &t, clip);
     else if (point == 2)
-        tris_to_add = clip_triangle_by_plane((t_vec){(float)W_W,0,0,1}, (t_vec){-1.0f,0 , 0, 1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){(float)W_W,0,0,1}, (t_vec){-1.0f,0 , 0, 1}, &t, clip);
     else if (point == 3)
-        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){1,0,0,1}, t, clip);
+        tris_to_add = clip_triangle_by_plane((t_vec){0,0,0,1}, (t_vec){1,0,0,1}, &t, clip);
     i = -1;
     while (++i < tris_to_add)
         if (push_dynarray(to_raster, &clip[i], 0))

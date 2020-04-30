@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/29 00:08:35 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/30 00:45:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ void            *do_thread(void *param)
     while (++thread->i < thread->end)
     {
         t = (t_triangle*)dyaddress(&thread->tris, thread->i);
-        //printf("w1: %f, w2: %f, w3: %f\n", t->tx[0].w, t->tx[1].w, t->tx[2].w);
         //fill_triangle(e, t, t->color);
-        if (thread->mode == 0 || thread->mode == 1)
+        if (e->usr.fill_text)
             fill_triangle_texture(e, *t);
-        if (thread->mode == 1)
+        if (e->usr.draw_line)
             draw_triangle(e, *t);
     }
     pthread_exit(NULL);
@@ -81,5 +80,4 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         i++;
     }
     */
-    clear_dynarray(&e->to_raster);
 }

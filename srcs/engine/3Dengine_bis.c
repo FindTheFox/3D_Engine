@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 01:57:45 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/30 03:15:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int         lumiere(t_env *e, t_vec normal)
     dp = (vectorproduct(normal, e->vlist.light_dir) + 1) / 2;
     //dp = vectorproduct(normal, e->vlist.light_dir);
     
-    return (color_shading(e->mesh[e->mesh_id].color, dp));
-    //return (color_shading(0xffffff, dp));
+    if (e->usr.color)
+        return (color_shading(e->mesh[e->mesh_id].color, dp));
+    else
+        return (color_shading(0xffffff, dp));
 }
 
 void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:03:00 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/26 19:17:36 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/30 03:18:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void                camera_rot_mouse(t_env *e)
 
 void                camera_rot_event(t_env *e)
 {
-    camera_rot_mouse(e);
+    if (e->usr.mouse_motion)
+        camera_rot_mouse(e);
     if (e->key[LEFT])
         e->yaw -= 8.0 * e->theta;
     if (e->key[RIGHT])

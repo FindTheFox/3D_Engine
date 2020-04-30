@@ -17,7 +17,8 @@
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include <pthread.h>
-
+# include <stdbool.h>
+# include "key.h"
 # include "texturing.h"
 
 # define W_W 1280
@@ -30,41 +31,7 @@
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
-# define NB_THREAD 32
-
-# define KEY_NB 32
-# define W 0
-# define A 1
-# define S 2
-# define D 3
-# define E 4
-# define Q 5
-# define UP 6
-# define DOWN 7
-# define LEFT 16
-# define RIGHT 17
-# define R 8
-# define F 9
-# define NUM1 14
-# define NUM2 11
-# define NUM3 15
-# define NUM4 12
-# define NUM5 20
-# define NUM6 13
-# define NUM7 22
-# define NUM8 10
-# define NUM9 23
-# define MOUSE 18
-# define SPACE 19
-# define LCTRL 21
-# define NUM0 24
-# define PAD_ENTER 25
-# define PLUS 26
-# define MINUS 27
-# define SHIFT 28
-# define F1 29
-# define F2 30
-# define F3 31
+# define NB_THREAD 35
 
 //DEFINE TEST MENU
 # define EXIT_MENU 0
@@ -150,10 +117,12 @@ typedef struct      s_thread
 
 typedef struct      s_triangle
 {
-    t_vec   p[3];
-    t_vec2d tx[3];
-    Uint8   tex;
-    int     color;
+    t_vec           p[3];
+    t_vec2d         tx[3];
+    Uint8           tex;
+    int             color;
+    int             mesh_id;
+    int             screen_pos;
 }                   t_triangle;
 
 typedef struct      s_matrix
@@ -219,6 +188,10 @@ typedef struct              s_color
     int                     *tab;
 }                           t_color;
 
+/*
+** Structure of User utilisation
+*/
+
 typedef struct              s_usr
 {
     int                     event_i_mesh;
@@ -226,8 +199,19 @@ typedef struct              s_usr
     int                     shift;
     unsigned int            platform;
     void                    (*f[5])(void *);
-    Uint8                  mode;
+    Uint8                   mode;
+    bool                    mouse_ptr;
+    bool                    draw_line;
+    bool                    fill_text;
+    bool                    fps;
+    bool                    forge;
+    bool                    color;
+    bool                    mouse_motion;
 }                           t_usr;
+
+/*
+** Structure Principale
+*/
 
 typedef struct              s_env
 {
@@ -248,6 +232,7 @@ typedef struct              s_env
     float                   yaw;
     float                   xaw;
     float                   *depth_buff;
+    int                     *pixel_buff;
     int                     wx;
     int                     wy;
     int                     key[KEY_NB];
@@ -296,7 +281,7 @@ void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
 int         lumiere(t_env *e, t_vec normal);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
-
+void        pass_data(t_triangle *t1, t_triangle t2);
 /*
 **  Platforming
 */
@@ -311,7 +296,7 @@ void                menu_start(void *env);
 **  Clipping
 */
 
-int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle in, t_triangle out[2]);
+int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle *in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
 void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
 
@@ -381,6 +366,8 @@ void        camera_event(t_env *e);
 void        mesh_rot_event(t_env *e, int event_i_mesh);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
+void        dev_event(t_env *env);
+uint32_t	get_color(SDL_Surface *img, int x, int y);
 
 /*
 **Color

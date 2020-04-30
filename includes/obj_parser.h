@@ -25,7 +25,7 @@ typedef struct s_attr_lst
 void		create_triangle_list(t_attr_lst *key_list);
 void		assign_from_array(void *data, int length, float *values);
 void		init_key_list(t_attr_lst *key_list);
-t_triangle	triangle_init(void);
+t_triangle	triangle_init(int mesh_id);
 char		*ft_atoi_ptr(char *str, int *value);
 char		*ft_fatoi_ptr(char *str, float *value);
 void		print_array(float **array, int size, int content_size, char *name);

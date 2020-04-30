@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/04/12 16:51:03 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/04/29 21:25:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_list *assign_lst_value(char *line, int length)
 	return (new);
 }
 
-static void		read_face_line(char *line, t_attr_lst *key_list)
+static void		read_face_line(char *line, t_attr_lst *key_list, int mesh_id)
 {
 	t_triangle new;
 	int tmp_id;
@@ -48,7 +48,7 @@ static void		read_face_line(char *line, t_attr_lst *key_list)
 			key_list->tris = (t_triangle*)double_array_size(key_list->tris, sizeof(t_triangle), key_list->tris_size);
 			key_list->tris_size *= 2;
 		}
-		new = triangle_init();
+		new = triangle_init(mesh_id);
 		i = 0;
 		line = skip_until_num(line);
 		while (i < 3)
@@ -110,7 +110,7 @@ t_mesh	obj_parser(char *file, t_env *e)
 	close(fd);
 	fd = open(file, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
-		read_face_line(line, &key_list);
+		read_face_line(line, &key_list, e->mesh_id);
 	free(line);
 	obj.tris = key_list.tris;
 	obj.size = key_list.tris_curr_id;
