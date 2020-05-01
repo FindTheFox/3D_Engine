@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/01 11:23:55 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/01 12:21:26 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void init_editor(int ac, t_env *env)
 {
+	env->state = FORGE;
 /*      env->nbmesh = 1;
         if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
                 ft_exit(env, "Mesh Alloc Error", 0);

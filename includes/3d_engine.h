@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/01 11:13:58 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/01 12:12:43 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,25 @@
 # define CONTROLS_MENU 3
 # define BUTTON_MARGE 6
 
-# define MENU 0
+/*# define MENU 0
 # define GAME 1
 # define PAUSE 2
 # define OPTION 3
 # define FORGE 4
+*/
 
 # define GAMING 0
 # define DEV 1
-# define TEST 2 
+# define TEST 2
+
+typedef enum            e_state
+{
+		MENU = 0,
+		GAME,
+		PAUSE,
+		OPTION,
+		FORGE
+}						t_state;
 
 typedef struct      s_image
 {
@@ -260,6 +270,7 @@ typedef struct              s_env
     SDL_Texture             *menu2;
     SDL_Texture             *menu3;
     SDL_Surface             *tmp;
+	int						state;
 }                           t_env;
 
 /*
