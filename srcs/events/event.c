@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 00:34:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/01 16:53:40 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void         key_tab(t_env *e)
         e->key[LEFT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
             e->key[RIGHT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    
+
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_0)
         e->key[NUM0] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_1)
@@ -64,14 +64,13 @@ static void         key_tab(t_env *e)
         e->key[NUM8] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_9)
         e->key[NUM9] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-    
+
     else if (e->event.type == SDL_MOUSEMOTION)
         e->key[MOUSE] = 1;
     else if (e->event.button.button == SDL_BUTTON_RIGHT)
         e->key[RCLICK] = e->event.type == SDL_MOUSEBUTTONDOWN ? 1 : 0;
     else if (e->event.button.button == SDL_BUTTON_LEFT)
         e->key[LCLICK] = e->event.type == SDL_MOUSEBUTTONDOWN ? 1 : 0;
-
 
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_ENTER)
         e->key[PAD_ENTER] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -110,19 +109,30 @@ static void         key_tab(t_env *e)
 
 }
 
+static void editor_events(t_env *e)
+{
+	if (e->event.key.keysym.scancode == SDL_SCANCODE_TAB && e->event.type == SDL_KEYDOWN)
+		
+}
+
 void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        if (env->event.key.keysym.scancode == SDLK_m
-		&& env->event.type == SDL_KEYDOWN)
-            printf("MENU\n");
+		if (env->state == FORGE)
+		{
+			editor_events(env);
+		}
+		else
+		{
+			if (env->event.key.keysym.scancode == SDLK_m
+			&& env->event.type == SDL_KEYDOWN)
+				printf("MENU\n");
             //menu(env->winsurf, 2);
-        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
-		&& env->event.type == SDL_KEYDOWN)
-        || env->event.type == SDL_QUIT)
-            ft_exit(env, "fini\n", 1);
-        key_tab(env);
+		}
+		if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE && env->event.type == SDL_KEYDOWN) || env->event.type == SDL_QUIT)
+				ft_exit(env, "fini\n", 1);
+		key_tab(env);
     }
     camera_event(env);
     mesh_rot_event(env, env->usr.event_i_mesh);

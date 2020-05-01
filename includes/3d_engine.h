@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/01 12:12:43 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/01 16:16:59 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,20 @@
 # define DEV 1
 # define TEST 2
 
-typedef enum            e_state
+typedef enum		e_state
 {
-		MENU = 0,
-		GAME,
-		PAUSE,
-		OPTION,
-		FORGE
-}						t_state;
+	MENU = 0,
+	GAME,
+	PAUSE,
+	OPTION,
+	FORGE
+}					t_state;
+
+typedef enum		e_list_choice
+{
+	WEAPON = 0,
+	TOOL
+}					t_list_choice;
 
 typedef struct      s_image
 {
@@ -271,6 +277,7 @@ typedef struct              s_env
     SDL_Texture             *menu3;
     SDL_Surface             *tmp;
 	int						state;
+	int						l_choice;
 }                           t_env;
 
 /*
