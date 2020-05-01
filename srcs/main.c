@@ -1,5 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
+
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -34,21 +33,29 @@ static void        setup(t_env *env, int ac, char **av)
 
     if (ac >= 2)
     {
-        env->nbmesh = ac - 1;
-        if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
-            ft_exit(env, "Mesh Alloc Error", 0); 
-        i = 1;
-        mi = 0;
-        while (i < ac)
-        {
-            env->mesh_id = mi;
-            env->mesh[mi] = obj_parser(av[i], env);
-            env->mesh[mi].color = colorset(env, mi);
-            env->mesh[mi].name = av[i];
-            mi++;
-            i++;
-        }
-    }
+		if (!ft_strcmp(av[1], "editor"))
+		{
+			 printf("editor\n");
+			init_editor(ac, env);
+		}
+		else
+		{
+        	env->nbmesh = ac - 1;
+        	if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
+            	ft_exit(env, "Mesh Alloc Error", 0); 
+        	i = 1;
+        	mi = 0;
+        	while (i < ac)
+        	{
+				env->mesh_id = mi;
+				env->mesh[mi] = obj_parser(av[i], env);
+          		env->mesh[mi].color = colorset(env, mi);
+            	env->mesh[mi].name = av[i];
+            	mi++;
+            	i++;
+        	}
+		}
+	}
     else
     {
         printf("cube init\n");
@@ -70,7 +77,8 @@ int         main(int ac, char **av)
     {
         framerate(&env);
         (env.usr.f[env.usr.platform])((void*)&env);
-    }
+    	ui_manager(&env);
+	}
     return (0);
 }
 

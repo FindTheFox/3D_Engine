@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/04/28 23:28:50 by user42           ###   ########.fr        #
+#    Updated: 2020/05/01 11:07:27 by brpinto          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ all: 		obj $(FT_LIB) $(NAME)
 
 obj:
 			mkdir -p $(OBJDIR)
-			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform
+			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform $(OBJDIR)/editor
 
 
 $(FT_LIB):

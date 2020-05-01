@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3d_engine.h                                         :+:      :+:    :+:   */
+/*   3d_engine.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/02/19 20:21:06 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/01 11:13:58 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
+void        init_editor(int ac, t_env *env);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
@@ -384,4 +385,9 @@ int         colorset(t_env *e, int i);
 
 void            thread_init(t_env *e, t_thread *thread);
 
+/*
+**Editor
+*/
+
+void            ui_manager(t_env *env);
 #endif
