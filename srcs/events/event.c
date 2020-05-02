@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/01 16:53:40 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/02 20:07:10 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static void         key_tab(t_env *e)
 static void editor_events(t_env *e)
 {
 	if (e->event.key.keysym.scancode == SDL_SCANCODE_TAB && e->event.type == SDL_KEYDOWN)
-		
+		printf("l_choice = %d\n", e->l_choice);
 }
 
 void                event(t_env *env)

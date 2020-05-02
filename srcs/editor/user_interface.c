@@ -6,11 +6,23 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:25:38 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/01 12:30:46 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/02 21:20:26 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
+
+static void	list_choice(t_env *e)
+{
+	if (compare_keyb(e, SDL_SCANCODE_TAB))
+	{
+		printf("SAME");
+		if (e->l_choice < ROOM)
+			e->l_choice++;
+		 else
+			e->l_choice = 0;
+	}
+}
 
 static void draw_area(t_env *e, int row_start, int col_start, int h, int w)
 {
@@ -54,6 +66,7 @@ static void editor_ui(t_env *e)
 	ui_min = W_W - (W_W / 3);
 	draw_v(e);
 	draw_area(e, 40, (ui_min + 40), 20, ((ui_min / 3)));
+	list_choice(e);
 }
 
 void    ui_manager(t_env *e)

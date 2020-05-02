@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 12:06:03 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/01 12:23:31 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/02 21:03:24 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int         main(int ac, char **av)
     while (env.end)
     {
         framerate(&env);
+		key_events(&env);
 		if (env.state == GAME || env.state == FORGE)
 			(env.usr.f[env.usr.platform])((void*)&env);
 		ui_manager(&env);

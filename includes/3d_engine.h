@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/01 16:16:59 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/02 21:29:31 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ typedef enum		e_state
 typedef enum		e_list_choice
 {
 	WEAPON = 0,
-	TOOL
+	TOOL,
+	ROOM,
+	OUT
 }					t_list_choice;
 
 typedef struct      s_image
@@ -278,6 +280,8 @@ typedef struct              s_env
     SDL_Surface             *tmp;
 	int						state;
 	int						l_choice;
+	Uint8                   *keyb_curr;
+	Uint8                   keyb_prev[283];
 }                           t_env;
 
 /*
@@ -301,6 +305,9 @@ int         lumiere(t_env *e, t_vec normal);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);
+void		key_events(t_env *env);
+int			compare_keyb(t_env *e, int key);
+
 /*
 **  Platforming
 */
