@@ -31,7 +31,7 @@
 # define MIN_TO_CLIP 256
 # define MIN_TO_RASTER 16384
 
-# define NB_THREAD 35
+# define NB_THREAD 8
 
 //DEFINE TEST MENU
 # define EXIT_MENU 0
@@ -123,6 +123,7 @@ typedef struct      s_triangle
     int             color;
     int             mesh_id;
     int             screen_pos;
+    int             tri_id;
 }                   t_triangle;
 
 typedef struct      s_matrix
@@ -188,13 +189,21 @@ typedef struct              s_color
     int                     *tab;
 }                           t_color;
 
+typedef struct              s_dbuff
+{
+    float                   w;
+    int                     mesh_id;
+    int                     tri_id;
+    int                     color;
+}                           t_dbuff;
+
 /*
 ** Structure of User utilisation
 */
 
 typedef struct              s_usr
 {
-    int                     event_i_mesh;
+    int                     select_mesh;
     int                     opt_mesh;
     int                     shift;
     unsigned int            platform;
@@ -231,7 +240,7 @@ typedef struct              s_env
     float                   frametime;
     float                   yaw;
     float                   xaw;
-    float                   *depth_buff;
+    t_dbuff                 *depth_buff;
     int                     *pixel_buff;
     int                     wx;
     int                     wy;
@@ -272,6 +281,7 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
+void        set_matrice(t_env *e);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
@@ -304,16 +314,16 @@ void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
 **Matrice calcul and init
 */
 
-void        init_matrix_proj(t_env *e);
-void        init_matrix_rotx(t_matrix *m, float theta);
-void        init_matrix_rotz(t_matrix *m, float theta);
-void        init_matrix_roty(t_matrix *m, float theta);
+void            init_matrix_proj(t_env *e);
+void            init_matrix_rotx(t_matrix *m, float theta);
+void            init_matrix_rotz(t_matrix *m, float theta);
+void            init_matrix_roty(t_matrix *m, float theta);
 t_matrix        matrix_mult_matrix(t_matrix m1, t_matrix m2);
-void        init_matrix_translation(t_matrix *m, t_vec v);
-void        init_matrix_identity(t_matrix *m);
+void            init_matrix_translation(t_matrix *m, t_vec v);
+void            init_matrix_identity(t_matrix *m);
 void			quickinversematrix(t_matrix *mat, t_matrix mat_pointat);
 void			pointatmatrix(t_matrix *matrix, t_vec pos, t_vec target, t_vec up);
-t_triangle          matrix_mult_triangle(t_matrix m, t_triangle tri);
+void            matrix_mult_triangle(t_matrix m, t_triangle *tri);
 
 /*
 **Vector calcul
@@ -363,7 +373,7 @@ void	starting_swap(t_triangle *t);
 
 void        event(t_env *env);
 void        camera_event(t_env *e);
-void        mesh_rot_event(t_env *e, int event_i_mesh);
+void        mesh_rot_event(t_env *e, int select_mesh);
 void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
@@ -383,5 +393,14 @@ int         colorset(t_env *e, int i);
 */
 
 void            thread_init(t_env *e, t_thread *thread);
+
+
+
+
+
+
+
+void            printmatrix(t_matrix m);
+
 
 #endif

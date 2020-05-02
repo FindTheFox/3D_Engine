@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_calc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 23:43:47 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/19 21:59:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/02 01:50:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,10 @@ t_vec            vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, f
 
     vec[1] = vectornormal(vec[1]);
     plane_d = -vectorproduct(vec[1], vec[0]);
-    // printf("plane_d %f\n", plane_d);
     ad = vectorproduct(linestart, vec[1]);
     bd = vectorproduct(lineend, vec[1]);
     t = (-plane_d - ad) / (bd - ad);
     *t_out = t;
-    // printf("t_out %f \n", t);
     linestarttoend = vectorsub(lineend, linestart);
     linetointersect = vectormult(linestarttoend, t);
     return (vectoradd(linestart, linetointersect));

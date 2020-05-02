@@ -25,6 +25,7 @@ SRCS_FILE	=	main.c \
 				obj_parser/printf_stuff.c \
 				init/init_sdl.c \
 				init/init_data.c \
+				init/set_matrix.c \
 				tools.c\
 				events/menu.c \
 				events/user.c \

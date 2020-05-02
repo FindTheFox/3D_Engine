@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 03:51:34 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 02:58:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static void                switch_i_mesh(t_env *e)
 {
     if (e->key[NUM0])
     {
-        if (e->usr.event_i_mesh < e->nbmesh - 1)
-            ++e->usr.event_i_mesh;
+        if (e->usr.select_mesh < e->nbmesh - 1)
+            ++e->usr.select_mesh;
         else
-            e->usr.event_i_mesh = 0;
-        printf("Selected MESH: %s\n", e->mesh[e->usr.event_i_mesh].name);
+            e->usr.select_mesh = 0;
+        printf("Selected MESH: %s\n", e->mesh[e->usr.select_mesh].name);
         e->key[NUM0] = 0;
     }
 }
@@ -85,7 +85,7 @@ void                mesh_rot_event(t_env *e, int index_mesh)
     {
         switch_i_mesh(e);
         switch_mesh_mod(e);
-        e->usr.opt_mesh == 0 ? move_event(e, e->usr.event_i_mesh) : 0; 
-        e->usr.opt_mesh == 1 ? rot_event(e, e->usr.event_i_mesh) : 0;
+        e->usr.opt_mesh == 0 ? move_event(e, e->usr.select_mesh) : 0; 
+        e->usr.opt_mesh == 1 ? rot_event(e, e->usr.select_mesh) : 0;
     }
 }

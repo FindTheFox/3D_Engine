@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 00:34:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 02:58:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void                event(t_env *env)
         key_tab(env);
     }
     camera_event(env);
-    mesh_rot_event(env, env->usr.event_i_mesh);
+    mesh_rot_event(env, env->usr.select_mesh);
     user_events(env);
     dev_event(env);
 }

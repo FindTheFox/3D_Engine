@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 03:15:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 01:52:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matroty, e->mlist.matrotx);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
     
-    tmp = vectoradd(e->mesh[e->mesh_id].dir, (t_vec){0.0f, 0.0f, e->zoom});
+    tmp = vectoradd(e->mesh[e->mesh_id].dir, (t_vec){0.0f, 0.0f, e->zoom, 0});
     init_matrix_translation(&e->mesh[e->mesh_id].mattrans, tmp);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mesh[e->mesh_id].mattrans);
 }
@@ -55,9 +55,9 @@ void        matrix_view(t_env *e)
     t_vec           up;
     t_vec           target;
 
-    e->vlist.lookdir = (t_vec){ 0,0,1,0 };
-    up = (t_vec){ 0,-1,0,0 };
-    target = (t_vec){ 0,0,1,0 };
+    e->vlist.lookdir = (t_vec){ 0,0,1,1 };
+    up = (t_vec){ 0,-1,0,1 };
+    target = (t_vec){ 0,0,1,1 };
  
     init_matrix_roty(&e->mlist.camroty, ft_to_radian(e->yaw) * 15);
     init_matrix_rotx(&e->mlist.camrotx, ft_to_radian(e->xaw) * 9); 

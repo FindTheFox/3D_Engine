@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 00:01:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 03:25:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void         small_triangle(t_clip clip, t_triangle out[2], t_vec vec[2])
     out[0].p[1] = vec_inter_plane(vec, clip.in[0], clip.out[0], &t);
     out[0].tx[1].u = t * (clip.tx_out[0].u - clip.tx_in[0].u) + clip.tx_in[0].u;
     out[0].tx[1].v = t * (clip.tx_out[0].v - clip.tx_in[0].v) + clip.tx_in[0].v;
-    out[0].tx[2].w = t * (clip.tx_out[0].w - clip.tx_in[0].w) + clip.tx_in[0].w;
+    out[0].tx[1].w = t * (clip.tx_out[0].w - clip.tx_in[0].w) + clip.tx_in[0].w;
     
     out[0].p[2] = vec_inter_plane(vec, clip.in[0], clip.out[1], &t);
     out[0].tx[2].u = t * (clip.tx_out[0].u - clip.tx_in[0].u) + clip.tx_in[0].u;
@@ -38,7 +38,6 @@ static void          quad_triangle(t_clip clip, t_triangle out[2], t_vec vec[2])
     out[0].p[1] = clip.in[1];
     out[0].tx[0] = clip.tx_in[0];
     out[0].tx[1] = clip.tx_in[1];
-    
     out[0].p[2] = vec_inter_plane(vec, clip.in[0], clip.out[0], &t);
     out[0].tx[2].u = t * (clip.tx_out[0].u - clip.tx_in[0].u) + clip.tx_in[0].u;
     out[0].tx[2].v = t * (clip.tx_out[0].v - clip.tx_in[0].v) + clip.tx_in[0].v; 
@@ -48,7 +47,6 @@ static void          quad_triangle(t_clip clip, t_triangle out[2], t_vec vec[2])
     out[1].tx[0] = clip.tx_in[1];
     out[1].p[1] = out[0].p[2];
     out[1].tx[1] = out[0].tx[2];
-
     out[1].p[2] = vec_inter_plane(vec, clip.in[1], clip.out[0], &t);
     out[1].tx[2].u = t * (clip.tx_out[0].u - clip.tx_in[1].u) + clip.tx_in[1].u;
     out[1].tx[2].v = t * (clip.tx_out[0].v - clip.tx_in[1].v) + clip.tx_in[1].v; 
@@ -61,21 +59,29 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     
     if (clip->inside == 1 && clip->outside == 2)
     {
+        small_triangle(*clip, out, vec);       
         out[0].color = in.color;//0x0000ff;
         out[0].tex = in.tex;
+        out[0].mesh_id = in.mesh_id;
+        out[0].screen_pos = in.screen_pos;
+        out[1].color = in.color;//0x00ff00;
+        out[1].tex = in.tex;
+        out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);
-        small_triangle(*clip, out, vec);       
         return (1);
     }
     else if (clip->inside == 2 && clip->outside == 1)
     {
+        quad_triangle(*clip, out, vec);
         out[0].color = in.color;//0xff0000;
-        out[1].color = in.color;//0x00ff00;
         out[0].tex = in.tex;
+        out[0].mesh_id = in.mesh_id;
+        out[0].screen_pos = in.screen_pos;
+        out[1].color = in.color;//0x00ff00;
         out[1].tex = in.tex;
+        out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);
         pass_data(&out[1], in);
-        quad_triangle(*clip, out, vec);
         return (2);
     }
     return (0);

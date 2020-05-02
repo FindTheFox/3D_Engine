@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/04/28 23:28:50 by user42           ###   ########.fr        #
+#    Updated: 2020/05/02 01:56:35 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ HEADER	=	$(addprefix $(INCDIR)/,$(INC_FILE))
 
 # compiler
 CC		=	gcc #-g -fsanitize=address
-CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
+CFLAGS	=	-Ofast #-march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
 	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image

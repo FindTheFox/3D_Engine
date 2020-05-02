@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:33:38 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/27 20:02:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 02:55:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ uint32_t		get_pixel(SDL_Surface *img, float tx, float ty)
 
 void        draw_triangle(t_env *e, t_triangle t)
 {
-    ft_line(e, t.p[0], t.p[1], 0xffffff);
-    ft_line(e, t.p[0], t.p[2], 0xffffff);
-    ft_line(e, t.p[1], t.p[2], 0xffffff);
+    ft_line(e, t.p[0], t.p[1], 0xff0000);
+    ft_line(e, t.p[0], t.p[2], 0xff0000);
+    ft_line(e, t.p[1], t.p[2], 0xff0000);
 }
-
 void        sdl_render(t_env *e)
 {
     int i;
