@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 02:58:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 01:37:47 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ static void         key_tab(t_env *e)
 
 void                event(t_env *env)
 {
+    SDL_SetRelativeMouseMode(env->usr.mouse_motion);
     while (SDL_PollEvent(&env->event))
     {
         if (env->event.key.keysym.scancode == SDLK_m

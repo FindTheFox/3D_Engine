@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:03:00 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 03:18:42 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 01:43:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,9 @@ void                camera_rot_mouse(t_env *e)
 	    SDL_GetRelativeMouseState(&(e->mouse.xrel), &(e->mouse.yrel));
         camera_rot_mouse_calc(e);
         
-        if (abs(e->mouse.xrel) > W_W / 2 || abs(e->mouse.yrel) > W_H / 2
-	    || e->mouse.x > e->wx + W_W - 1
-	    || e->mouse.x < e->wx
-	    || e->mouse.y > e->wy + W_H - 1
-	    || e->mouse.y < e->wy)
-	    	SDL_WarpMouseGlobal(e->wx + (W_W / 2),
-	    		e->wy + (W_H / 2));
-    	SDL_FlushEvent(SDL_MOUSEMOTION);
+    	//SDL_WarpMouseGlobal(e->wx + (W_W / 2),
+	    //		e->wy + (W_H / 2));
+        SDL_FlushEvent(SDL_MOUSEMOTION);
         e->key[MOUSE] = 0;
     }
 }

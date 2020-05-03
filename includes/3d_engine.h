@@ -142,7 +142,7 @@ typedef struct      s_mesh
     t_vec           dir;
     int             color;
     SDL_Surface     *img;
-    char            *name;          //FREE ?
+    char            *name;         //FREE ?
 }                   t_mesh;
 
 
@@ -221,7 +221,6 @@ typedef struct              s_usr
 /*
 ** Structure Principale
 */
-
 typedef struct              s_env
 {
     bool                    end;
@@ -254,6 +253,8 @@ typedef struct              s_env
     t_mesh                  *mesh;
     int                     nbmesh;
     int                     mesh_id;
+    t_dyntab                world_obj;
+    int                     obj_on_world;
     t_usr                   usr;
     t_color                 color;
     t_rgba                  rgba;
@@ -281,14 +282,15 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
+void        init_world(t_env *e);
 void        set_matrice(t_env *e);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
 void        matrix_view(t_env *e);
-void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta);
-int         lumiere(t_env *e, t_vec normal);
+void        matrix_world(t_env *e, t_mesh *obj);
+int         lumiere(t_env *e, t_vec normal, int *color);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);

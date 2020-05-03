@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 01:52:07 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 01:14:03 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void       center(t_vec *out)
         //return(*out);
 }
 
-int         lumiere(t_env *e, t_vec normal)
+int         lumiere(t_env *e, t_vec normal, int *color)
 {
     float   dp;
     
@@ -28,24 +28,24 @@ int         lumiere(t_env *e, t_vec normal)
     //dp = vectorproduct(normal, e->vlist.light_dir);
     
     if (e->usr.color)
-        return (color_shading(e->mesh[e->mesh_id].color, dp));
+        *color = color_shading(*color, dp);
     else
-        return (color_shading(0xffffff, dp));
+        *color = color_shading(0xffffff, dp);
 }
 
-void        matrix_world(t_env *e, float xtheta, float ytheta, float ztheta)
+void        matrix_world(t_env *e, t_mesh *obj)
 {
     t_vec tmp;
 
-    init_matrix_rotz(&e->mlist.matrotz, ztheta);
-    init_matrix_rotx(&e->mlist.matrotx, xtheta);
-    init_matrix_roty(&e->mlist.matroty, ytheta);
+    init_matrix_rotz(&e->mlist.matrotz, obj->ztheta);
+    init_matrix_rotx(&e->mlist.matrotx, obj->xtheta);
+    init_matrix_roty(&e->mlist.matroty, obj->ytheta);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matroty, e->mlist.matrotx);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
     
-    tmp = vectoradd(e->mesh[e->mesh_id].dir, (t_vec){0.0f, 0.0f, e->zoom, 0});
-    init_matrix_translation(&e->mesh[e->mesh_id].mattrans, tmp);
-    e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mesh[e->mesh_id].mattrans);
+    tmp = vectoradd(obj->dir, (t_vec){0.0f, 0.0f, e->zoom, 0});
+    init_matrix_translation(&obj->mattrans, tmp);
+    e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, obj->mattrans);
 }
 
 void        matrix_view(t_env *e)

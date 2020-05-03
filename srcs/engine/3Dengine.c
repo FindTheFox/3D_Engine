@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 03:26:08 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 01:05:29 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int        normalize(t_env *e, t_triangle tri, int *color)
     vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
     {
-        *color = lumiere(e, normal);
+        lumiere(e, normal, color);
         return (1);
     }
     return (0);
@@ -102,26 +102,27 @@ static int        normalize(t_env *e, t_triangle tri, int *color)
 
 void        engine_3d(t_env *env)
 {
-    int     i;
-    int     j;
-    t_triangle triprojected;
+    int         i;
+    int         j;
+    t_triangle  triprojected;
+    t_mesh      *obj;
     int         color;
 
     //do_camera rot/move
     matrix_view(env);
     i = -1;
-    while (++i < env->nbmesh)
+    while (++i < env->obj_on_world)
     {
         env->mesh_id = i;
-        //do mesh rot/move
-        matrix_world(env, env->mesh[i].xtheta, env->mesh[i].ytheta, env->mesh[i].ztheta);
+        obj = (t_mesh*)dyaddress(&env->world_obj, i);
+        matrix_world(env, obj);
         j = -1;
-        while (++j < env->mesh[i].size)
+        while (++j < obj->size)
         {
-            
-            triprojected = env->mesh[i].tris[j];
+            triprojected = obj->tris[j];
             triprojected.tri_id = j;
             matrix_mult_triangle(env->mlist.matworld, &triprojected);
+            color = obj->color;
             if (normalize(env, triprojected, &color) == 1)
                 projection(env, triprojected, color);
         }
