@@ -378,6 +378,7 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
+int		menu(SDL_Surface *screen, int menu);
 
 /*
 **Color
