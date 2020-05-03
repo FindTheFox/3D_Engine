@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 12:06:03 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/02 21:03:24 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/03 16:00:13 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void        setup(t_env *env, int ac, char **av)
 		if (!ft_strcmp(av[1], "editor"))
 		{
 			printf("editor\n");
-			init_editor(ac, env);
+			env->state = FORGE;
 		}
 		else
 		{
@@ -57,32 +57,30 @@ static void        setup(t_env *env, int ac, char **av)
         	}
 		}
 	}
-    else
+/*    else
     {
-		env->state = GAME;
-        printf("cube init\n");
-        env->nbmesh = 1;
-        init_cube(env);
-    }
+//		env->state = GAME;
+//		printf("cube init\n");
+//		env->nbmesh = 1;
+//		init_cube(env);
+    }*/
     init_sdl(env);
     init_data(env);
 }
 
 int         main(int ac, char **av)
 {
-    t_env   env;
+	t_env   env;
 
-    ft_memset(&env, 0, sizeof(t_env));
-    setup(&env, ac, av);
-    env.end = 1;
-    while (env.end)
-    {
-        framerate(&env);
+	ft_memset(&env, 0, sizeof(t_env));
+	setup(&env, ac, av);
+	env.end = 1;
+	while (env.end)
+	{
+		framerate(&env);
 		key_events(&env);
-		if (env.state == GAME || env.state == FORGE)
-			(env.usr.f[env.usr.platform])((void*)&env);
-		ui_manager(&env);
+		(env.usr.f[env.usr.platform])((void*)&env);
+		state_route(&env);
 	}
-    return (0);
+	return (0);
 }
-

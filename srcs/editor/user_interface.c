@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:25:38 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/02 21:20:26 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/03 15:59:08 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	list_choice(t_env *e)
 {
 	if (compare_keyb(e, SDL_SCANCODE_TAB))
 	{
-		printf("SAME");
+		printf("l_choice = %d\n", e->l_choice);
 		if (e->l_choice < ROOM)
 			e->l_choice++;
-		 else
+		else
 			e->l_choice = 0;
 	}
 }
@@ -57,21 +57,30 @@ static void draw_v(t_env *e)
 	}
 }
 
-static void editor_ui(t_env *e)
+static void	editor_ui(t_env *e)
 {
-	int x;
-	int y;
 	int ui_min;
 
 	ui_min = W_W - (W_W / 3);
 	draw_v(e);
 	draw_area(e, 40, (ui_min + 40), 20, ((ui_min / 3)));
 	list_choice(e);
+
 }
 
-void    ui_manager(t_env *e)
+void editor(t_env *e)
 {
-	SDL_ShowCursor(SDL_ENABLE);
+	printf("state = %d\n", e->state);
+	init_editor(e);
+	editor_ui(e);
+}
+
+void    state_route(t_env *e)
+{
 	if (e->state == FORGE)
-		editor_ui(e);
+		editor(e);
+	if (e->state == GAME)
+		printf("GAME\n");
+	if (e->state == MENU)
+		printf("MENU\n");
 }

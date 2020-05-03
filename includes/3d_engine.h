@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 21:29:31 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/03 15:41:16 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,7 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
-void        init_editor(int ac, t_env *env);
+void        init_editor(t_env *env);
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
@@ -305,8 +305,7 @@ int         lumiere(t_env *e, t_vec normal);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);
-void		key_events(t_env *env);
-int			compare_keyb(t_env *e, int key);
+void		state_route(t_env *env);
 
 /*
 **  Platforming
@@ -394,6 +393,8 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
+void		key_events(t_env *env);
+int			compare_keyb(t_env *e, int key);
 
 /*
 **Color
@@ -414,5 +415,5 @@ void            thread_init(t_env *e, t_thread *thread);
 **Editor
 */
 
-void            ui_manager(t_env *env);
+void		editor(t_env *e);
 #endif
