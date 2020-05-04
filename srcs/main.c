@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 12:06:03 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/03 16:00:13 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/04 14:59:10 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,58 @@
 
 static void     framerate(t_env *e)
 {
-    float           oldtime;
-    int             fps;
+	float           oldtime;
+	int             fps;
 
-    oldtime = e->time;
-    e->time = SDL_GetTicks();
-    e->theta = (e->time - oldtime) / 1000;
-    fps = 1.0 / e->theta;
-    if (e->usr.fps)
-        printf("FPS: %d\n", fps);
-    SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
+	oldtime = e->time;
+	e->time = SDL_GetTicks();
+	e->theta = (e->time - oldtime) / 1000;
+	fps = 1.0 / e->theta;
+	if (e->usr.fps)
+		printf("FPS: %d\n", fps);
+	SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
 }
 
 static void        setup(t_env *env, int ac, char **av)
 {
-    int     i;
-    int     mi;
+	int		i;
+	int		mi;
 
-    if (ac >= 2)
-    {
+	if (ac >= 2)
+	{
 		if (!ft_strcmp(av[1], "editor"))
 		{
 			printf("editor\n");
-			env->state = FORGE;
+			env->usr.platform = FORGE;
 		}
 		else
 		{
 			env->state = GAME;
-        	env->nbmesh = ac - 1;
-        	if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
-            	ft_exit(env, "Mesh Alloc Error", 0); 
-        	i = 1;
-        	mi = 0;
-        	while (i < ac)
-        	{
+			env->nbmesh = ac - 1;
+			if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
+				ft_exit(env, "Mesh Alloc Error", 0); 
+			i = 1;
+			mi = 0;
+			while (i < ac)
+			{
 				env->mesh_id = mi;
 				env->mesh[mi] = obj_parser(av[i], env);
-          		env->mesh[mi].color = colorset(env, mi);
-            	env->mesh[mi].name = av[i];
-            	mi++;
-            	i++;
-        	}
+				env->mesh[mi].color = colorset(env, mi);
+				env->mesh[mi].name = av[i];
+				mi++;
+				i++;
+			}
 		}
 	}
-/*    else
-    {
-//		env->state = GAME;
-//		printf("cube init\n");
-//		env->nbmesh = 1;
-//		init_cube(env);
-    }*/
-    init_sdl(env);
-    init_data(env);
+	/*    else
+		  {
+	//		env->state = GAME;
+	//		printf("cube init\n");
+	//		env->nbmesh = 1;
+	//		init_cube(env);
+	}*/
+	init_sdl(env);
+	init_data(env);
 }
 
 int         main(int ac, char **av)
@@ -80,7 +80,6 @@ int         main(int ac, char **av)
 		framerate(&env);
 		key_events(&env);
 		(env.usr.f[env.usr.platform])((void*)&env);
-		state_route(&env);
 	}
 	return (0);
 }
