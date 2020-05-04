@@ -49,12 +49,12 @@ static void        setup(t_env *env, int ac, char **av)
             i++;
         }
     }
-    else
+    /*else
     {
         printf("cube init\n");
         env->nbmesh = 1;
         init_cube(env);
-    }
+    }*/
     init_sdl(env);
     init_data(env);
 }

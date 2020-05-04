@@ -1,7 +1,7 @@
 #include "../../includes/3d_engine.h"
 
 // TEST MENU
-int menu(SDL_Surface* screen, int menu)//Menu
+int menu(t_env *env, int menu)//Menu
 {
     SDL_ShowCursor(SDL_ENABLE);
     int continuer = 1, buttonRequest = 1; //buttonRequest renvoie une valeur selon où a cliqué l'utilisateur
@@ -17,12 +17,10 @@ int menu(SDL_Surface* screen, int menu)//Menu
         exit(0);
     }
  
-    while(menu)
-    {
  
         if(menu == MAIN_MENU)
         {
-            SDL_FillRect(screen, NULL, 0x00000000);
+            SDL_FillRect(env->winsurf, NULL, 0x00000000);
             // clearScreen(screen); // REMPLIR L'ECRAN DE L'IMAGE MEUNU
             TTF_Font* font = TTF_OpenFont("includes/assets/AmazDooMLeft.ttf", 100);
             if(!(text = TTF_RenderText_Shaded(font, "DooM", textColor, bgColor)))
@@ -30,90 +28,90 @@ int menu(SDL_Surface* screen, int menu)//Menu
                     printf("%s\n", TTF_GetError());
                 }
             printf("text w = %d\n", text->w);
-            textPos.x = (screen->w - text->w) / 2;
+            textPos.x = (env->winsurf->w - text->w) / 2;
             textPos.y = 30;
-            SDL_BlitSurface(text, NULL, screen, &textPos);
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
             printf("TEST\n");
             button = IMG_Load("includes/assets/tiles/buttonMenu.png");
             if(!button) 
                 printf("IMG_Load: %s\n", IMG_GetError());
-            button1Pos.x = button2Pos.x = button3Pos.x = (screen->w - button->w) / 2;
-            button1Pos.y = (screen->h / 2) - (button->h * 1.5) - BUTTON_MARGE;
-            if(SDL_BlitSurface(button, NULL, screen, &button1Pos) == -1)
+            button1Pos.x = button2Pos.x = button3Pos.x = (env->winsurf->w - button->w) / 2;
+            button1Pos.y = (env->winsurf->h / 2) - (button->h * 1.5) - BUTTON_MARGE;
+            if(SDL_BlitSurface(button, NULL, env->winsurf, &button1Pos) == -1)
                 printf("error blitsurface");
             button = IMG_Load("includes/assets/tiles/buttonMenu.png");
-            button2Pos.y = (screen->h - button->h) / 2;
-            SDL_BlitSurface(button, NULL, screen, &button2Pos);
+            button2Pos.y = (env->winsurf->h - button->h) / 2;
+            SDL_BlitSurface(button, NULL, env->winsurf, &button2Pos);
             button = IMG_Load("includes/assets/tiles/buttonMenu.png");
-            button3Pos.y = (screen->h + button->h) / 2 + BUTTON_MARGE;
-            SDL_BlitSurface(button, NULL, screen, &button3Pos);
+            button3Pos.y = (env->winsurf->h + button->h) / 2 + BUTTON_MARGE;
+            SDL_BlitSurface(button, NULL, env->winsurf, &button3Pos);
  
-            continuer = 1;
+            //continuer = 1;
         }
         else if(menu == CONTROLS_MENU)
         {
-            printf("TEST1\n");
-            SDL_FillRect(screen, NULL, 0x00000000);
+           /* printf("TEST1\n");
+            SDL_FillRect(env->winsurf, NULL, 0x00000000);
             // clearScreen(screen); // REMPLIR L'ECRAN DE L'IMAGE CONTROLS MENU
             TTF_Font *font = TTF_OpenFont("assets/AmazDooMLeft.ttf", 50);
  
-            textPos.x = screen->w / 3.5;
-            textPos.y = ((screen->h - 140) / 8) - (text->h / 2) + 40; //Blitage des définitions
+            textPos.x = env->winsurf->w / 3.5;
+            textPos.y = ((env->winsurf->h - 140) / 8) - (text->h / 2) + 40; //Blitage des définitions
             text = TTF_RenderText_Shaded(font, "Up (player 1)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + text->h  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + text->h  + 40;
             text = TTF_RenderText_Shaded(font, "Down (player 1)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 2) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 2) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "Left (player 1)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 4)  + 40;
+            SDL_BlitSurface(text, NULL, screeeen-n, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 4)  + 40;
             text = TTF_RenderText_Shaded(font, "Right (player 1)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 5) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 5) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "Up (player 2)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 7)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 7)  + 40;
             text = TTF_RenderText_Shaded(font, "Down (player 2)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 8) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 8) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "Left (player 2)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 10)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 10)  + 40;
             text = TTF_RenderText_Shaded(font, "Right (player 2)", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
  
-            textPos.x = screen->w / 2;
+            textPos.x = env->winsurf->w / 2;
  
-            textPos.y = ((screen->h - 140) / 8) - (text->h / 2) + 40; //Blitage des touches
+            textPos.y = ((env->winsurf->h - 140) / 8) - (text->h / 2) + 40; //Blitage des touches
             text = TTF_RenderText_Shaded(font, "\"I\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + text->h  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + text->h  + 40;
             text = TTF_RenderText_Shaded(font, "\"J\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 2) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 2) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "\"K\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 4)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 4)  + 40;
             text = TTF_RenderText_Shaded(font, "\"L\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 5) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 5) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "\"Z\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 7)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 7)  + 40;
             text = TTF_RenderText_Shaded(font, "\"Q\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 8) + (text->h / 2)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 8) + (text->h / 2)  + 40;
             text = TTF_RenderText_Shaded(font, "\"S\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
-            textPos.y = ((screen->h - 140) / 8) + (text->h * 10)  + 40;
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
+            textPos.y = ((env->winsurf->h - 140) / 8) + (text->h * 10)  + 40;
             text = TTF_RenderText_Shaded(font, "\"D\"", textColor, bgColor);
-            SDL_BlitSurface(text, NULL, screen, &textPos);
+            SDL_BlitSurface(text, NULL, env->winsurf, &textPos);
  
             button = IMG_Load("assets/tiles/buttonMenu.png");
             button1Pos.x = 25;
-            button1Pos.y = screen->h - 70;
-            SDL_BlitSurface(button, NULL, screen, &button1Pos);
+            button1Pos.y = env->winsurf->h - 70;
+            SDL_BlitSurface(button, NULL, env->winsurf, &button1Pos);*/
  
             continuer = 1;
         }
@@ -124,25 +122,27 @@ int menu(SDL_Surface* screen, int menu)//Menu
             button = IMG_Load("includes/assets/tiles/buttonMenu.png");
             //button = SDL_LoadBMP("doom.bmp");
             printf("caca");
-            printf("TEST2\n s->w %d\n", screen->w);
-            button1Pos.x = button2Pos.x = (screen->w - button->w) / 2;
-            button1Pos.y = (screen->h - BUTTON_MARGE) / 2 - button->h;
-            SDL_BlitSurface(button, NULL, screen, &button1Pos);
+            printf("TEST2\n s->w %d\n", env->winsurf->w);
+            button1Pos.x = button2Pos.x = (env->winsurf->w - button->w) / 2;
+            button1Pos.y = (env->winsurf->h - BUTTON_MARGE) / 2 - button->h;
+            SDL_BlitSurface(button, NULL, env->winsurf, &button1Pos);
             button = IMG_Load("includes/assets/tiles/buttonMenu.png");
             
-            button2Pos.y = (screen->h + BUTTON_MARGE) / 2;
-            SDL_BlitSurface(button, NULL, screen, &button2Pos);
+            button2Pos.y = (env->winsurf->h + BUTTON_MARGE) / 2;
+            SDL_BlitSurface(button, NULL, env->winsurf, &button2Pos);
             
-            continuer = 1;
+            //continuer = 1;
         }
  
         // SDL_Flip(screen);
  
-        while(continuer)
+        /*while(continuer)
         {
             while (SDL_PollEvent(&event))
             {
-                    if(event.type == SDL_QUIT)
+                    if((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+		                && env->event.type == SDL_KEYDOWN)
+                        || env->event.type == SDL_QUIT)
                     {
                         continuer = 0;
                         menu = EXIT_MENU;
@@ -188,8 +188,8 @@ int menu(SDL_Surface* screen, int menu)//Menu
                               }
                               else if(menu == PAUSE_MENU)
                               {
-                                  SDL_BlitSurface(saveScreen, &button1Pos, screen, &button1Pos);
-                                  SDL_BlitSurface(saveScreen, &button2Pos, screen, &button2Pos);
+                                  //SDL_BlitSurface(saveenv->winsurf, &button1Pos, env->winsurf, &button1Pos);
+                                  //SDL_BlitSurface(saveenv->winsurf, &button2Pos, env->winsurf, &button2Pos);
                                 //   SDL_Flip(screen);
                                   menu = EXIT_MENU;
                               }
@@ -228,8 +228,9 @@ int menu(SDL_Surface* screen, int menu)//Menu
                     }
                 SDL_Delay(20);
             }
-        }
-    }
+        }*/
+        menu = 0;
+
  
     SDL_FreeSurface(button);
     SDL_FreeSurface(text);

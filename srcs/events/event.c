@@ -12,7 +12,7 @@
 
 #include "../../includes/3d_engine.h"
 
-static void         key_tab(t_env *e)
+void         key_tab(t_env *e)
 {
     if (e->event.key.keysym.scancode == SDL_SCANCODE_W)
         e->key[W] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -89,17 +89,17 @@ void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        if (env->event.key.keysym.scancode == SDL_SCANCODE_0
+        /*if (env->event.key.keysym.scancode == SDL_SCANCODE_0
 		&& env->event.type == SDL_KEYDOWN)
         {
             //printf("MENU\n");
-            while(menu(env->winsurf, MAIN_MENU) != 1)
+            while(menu(env, MAIN_MENU) != 1)
                 {
                     printf("menu\n");
                     sdl_render(env);
                 }
-        }
-        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+        }*/
+        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
         || env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);

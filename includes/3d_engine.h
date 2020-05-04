@@ -218,6 +218,22 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
+typedef struct      s_menu
+{
+    SDL_Surface     *button;
+    SDL_Surface     *text;
+    SDL_Surface     *saveScreen;
+    SDL_Rect        button1Pos;
+    SDL_Rect        button2Pos;
+    SDL_Rect        button3Pos;
+    SDL_Rect        textPos;
+    SDL_Color       textColor;
+    SDL_Color       bgColor;
+    SDL_Surface             *menu1;
+    SDL_Surface             *menu2;
+    SDL_Surface             *menu3;
+}                   t_menu;
+
 /*
 ** Structure Principale
 */
@@ -252,6 +268,7 @@ typedef struct              s_env
     t_mlist                 mlist;
     t_fill                  fill;
     t_mesh                  *mesh;
+    t_menu                  menu; 
     int                     nbmesh;
     int                     mesh_id;
     t_usr                   usr;
@@ -265,9 +282,6 @@ typedef struct              s_env
     SDL_Renderer            *rend;
     SDL_Texture             *screen;
     SDL_Surface             *winsurf;
-    SDL_Texture             *menu1;
-    SDL_Texture             *menu2;
-    SDL_Texture             *menu3;
     SDL_Surface             *tmp;
 }                           t_env;
 
@@ -378,7 +392,11 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
-int		menu(SDL_Surface *screen, int menu);
+int		    menu(t_env *env, int menu);
+void        main_menu(t_env *env);
+void        pause_menu(t_env *env);
+void        event_MainMenu(t_env *env);
+void        key_tab(t_env *e);
 
 /*
 **Color

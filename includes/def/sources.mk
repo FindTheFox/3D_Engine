@@ -27,7 +27,7 @@ SRCS_FILE	=	main.c \
 				init/init_data.c \
 				init/set_matrix.c \
 				tools.c\
-				events/menu.c \
+				events/menu2.c \
 				events/user.c \
 				events/dev_events.c \
 				platform/select_platform.c
