@@ -397,9 +397,8 @@ int         colorset(t_env *e, int i);
 void            thread_init(t_env *e, t_thread *thread);
 
 
-
-
-
+void            place_obj(t_mesh *obj, t_vec pos);
+void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y);
 
 
 void            printmatrix(t_matrix m);

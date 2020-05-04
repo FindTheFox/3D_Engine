@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 00:47:41 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/04 17:19:27 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void         move_event(t_env *e, t_mesh *obj)
     vectormult(forward, 0.5);
     right = vectormult((t_vec){forward.z, 0, -forward.x, forward.w}, 0.5f);
     vectormult(right, 0.5);
+    //printf("2X : %f      Y: %f       Z: %f\n", right.x, right.y, right.z);
+    
     if (e->key[NUM8])
         obj->dir = vectoradd(obj->dir, forward);
     if (e->key[NUM5])
@@ -90,7 +92,10 @@ void                mesh_rot_event(t_env *e, int index_mesh)
             ft_exit(e, "DooM: Pull obj in dyntab failed\n", 0);
         switch_i_mesh(e, obj);
         switch_mesh_mod(e);
-        e->usr.opt_mesh == 0 ? move_event(e, obj) : 0; 
-        e->usr.opt_mesh == 1 ? rot_event(e, obj) : 0;
+        if (e->usr.forge)
+        {
+            e->usr.opt_mesh == 0 ? move_event(e, obj) : 0; 
+            e->usr.opt_mesh == 1 ? rot_event(e, obj) : 0;
+        }
     }
 }

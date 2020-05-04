@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 16:47:17 by user42            #+#    #+#             */
-/*   Updated: 2020/05/04 01:35:19 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/04 16:44:55 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void            select_pointing_tri(t_env *e, int pos)
 {
     int x;
     int y;
-    t_triangle *tri;
-    
+    t_triangle  *tri;
+
     if (!(tri = (t_triangle*)dyaddress(&e->to_raster, y)))
         ft_exit(e, "DooM: Fail dynarr tri load\nsrcs/event/dev_events.c\n", 0);
     if (pos < PX_NB && pos >= 0)
@@ -29,8 +29,10 @@ void            select_pointing_tri(t_env *e, int pos)
 
 void            dev_event(t_env *env)
 {
-    int     pos;
+    int         pos;
+    t_mesh      *obj;
 
+    obj = NULL;
     if (env->usr.forge)
     {
         SDL_GetMouseState(&env->mouse.x, &env->mouse.y);
@@ -40,12 +42,13 @@ void            dev_event(t_env *env)
         if (env->key[LCLICK])
         {
             //printf("MOUSE X: %d         MOUSE Y: %d\n", env->mouse.x, env->mouse.y);
-            printf("SCREENCOLOR: %x\n", get_color(env->winsurf, env->mouse.x, env->mouse.y));
-            printf("TRI_COLOR:  %x\n", env->depth_buff[pos].color);
-            printf("BUFF.W: %f\n\n", env->depth_buff[pos].w);
+            //printf("SCREENCOLOR: %x\n", get_color(env->winsurf, env->mouse.x, env->mouse.y));
+            //printf("TRI_COLOR:  %x\n", env->depth_buff[pos].color);
+            //printf("BUFF.W: %f\n\n", env->depth_buff[pos].w);
             //printf("TRI_ID: %d\n", env->depth_buff[pos].tri_id);
-            
-            env->key[LCLICK] = 0;
+            if(!(obj = (t_mesh*)dyaddress(&env->world_obj, env->usr.select_mesh)))
+                ft_exit(env, "DooM: Drag_and_Drop failed\n", 0);
+            drag_and_drop(env, obj, env->mouse.xrel, env->mouse.yrel);
         }
         if (env->key[RCLICK])
         {

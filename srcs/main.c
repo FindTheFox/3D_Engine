@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 00:03:38 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/04 16:06:09 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void     framerate(t_env *e)
     if (e->usr.fps)
         printf("FPS: %d\n", fps);
     SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
-
 }
 
 static void        setup(t_env *env, int ac, char **av)

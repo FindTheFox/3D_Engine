@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 01:05:29 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/04 18:11:16 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void        projection2(t_env *env, t_triangle triclip, int color)
     t_triangle triproj;
 
     matrix_mult_triangle(env->mlist.matproj, &triclip);
-
-    //take_texture_vec(&triprojected, tview);
-    //pass_data(&triprojected, tview);
 
     triproj = triclip;
 
@@ -70,9 +67,6 @@ void        projection(t_env *env, t_triangle triprojected, int color)
     int         nclip;
 
     matrix_mult_triangle(env->mlist.matview, &triprojected);
-    //take_texture_vec(&tview, triprojected);
-    //pass_data(&tview, triprojected);
-
     nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, &triprojected, clip);
 
     i = -1;

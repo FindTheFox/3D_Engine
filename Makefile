@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/05/03 17:25:27 by saneveu          ###   ########.fr        #
+#    Updated: 2020/05/04 16:08:36 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ all: 		obj $(FT_LIB) $(NAME)
 
 obj:
 			mkdir -p $(OBJDIR)
-			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform
+			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform $(OBJDIR)/obj_utils
 
 
 $(FT_LIB):
