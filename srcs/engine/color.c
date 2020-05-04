@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 00:45:42 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/30 04:46:23 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/02 02:06:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int         colorset(t_env *e, int i)
 		0x9d1f7f,
 		0x8d0e7f};
 	
-	*/
 	static int color[16] = {
 		65536 * 66 + 256 * 30 + 15,
 		65536 * 25 + 256 * 7 + 26,
@@ -78,7 +77,7 @@ int         colorset(t_env *e, int i)
 		65536 * 153 + 256 * 87 + 0,
 		65536 * 106 + 256 * 52 + 3};
 	
-	/*
+	*/
 	static int color[16] = {
 		0xffffff,
 		0xdfffff,
@@ -96,7 +95,7 @@ int         colorset(t_env *e, int i)
 		0x60,
 		0x3f,
 		0x1f};
-	*/
+	
 /*
 		static int color[16] = {
 		0xb2123e,

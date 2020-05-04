@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/03 15:10:44 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/04 16:49:08 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-static void         key_tab(t_env *e)
+static void	key_tab(t_env *e)
 {
 	if (e->event.key.keysym.scancode == SDL_SCANCODE_W)
 		e->key[W] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -106,7 +106,6 @@ static void         key_tab(t_env *e)
 		e->key[F11] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 	else if (e->event.key.keysym.scancode == SDL_SCANCODE_F12)
 		e->key[F12] = e->event.type == SDL_KEYDOWN ? 1 : 0;
-
 }
 
 /*static void editor_events(t_env *e)
@@ -117,19 +116,19 @@ static void         key_tab(t_env *e)
 
 void                event(t_env *env)
 {
-	while (SDL_PollEvent(&env->event))
-	{
-		if (env->event.key.keysym.scancode == SDLK_m
-				&& env->event.type == SDL_KEYDOWN)
-			printf("MENU\n");
-		//menu(env->winsurf, 2);
-		//		}
-		if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE && env->event.type == SDL_KEYDOWN) || env->event.type == SDL_QUIT)
-			ft_exit(env, "fini\n", 1);
-		key_tab(env);
-	}
-	camera_event(env);
-	mesh_rot_event(env, env->usr.event_i_mesh);
-	user_events(env);
-	dev_event(env);
+    SDL_SetRelativeMouseMode(env->usr.mouse_motion);
+    while (SDL_PollEvent(&env->event))
+    {
+        if (env->event.key.keysym.scancode == SDLK_m
+		&& env->event.type == SDL_KEYDOWN)
+            printf("MENU\n");
+            //menu(env->winsurf, 2);
+        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE && env->event.type == SDL_KEYDOWN) || env->event.type == SDL_QUIT)
+            ft_exit(env, "fini\n", 1);
+        key_tab(env);
+    }
+    camera_event(env);
+    mesh_rot_event(env, env->usr.select_mesh);
+    user_events(env);
+    dev_event(env);
 }

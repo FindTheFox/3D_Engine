@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 00:59:09 by user42            #+#    #+#             */
-/*   Updated: 2020/04/29 23:58:46 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 03:26:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ static void	write_pixel(t_env *env, t_filltex *fill, t_triangle *t, int dist[3])
 	SDL_Surface *sp;
 	int			color;
 
-	if (dist[2] <= PX_NB && fill->tex_w > env->depth_buff[dist[2]])
+	if (dist[2] <= PX_NB && fill->tex_w >= env->depth_buff[dist[2]].w)
 	{
 		if (t->tex == 1 && (sp = env->mesh[env->mesh_id].img))
 			color = get_pixel(sp, fill->tex_u / fill->tex_w, fill->tex_v / fill->tex_w);
 		else
 			color = t->color;
-		env->depth_buff[dist[2]] = fill->tex_w;
-		env->pixel_buff[dist[2]] = t->mesh_id;
+		env->depth_buff[dist[2]].w = fill->tex_w;
+		env->depth_buff[dist[2]].mesh_id = t->mesh_id;
+		env->depth_buff[dist[2]].tri_id = t->tri_id;
+		env->depth_buff[dist[2]].color = t->color;
 		put_pixel_txt(env, dist[2], color);
 	}
 }
@@ -137,7 +139,6 @@ void		fill_triangle_texture(t_env *env, t_triangle t)
 {
 	t_filltex	fill;
 
-	//fill = (t_texturizer){};
 	starting_swap(&t);
 	compute_gradients(&fill, t, false);
 	if (fill.dy1)

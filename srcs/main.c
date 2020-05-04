@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/01 12:06:03 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/04 14:59:10 by brpinto          ###   ########.fr       */
+/*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
+/*   Updated: 2020/05/04 16:53:09 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void        setup(t_env *env, int ac, char **av)
 	int		i;
 	int		mi;
 
+<<<<<<< HEAD
 	if (ac >= 2)
 	{
 		if (!ft_strcmp(av[1], "editor"))
@@ -66,6 +67,7 @@ static void        setup(t_env *env, int ac, char **av)
 	}*/
 	init_sdl(env);
 	init_data(env);
+    init_world(env);
 }
 
 int         main(int ac, char **av)

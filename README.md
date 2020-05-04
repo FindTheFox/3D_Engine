@@ -25,7 +25,7 @@ Project game Doom-Nukem like, for 42 school Paris
 *  Down:       `RCTRL`
 *  Sprint:     `LSHIFT`
 
-   <strong>    Forge</forge>
+   <strong>    Forge</strong>
 *  Select Object:                      `RIGHT_MOUSE` / `PNUM_0`
 *  Change Move Mode: (Rot 0 / Mov 1)   `PNUM_ENTER`
 *  Action:                             `PNUM_[1-9]`

@@ -6,11 +6,25 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:55:29 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/29 22:14:57 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 02:39:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/3d_engine.h"
+
+void            printmatrix(t_matrix m)
+{
+    int i;
+    int j;
+
+    i = -1;
+    while (++i < 4)
+    {
+        j = -1;
+        while (++j < 4)
+            printf("M[%d][%d]: %f\n", i, j, m.m[i][j]);
+    }
+}
 
 void        swap_vec(t_vec *v1, t_vec *v2)
 {
@@ -26,10 +40,10 @@ void        reset_pbuffer(t_env *e)
     x = 0;
     while (x < PX_NB - 4)
     {
-        e->depth_buff[x] = -INFINITY;
-        e->depth_buff[x + 1] = -INFINITY;
-        e->depth_buff[x + 2] = -INFINITY;
-        e->depth_buff[x + 3] = -INFINITY;
+        e->depth_buff[x].w = -INFINITY;
+        e->depth_buff[x + 1].w = -INFINITY;
+        e->depth_buff[x + 2].w = -INFINITY;
+        e->depth_buff[x + 3].w = -INFINITY;
         x += 4;
     }
 }

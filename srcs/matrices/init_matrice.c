@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:29:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/29 21:30:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/02 01:52:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,9 @@ void			pointatmatrix(t_matrix *matrix,	t_vec pos, t_vec target, t_vec up)
 	matrix->m[3][3] = 1;
 }
 
-t_triangle          matrix_mult_triangle(t_matrix m, t_triangle tri)
+void              matrix_mult_triangle(t_matrix m, t_triangle *tri)
 {
-    t_triangle triout;
-
-    triout = tri;
-    triout.p[0] = matrix_mult_vector(m, tri.p[0]);
-    triout.p[1] = matrix_mult_vector(m, tri.p[1]);
-    triout.p[2] = matrix_mult_vector(m, tri.p[2]);
-    return (triout);
+    tri->p[0] = matrix_mult_vector(m, tri->p[0]);
+    tri->p[1] = matrix_mult_vector(m, tri->p[1]);
+    tri->p[2] = matrix_mult_vector(m, tri->p[2]);
 }
