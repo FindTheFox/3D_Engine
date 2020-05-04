@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 17:12:41 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/04 21:30:05 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,11 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
+typedef	struct				s_editor
+{
+	int						display;
+}							t_editor;
+
 /*
 ** Structure Principale
 */
@@ -292,6 +297,7 @@ typedef struct              s_env
 	int						l_choice;
 	Uint8                   *keyb_curr;
 	Uint8                   keyb_prev[283];
+	t_editor				ed;
 }                           t_env;
 
 /*
@@ -427,7 +433,7 @@ void            thread_init(t_env *e, t_thread *thread);
 **Editor
 */
 
-void		editor(t_env *e);
+void			editor(t_env *e);
 void            printmatrix(t_matrix m);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 17:13:03 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/04 19:44:29 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,19 @@ static void        setup(t_env *env, int ac, char **av)
 
 	if (ac >= 2)
 	{
-		if (!ft_strcmp(av[1], "editor"))
+		env->nbmesh = ac - 1;
+		if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
+			ft_exit(env, "Mesh Alloc Error", 0); 
+		i = 1;
+		mi = 0;
+		while (i < ac)
 		{
-			printf("editor\n");
-			env->usr.platform = FORGE;
-		}
-		else
-		{
-			env->state = GAME;
-			env->nbmesh = ac - 1;
-			if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
-				ft_exit(env, "Mesh Alloc Error", 0); 
-			i = 1;
-			mi = 0;
-			while (i < ac)
-			{
-				env->mesh_id = mi;
-				env->mesh[mi] = obj_parser(av[i], env);
-				env->mesh[mi].color = colorset(env, mi);
-				env->mesh[mi].name = av[i];
-				mi++;
-				i++;
-			}
+			env->mesh_id = mi;
+			env->mesh[mi] = obj_parser(av[i], env);
+			env->mesh[mi].color = colorset(env, mi);
+			env->mesh[mi].name = av[i];
+			mi++;
+			i++;
 		}
 	}
 	/*    else
@@ -66,7 +57,7 @@ static void        setup(t_env *env, int ac, char **av)
 	}*/
 	init_sdl(env);
 	init_data(env);
-    init_world(env);
+	init_world(env);
 }
 
 int         main(int ac, char **av)
@@ -81,6 +72,7 @@ int         main(int ac, char **av)
 		framerate(&env);
 		key_events(&env);
 		(env.usr.f[env.usr.platform])((void*)&env);
+		editor(&env);
 	}
 	return (0);
 }
