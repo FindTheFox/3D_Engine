@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 16:54:08 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/04 17:12:41 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,12 +304,9 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
-<<<<<<< HEAD
 void        init_editor(t_env *env);
-=======
 void        init_world(t_env *e);
 void        set_matrice(t_env *e);
->>>>>>> master
 void        sdl_render(t_env *e);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);

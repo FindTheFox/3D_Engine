@@ -33,7 +33,7 @@ SRCS_FILE	=	main.c \
 				platform/select_platform.c \
 				init/init_editor.c \
 				editor/user_interface.c \
-				events/key_events.c
+				events/key_events.c \
 				init/init_world.c
 
 OBJ_DIRS =		engine \
