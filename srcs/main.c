@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 19:44:29 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/05 19:39:18 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void        setup(t_env *env, int ac, char **av)
 			env->mesh[mi] = obj_parser(av[i], env);
 			env->mesh[mi].color = colorset(env, mi);
 			env->mesh[mi].name = av[i];
+			env->mesh[mi].id = mi;
 			mi++;
 			i++;
 		}
@@ -72,7 +73,6 @@ int         main(int ac, char **av)
 		framerate(&env);
 		key_events(&env);
 		(env.usr.f[env.usr.platform])((void*)&env);
-		editor(&env);
 	}
 	return (0);
 }

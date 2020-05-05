@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 21:30:05 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/05 19:42:08 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct      s_mesh
     int             color;
     SDL_Surface     *img;
     char            *name;         //FREE ?
+	int				id;
 }                   t_mesh;
 
 
@@ -239,6 +240,7 @@ typedef struct              s_usr
 typedef	struct				s_editor
 {
 	int						display;
+	int						*selected_id;
 }							t_editor;
 
 /*

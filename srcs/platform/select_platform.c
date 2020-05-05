@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:43:32 by user42            #+#    #+#             */
-/*   Updated: 2020/05/04 19:47:44 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/05 18:57:16 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void                forge(void *env)
     t_env *e;
 
     e = (t_env *)env;
+    reset_pbuffer(e);
+    engine_3d(e);
+    event(e);
+    clear_dynarray(&e->to_raster); //test remove arr after do events for find triangle data
+    sdl_render(e);
+	editor(e);
 }
 
 void                gameplay(void *env)

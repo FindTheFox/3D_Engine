@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 19:22:01 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 19:40:04 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/05 18:56:35 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void     init_usr(t_env *e)
 {
     int i;
 
-    e->usr.platform = GAME;
+    e->usr.platform = FORGE;
     e->usr.mouse_ptr = 0;
     e->usr.draw_line = 0;
     e->usr.fill_text = 1;
