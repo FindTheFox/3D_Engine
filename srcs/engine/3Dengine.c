@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 18:11:16 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/06 01:27:08 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void        projection2(t_env *env, t_triangle triclip, int color)
     matrix_mult_triangle(env->mlist.matproj, &triclip);
 
     triproj = triclip;
-
     texture_perspective(env, &triproj);
     
     triproj.p[0] = vectordiv(triproj.p[0], triproj.p[0].w);
@@ -54,8 +53,9 @@ void        projection2(t_env *env, t_triangle triclip, int color)
     center(&triproj.p[0]);
     center(&triproj.p[1]);
     center(&triproj.p[2]);
+    
     triproj.color = color;
-    if (push_dynarray(&env->to_clip, &triproj, false))
+    if (push_dyntab(&env->to_clip, &triproj, false))
         ft_exit(env, "push dynamic tab to_clip fail", 0);
 }
 
@@ -104,16 +104,18 @@ void        engine_3d(t_env *env)
 
     //do_camera rot/move
     matrix_view(env);
+    env->mesh_id = -1;
     i = -1;
     while (++i < env->obj_on_world)
     {
-        env->mesh_id = i;
-        obj = (t_mesh*)dyaddress(&env->world_obj, i);
+        env->mesh_id++;
+        obj = (t_mesh*)ft_listfind(&env->world_obj, i);
         matrix_world(env, obj);
         j = -1;
         while (++j < obj->size)
         {
             triprojected = obj->tris[j];
+            pass_data(&triprojected, obj->tris[j]);
             triprojected.tri_id = j;
             matrix_mult_triangle(env->mlist.matworld, &triprojected);
             color = obj->color;
@@ -122,5 +124,5 @@ void        engine_3d(t_env *env)
         }
     }
     rasterizer(env, &env->to_clip);
-    clear_dynarray(&env->to_clip);
+    clear_dyntab(&env->to_clip);
 }

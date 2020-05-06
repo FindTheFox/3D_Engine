@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_point.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:32:25 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 00:52:02 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 22:17:14 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void            init_cube(t_env *env)
         ft_exit(env, "Malloc Mesh Error\n", 0);
     if (!(env->mesh[0].img = SDL_LoadBMP("ressources/img/wall.bmp")))
         ft_exit(env, "Load Bmp Failed\n", 0);
-    
+    printf("lol\n");
     env->mesh[0].size = 12;
     env->mesh[0].color = 0xfff0ff;
     //south

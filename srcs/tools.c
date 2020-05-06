@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:55:29 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 02:39:37 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/05 20:53:20 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,6 @@ void            pass_data(t_triangle *t1, t_triangle t2)
     t1->mesh_id = t2.mesh_id;
     t1->screen_pos = t2.screen_pos;
     t1->color = t2.color;
+    t1->tex = t2.tex;
+    t1->tri_id = t2.tri_id;
 }

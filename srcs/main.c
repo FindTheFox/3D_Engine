@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 16:06:09 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/06 01:56:56 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void        setup(t_env *env, int ac, char **av)
             env->mesh[mi] = obj_parser(av[i], env);
             env->mesh[mi].color = colorset(env, mi);
             env->mesh[mi].name = av[i];
+            env->mesh[mi].id = mi;
+            env->mesh[mi].img = NULL;
             mi++;
             i++;
         }
@@ -52,7 +54,12 @@ static void        setup(t_env *env, int ac, char **av)
     {
         printf("cube init\n");
         env->nbmesh = 1;
-        init_cube(env);
+        if (!(env->mesh = (t_mesh *)malloc(sizeof(t_mesh) * env->nbmesh)))
+            ft_exit(env, "Mesh Alloc Error", 0); 
+        env->mesh[0] = obj_parser("ressources/wooden_crate.obj", env);
+        if (!(env->mesh[0].img = SDL_LoadBMP("ressources/wood_crate_10cm.bmp")))
+            ft_exit(env, "DooM: Load Bmp Failed\n", 0);
+        //init_cube(env);
     }
     init_sdl(env);
     init_data(env);

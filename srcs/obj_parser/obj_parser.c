@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 22:31:36 by ahippoly          #+#    #+#             */
-/*   Updated: 2020/04/29 21:25:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 19:50:38 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void		read_face_line(char *line, t_attr_lst *key_list, int mesh_id)
 			line = skip_until_space(line);
 			i++;
 		}
+		new.tex = key_list->textured;
 		key_list->tris[key_list->tris_curr_id++] = new;
 	}
 }
@@ -80,6 +81,7 @@ int read_line_key(char *line, t_attr_lst *key_list)
 	if (ft_strnstr(line, "vt ", 3))
 	{
 		ft_lstadd(&key_list->vt, assign_lst_value(line, 2));
+		key_list->textured = 1;
 		key_list->vt_size++;
 	}
 	if (ft_strnstr(line, "vn ", 3))

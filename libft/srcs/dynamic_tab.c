@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 21:29:19 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/10 15:53:57 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/05 22:15:54 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		*dyaddress(t_dyntab *arr, int index)
 	return ((void*)(arr->c + (index * arr->cell_size)));
 }
 
-void		free_dynarray(t_dyntab *arr)
+void		free_dyntab(t_dyntab *arr)
 {
 	free(arr->c);
 	ft_memset(arr, 0, sizeof(t_dyntab));
@@ -35,12 +35,12 @@ static int	start_size(int n)
 	return (a);
 }
 
-void		clear_dynarray(t_dyntab *arr)
+void		clear_dyntab(t_dyntab *arr)
 {
 	arr->cell_nb = 0;
 }
 
-int			init_dynarray(t_dyntab *arr, int cell_size, int nb_cells)
+int			init_dyntab(t_dyntab *arr, int cell_size, int nb_cells)
 {
 	if (cell_size <= 0 || nb_cells < 0)
 		return (-1);

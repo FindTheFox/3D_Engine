@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 16:47:17 by user42            #+#    #+#             */
-/*   Updated: 2020/05/04 16:44:55 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/06 02:02:24 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ void            select_pointing_tri(t_env *e, int pos)
 {
     int x;
     int y;
-    t_triangle  *tri;
 
-    if (!(tri = (t_triangle*)dyaddress(&e->to_raster, y)))
-        ft_exit(e, "DooM: Fail dynarr tri load\nsrcs/event/dev_events.c\n", 0);
     if (pos < PX_NB && pos >= 0)
     {
         e->usr.select_mesh = e->depth_buff[pos].mesh_id;
         printf("Selected mesh: %s\n", e->mesh[e->usr.select_mesh].name);
+        printf("meshid: %d\n", e->usr.select_mesh);
     }
 }
 
@@ -46,8 +44,9 @@ void            dev_event(t_env *env)
             //printf("TRI_COLOR:  %x\n", env->depth_buff[pos].color);
             //printf("BUFF.W: %f\n\n", env->depth_buff[pos].w);
             //printf("TRI_ID: %d\n", env->depth_buff[pos].tri_id);
-            if(!(obj = (t_mesh*)dyaddress(&env->world_obj, env->usr.select_mesh)))
+            if(!(obj = (t_mesh*)ft_listfind(&env->world_obj, env->usr.select_mesh)))
                 ft_exit(env, "DooM: Drag_and_Drop failed\n", 0);
+            //select_pointing_tri(env, pos);            
             drag_and_drop(env, obj, env->mouse.xrel, env->mouse.yrel);
         }
         if (env->key[RCLICK])

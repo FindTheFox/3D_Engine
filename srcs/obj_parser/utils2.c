@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 23:16:04 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/29 21:25:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 19:49:10 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void init_key_list(t_attr_lst *key_list)
 	key_list->v_size = 0;
 	key_list->vt_size = 0;
 	key_list->vn_size = 0;
+	key_list->textured = 0;
 	key_list->tris_curr_id = 0;
 	key_list->tris_size = FACES_ARRAY_SIZE;
 	key_list->tris = (t_triangle*)malloc(sizeof(t_triangle) * FACES_ARRAY_SIZE);

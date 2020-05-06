@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 15:41:37 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 18:05:31 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/05 23:49:38 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y)
         obj->dir = vectorsub(obj->dir, forward);
         //up = vectormult(up, x / 4);
         //obj->dir = vectorsub(obj->dir, up);
-        //obj->dir = vectorsub(obj->dir, right);
     }
+}
+
+void            pop_obj(t_env *e, t_mesh *push)
+{
+    //push->id = e->obj_on_world;
+    //e->obj_on_world += 1;
+    //if (push_dyntab(&e->world_obj, push, false))
+    //    ft_exit(e, "DooM: Echec push obj in dynamic tab\n", 0);
+}
+
+void            remove_obj(t_env *e, int id)
+{
+    //e->obj_on_world--;
+    //if (remove_dyntab(&e->world_obj, id))
+    //    ft_exit(e, "DooM: Echec remove obj in dynamic tab\n", 0);
 }

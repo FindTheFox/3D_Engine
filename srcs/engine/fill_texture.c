@@ -3,39 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   fill_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 00:59:09 by user42            #+#    #+#             */
-/*   Updated: 2020/05/02 03:26:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/06 01:50:46 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-int			sample_pixel(SDL_Surface *s, t_vec2d px)
-{
-	int				ret;
-	int				pos;
-	unsigned int	*pixels;
-
-	if (px.u < 0.0f || px.v < 0.0f || px.u > 1.0f || px.v > 1.0f)
-		return (0);
-	pixels = (unsigned int*)s->pixels;
-	pos = (abs((int)((px.v * s->h) - 1))) * s->w;
-	pos += (int)(px.u * s->w);
-	ret = pixels[pos];
-	return (ret);
-}
-
 static void	write_pixel(t_env *env, t_filltex *fill, t_triangle *t, int dist[3])
 {
 	SDL_Surface *sp;
 	int			color;
+	t_mesh		*obj;
 
+	obj = (t_mesh*)fill->obj;
 	if (dist[2] <= PX_NB && fill->tex_w >= env->depth_buff[dist[2]].w)
 	{
-		if (t->tex == 1 && (sp = env->mesh[env->mesh_id].img))
+		if (t->tex == 1 && (sp = obj->img))
 			color = get_pixel(sp, fill->tex_u / fill->tex_w, fill->tex_v / fill->tex_w);
+			//printf("ok\n");	
 		else
 			color = t->color;
 		env->depth_buff[dist[2]].w = fill->tex_w;
@@ -138,7 +126,8 @@ static void	fill_triangle_bot(t_env *env, t_filltex *fill, t_triangle t)
 void		fill_triangle_texture(t_env *env, t_triangle t)
 {
 	t_filltex	fill;
-
+	
+	fill.obj = ft_listfind(&env->world_obj, t.mesh_id);
 	starting_swap(&t);
 	compute_gradients(&fill, t, false);
 	if (fill.dy1)

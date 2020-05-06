@@ -1,3 +1,5 @@
-INC_FILE	=	3d_engine.h \
+INC_FILE	=	key.h \
 				obj_parser.h \
-				texturing.h
+				texturing.h \
+				object.h \
+				3d_engine.h 

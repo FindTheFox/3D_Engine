@@ -129,6 +129,7 @@ SRC += $(S_PATH)ft_to_degree.c
 SRC += $(S_PATH)dynamic_tab.c
 SRC += $(S_PATH)dynamic_tab2.c
 SRC += $(S_PATH)ft_fswap.c
+SRC += $(S_PATH)ft_lstfind.c
 
 # Objects and Headers
 

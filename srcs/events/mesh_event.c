@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 17:19:27 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/05 23:39:52 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static void                switch_i_mesh(t_env *e, t_mesh *obj)
 {
     if (e->key[NUM0])
     {
-        if (e->usr.select_mesh < e->obj_on_world)
+        if (e->usr.select_mesh < e->obj_on_world - 1)
             ++e->usr.select_mesh;
         else
             e->usr.select_mesh = 0;
-        printf("Selected MESH: %s\n", e->mesh[e->usr.select_mesh].name);
+        if (!(obj = (t_mesh*)ft_listfind(&e->world_obj, e->usr.select_mesh)))
+            ft_exit(e, "DooM: echec obj access\n", 0);
+        ft_putstr("Selected MESH:   ");
+        ft_putendl(obj->name);
         e->key[NUM0] = 0;
     }
 }
@@ -88,7 +91,7 @@ void                mesh_rot_event(t_env *e, int index_mesh)
     obj = NULL;
     if (e->usr.forge)
     {
-        if (!(obj = dyaddress(&e->world_obj, index_mesh)))
+        if (!(obj = ft_listfind(&e->world_obj, index_mesh)))
             ft_exit(e, "DooM: Pull obj in dyntab failed\n", 0);
         switch_i_mesh(e, obj);
         switch_mesh_mod(e);

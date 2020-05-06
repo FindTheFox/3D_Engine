@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:53:59 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/15 07:11:50 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/06 01:07:08 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,19 @@ int				ft_atoi_base(char *str, char *base);
 void			ft_putnbr_base_fd(int nb, char *base, int fd);
 char			*ft_convert_base(char *nbr, char *base_from, char *base_to);
 t_list			*ft_create_elem(void *content);
-void			ft_list_push_back(t_list **begin_list, void *content);
+void			ft_list_push_back(t_list **begin_list, void *content, size_t size);
 int				get_next_line(int const fd, char **line);
 char			*ft_strfjoin(const char *s1, const char *s2, int choose);
 void			ft_swap(void **s1, void **s2);
-int				init_dynarray(t_dyntab *arr, int cell_size, int nb_cells);
-void			clear_dynarray(t_dyntab *arr);
-void			free_dynarray(t_dyntab *arr);
+int				init_dyntab(t_dyntab *arr, int cell_size, int nb_cells);
+void			clear_dyntab(t_dyntab *arr);
+void			free_dyntab(t_dyntab *arr);
 void			*dyaddress(t_dyntab *arr, int index);
-int				push_dynarray(t_dyntab *arr, void *src, bool front);
-int				pop_dynarray(t_dyntab *arr, bool front);
+int				push_dyntab(t_dyntab *arr, void *src, bool front);
+int				pop_dyntab(t_dyntab *arr, bool front);
 int				realloc_content(t_dyntab *arr);
 void			ft_fswap(float *n1, float *n2);
+int				remove_dyntab(t_dyntab *arr, int index);
+void			*ft_listfind(t_list **l, int index);
 
 #endif

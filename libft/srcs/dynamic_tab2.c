@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 21:33:30 by saneveu           #+#    #+#             */
-/*   Updated: 2020/03/02 21:35:47 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/05 22:22:12 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		realloc_content(t_dyntab *arr)
 	return (0);
 }
 
-int		pop_dynarray(t_dyntab *arr, bool front)
+int		pop_dyntab(t_dyntab *arr, bool front)
 {
 	int		len;
 
@@ -42,7 +42,16 @@ int		pop_dynarray(t_dyntab *arr, bool front)
 	return (0);
 }
 
-int		push_dynarray(t_dyntab *arr, void *src, bool front)
+int		remove_dyntab(t_dyntab *arr, int index)
+{
+	if (index > arr->cell_nb || index < 0)
+		return (-1);
+	free((void*)(arr->c + (index * arr->cell_size)));
+	arr->cell_nb--;
+	return(0);
+}
+
+int		push_dyntab(t_dyntab *arr, void *src, bool front)
 {
 	int		len;
 

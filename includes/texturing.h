@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texturing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 23:43:35 by saneveu           #+#    #+#             */
-/*   Updated: 2020/04/28 00:43:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/06 01:41:06 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct      s_filltex
     float       tex_v;
     float       tex_w;
     float       tstep;
+    void        *obj;
 }                   t_filltex;
 
 #endif

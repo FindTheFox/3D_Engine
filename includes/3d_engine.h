@@ -20,6 +20,8 @@
 # include <stdbool.h>
 # include "key.h"
 # include "texturing.h"
+# include "object.h"
+# include "matrice.h"
 
 # define W_W 1280
 # define W_H 720
@@ -46,10 +48,6 @@
 # define OPTION 3
 # define FORGE 4
 
-# define GAMING 0
-# define DEV 1
-# define TEST 2 
-
 typedef struct      s_image
 {
     SDL_Surface     *sprite;
@@ -73,21 +71,6 @@ typedef struct      s_rgba
     Uint8 b;
     Uint8 a;
 }                   t_rgba;
-
-typedef struct      s_vec
-{
-    float   x;
-    float   y;
-    float   z;
-    float   w;
-}                   t_vec;
-
-typedef struct      s_vec2d
-{
-    float   u;
-    float   v;
-    float   w;
-}                   t_vec2d;
 
 typedef struct      s_clip
 {
@@ -114,37 +97,6 @@ typedef struct      s_thread
     int             id;
     Uint8           mode;
 }                   t_thread;
-
-typedef struct      s_triangle
-{
-    t_vec           p[3];
-    t_vec2d         tx[3];
-    Uint8           tex;
-    int             color;
-    int             mesh_id;
-    int             screen_pos;
-    int             tri_id;
-}                   t_triangle;
-
-typedef struct      s_matrix
-{
-    float           m[4][4];
-}                   t_matrix;
-
-typedef struct      s_mesh
-{
-    t_triangle      *tris;
-    int             size;
-    float           ztheta;
-    float           ytheta;
-    float           xtheta;
-    t_matrix        mattrans;
-    t_vec           dir;
-    int             color;
-    SDL_Surface     *img;
-    char            *name;         //FREE ?
-}                   t_mesh;
-
 
 typedef struct      s_fill 
 {
@@ -253,7 +205,7 @@ typedef struct              s_env
     t_mesh                  *mesh;
     int                     nbmesh;
     int                     mesh_id;
-    t_dyntab                world_obj;
+    t_list                  *world_obj;
     int                     obj_on_world;
     t_usr                   usr;
     t_color                 color;
@@ -343,6 +295,7 @@ float           vectorlen(t_vec v);
 float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p);
 t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out);
 void            swap_vec(t_vec *v1, t_vec *v2);
+
 /*
 **Triangle Draw
 */
@@ -359,6 +312,7 @@ void        put_pixel_txt(t_env *e, int pos, int color);
 
 void            fill_triangle_texture(t_env *e, t_triangle t);
 uint32_t		get_pixel(SDL_Surface *surface, float tx, float ty);
+uint32_t		get_pixel_txt(SDL_Surface *img, float tx, float ty);
 
 
 void	set_line_bounds_bot(t_filltex *fill, t_triangle t, float currents[2]);
@@ -380,13 +334,14 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
+void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y);
 
 /*
 **Color
 */
 
-t_rgba      hex_to_rgba(int c);
-int         rgba_to_hex(t_rgba rgba);
+SDL_Color   hex_to_rgba(int c);
+int         rgba_to_hex(SDL_Color rgba);
 int         color_shading(int color, float shade);
 int         colorset(t_env *e, int i);
 
@@ -395,11 +350,6 @@ int         colorset(t_env *e, int i);
 */
 
 void            thread_init(t_env *e, t_thread *thread);
-
-
-void            place_obj(t_mesh *obj, t_vec pos);
-void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y);
-
 
 void            printmatrix(t_matrix m);
 
