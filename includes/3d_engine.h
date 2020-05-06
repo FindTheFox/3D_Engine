@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/05 19:42:08 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/06 20:09:31 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,10 @@ typedef	struct				s_editor
 {
 	int						display;
 	int						*selected_id;
+	int						test;
+	int						mesh_len;
+	int						mesh_choice;
+	int						over_y;
 }							t_editor;
 
 /*
