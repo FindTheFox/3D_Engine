@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:53:03 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 02:09:41 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 21:28:47 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void        matrix_world(t_env *e, t_mesh *obj)
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, e->mlist.matrotz);
     
     tmp = vectoradd(obj->dir, (t_vec){0.0f, 0.0f, e->zoom, 0});
+    tmp = vectoradd(tmp, (t_vec){e->mesh_id * 20,0,0,0});
     init_matrix_translation(&obj->mattrans, tmp);
     e->mlist.matworld = matrix_mult_matrix(e->mlist.matworld, obj->mattrans);
 }

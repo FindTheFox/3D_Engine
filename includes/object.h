@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 22:31:20 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/05 22:54:49 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 00:51:55 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct      s_mesh
     t_matrix        mattrans;
     t_vec           dir;
     int             color;
-    SDL_Surface     *img;
-    char            *name;         //FREE ?
+    SDL_Surface     *img;               //FREE ?
+    char            *name;         
     int             id;
 }                   t_mesh;
 

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 17:53:59 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 01:07:08 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 03:45:35 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_list
 {
 	void			*content;
 	size_t			content_size;
+	int				index;
 	struct s_list	*next;
 }				t_list;
 
@@ -99,12 +100,14 @@ size_t			ft_lstsize(t_list *lst);
 void			ft_lstmerge(t_list **alst1, t_list *alst2);
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+t_list			*ft_lstremove(t_list *alst, int index);
 void			ft_putnbr_base(int nb, char *base);
 int				ft_atoi_base(char *str, char *base);
 void			ft_putnbr_base_fd(int nb, char *base, int fd);
 char			*ft_convert_base(char *nbr, char *base_from, char *base_to);
-t_list			*ft_create_elem(void *content);
-void			ft_list_push_back(t_list **begin_list, void *content, size_t size);
+t_list			*ft_create_elem(void *content, size_t size);
+void			ft_list_inser(t_list *liste, void *content);
+t_list			*ft_list_push_back(t_list *begin_list, void *content, size_t size);
 int				get_next_line(int const fd, char **line);
 char			*ft_strfjoin(const char *s1, const char *s2, int choose);
 void			ft_swap(void **s1, void **s2);
@@ -118,5 +121,6 @@ int				realloc_content(t_dyntab *arr);
 void			ft_fswap(float *n1, float *n2);
 int				remove_dyntab(t_dyntab *arr, int index);
 void			*ft_listfind(t_list **l, int index);
+t_list      	*ft_listindex(t_list *l);
 
 #endif

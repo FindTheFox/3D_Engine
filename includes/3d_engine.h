@@ -168,6 +168,7 @@ typedef struct              s_usr
     bool                    forge;
     bool                    color;
     bool                    mouse_motion;
+    int                     new_obj;
 }                           t_usr;
 
 /*
@@ -350,6 +351,15 @@ int         colorset(t_env *e, int i);
 */
 
 void            thread_init(t_env *e, t_thread *thread);
+
+/*
+** Object Manip
+*/
+
+void            remove_obj(t_env *e, int id);
+void            pop_obj(t_env *e, t_mesh *push);
+void            select_save_obj(t_env *e, int id);
+void        print_objlist(t_list *l);
 
 void            printmatrix(t_matrix m);
 

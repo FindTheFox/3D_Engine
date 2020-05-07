@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 15:41:37 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/05 23:49:38 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 17:31:32 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,36 @@ void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y)
 
 void            pop_obj(t_env *e, t_mesh *push)
 {
-    //push->id = e->obj_on_world;
-    //e->obj_on_world += 1;
-    //if (push_dyntab(&e->world_obj, push, false))
-    //    ft_exit(e, "DooM: Echec push obj in dynamic tab\n", 0);
+    push->id = e->obj_on_world;
+    e->obj_on_world += 1;
+    ft_list_push_back(e->world_obj, push, sizeof(t_mesh));
+    ft_listindex(e->world_obj);
+    print_objlist(e->world_obj);
 }
 
 void            remove_obj(t_env *e, int id)
 {
-    //e->obj_on_world--;
-    //if (remove_dyntab(&e->world_obj, id))
-    //    ft_exit(e, "DooM: Echec remove obj in dynamic tab\n", 0);
+    int     i;
+    t_list  *tmp;
+    t_mesh  *obj;
+
+    e->world_obj = ft_lstremove(e->world_obj, id);
+    e->obj_on_world--;
+    e->usr.select_mesh = 0;
+    //i = -1;
+    //while (++i < e->obj_on_world)
+    //{
+    //    obj = ft_listfind(&e->world_obj, i);
+    //    obj->id = i;
+    //}
+    ft_listindex(e->world_obj);
+}
+
+void            select_save_obj(t_env *e, int id)
+{
+    if (id >= e->nbmesh)
+        id = 0;
+    e->usr.new_obj = id;
+    ft_putstr("New Mesh:    ");
+    ft_putendl(e->mesh[id].name);
 }

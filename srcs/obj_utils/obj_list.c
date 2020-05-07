@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   obj_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 23:20:56 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 03:46:16 by saneveu          ###   ########.fr       */
+/*   Created: 2020/05/07 04:21:54 by saneveu           #+#    #+#             */
+/*   Updated: 2020/05/07 05:12:34 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/3d_engine.h"
 
-void	ft_lstadd(t_list **link, t_list *new)
+void        print_objlist(t_list *l)
 {
-	if (link)
-		new->next = *link;
-	*link = new;
-}
+    t_list  *tmp;
 
-void	ft_list_inser(t_list *liste, void *content)
-{
-	t_list *new;
-	t_list *tmp;
-
-	new = malloc(sizeof(t_list));
-	if (liste == NULL)
-		return ;
-	new->content = content;
-	tmp = liste;
-	new->next = tmp;
-	liste = new;
+    tmp = l;
+    if (!tmp)
+        printf("PAS DE LIST\n");
+    while (tmp)
+    {
+        printf("LIST ID: %d\n", tmp->index);
+        tmp = tmp->next;
+    }
 }

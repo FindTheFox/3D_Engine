@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 01:27:08 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 21:28:11 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,15 @@ void        engine_3d(t_env *env)
     while (++i < env->obj_on_world)
     {
         env->mesh_id++;
-        obj = (t_mesh*)ft_listfind(&env->world_obj, i);
+        if (!(obj = (t_mesh*)ft_listfind(&env->world_obj, i)))
+            ft_exit(env, "DooM: list find echec\n", 0);
         matrix_world(env, obj);
         j = -1;
         while (++j < obj->size)
         {
             triprojected = obj->tris[j];
             pass_data(&triprojected, obj->tris[j]);
-            triprojected.tri_id = j;
+            triprojected.mesh_id = i;
             matrix_mult_triangle(env->mlist.matworld, &triprojected);
             color = obj->color;
             if (normalize(env, triprojected, &color) == 1)

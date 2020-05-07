@@ -33,6 +33,8 @@ SRCS_FILE	=	main.c \
 				platform/select_platform.c \
 				init/init_world.c \
 				obj_utils/obj_utils.c \
+				obj_utils/obj_list.c \
+
 
 OBJ_DIRS =		engine \
 				exit \

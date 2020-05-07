@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 00:59:09 by user42            #+#    #+#             */
-/*   Updated: 2020/05/06 01:50:46 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/07 17:36:13 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,9 @@ static void	fill_triangle_bot(t_env *env, t_filltex *fill, t_triangle t)
 void		fill_triangle_texture(t_env *env, t_triangle t)
 {
 	t_filltex	fill;
-	
+
 	fill.obj = ft_listfind(&env->world_obj, t.mesh_id);
+	//printf("FILL : %s\n", ((t_mesh*)fill.obj)->name);
 	starting_swap(&t);
 	compute_gradients(&fill, t, false);
 	if (fill.dy1)

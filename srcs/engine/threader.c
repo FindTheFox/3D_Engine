@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threader.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 01:49:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:34:15 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
     int         i;
 
     clip_mesh(e, to_clip, &e->to_raster);
-    // thread_init(e);
     i = 0;
     while (i < NB_THREAD)
     {
@@ -69,15 +68,15 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
         pthread_join(thread[i].thread, NULL);
         i++;
     }
-    /*
-    while (i < e->to_raster.cell_nb)
-    {
-        t = (t_triangle *)dyaddress(&e->to_raster, i);
-        //printf("color %x\n", t->color);
-        fill_triangle(e, t, t->color);
-        //fill_triangle_texture(e, *t);
-        //draw_triangle(e, *t);
-        i++;
-    }
-    */
+    
+    //while (i < e->to_raster.cell_nb)
+    //{
+    //    t = (t_triangle *)dyaddress(&e->to_raster, i);
+    //    //printf("color %x\n", t->color);
+    //    //fill_triangle(e, t, t->color);
+    //    fill_triangle_texture(e, *t);
+    //    //draw_triangle(e, *t);
+    //    i++;
+    //}
+    
 }
