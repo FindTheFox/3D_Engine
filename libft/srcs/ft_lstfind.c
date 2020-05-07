@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 23:26:28 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 04:47:18 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 00:11:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void        *ft_listfind(t_list **l, int index)
     int     i;
 
     tmp = *l;
+    if (tmp == NULL)
+        return (NULL);
     i = -1;
     while (++i < index && tmp->next)
         tmp = tmp->next;

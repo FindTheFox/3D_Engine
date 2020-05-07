@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/05 23:39:52 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 00:34:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,10 @@ void                mesh_rot_event(t_env *e, int index_mesh)
     obj = NULL;
     if (e->usr.forge)
     {
-        if (!(obj = ft_listfind(&e->world_obj, index_mesh)))
-            ft_exit(e, "DooM: Pull obj in dyntab failed\n", 0);
-        switch_i_mesh(e, obj);
-        switch_mesh_mod(e);
-        if (e->usr.forge)
+        if ((obj = ft_listfind(&e->world_obj, index_mesh)))
         {
+            switch_i_mesh(e, obj);
+            switch_mesh_mod(e);
             e->usr.opt_mesh == 0 ? move_event(e, obj) : 0; 
             e->usr.opt_mesh == 1 ? rot_event(e, obj) : 0;
         }

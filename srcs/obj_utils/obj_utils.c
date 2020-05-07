@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 15:41:37 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 17:31:32 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 00:24:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ void            pop_obj(t_env *e, t_mesh *push)
 {
     push->id = e->obj_on_world;
     e->obj_on_world += 1;
-    ft_list_push_back(e->world_obj, push, sizeof(t_mesh));
-    ft_listindex(e->world_obj);
     print_objlist(e->world_obj);
+    printf("DELETE: %s\n", push->name);
+    e->world_obj = ft_list_push_back(e->world_obj, push, sizeof(t_mesh));
+    ft_listindex(e->world_obj);
 }
 
 void            remove_obj(t_env *e, int id)
@@ -62,15 +63,11 @@ void            remove_obj(t_env *e, int id)
     t_list  *tmp;
     t_mesh  *obj;
 
-    e->world_obj = ft_lstremove(e->world_obj, id);
-    e->obj_on_world--;
+    if (!(e->world_obj = ft_lstremove(e->world_obj, id)))
+        e->obj_on_world = -1;
+    else
+        e->obj_on_world--;
     e->usr.select_mesh = 0;
-    //i = -1;
-    //while (++i < e->obj_on_world)
-    //{
-    //    obj = ft_listfind(&e->world_obj, i);
-    //    obj->id = i;
-    //}
     ft_listindex(e->world_obj);
 }
 

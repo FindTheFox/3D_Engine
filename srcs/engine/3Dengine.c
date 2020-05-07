@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 21:28:11 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 00:38:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,37 @@ static int        normalize(t_env *e, t_triangle tri, int *color)
     return (0);
 }
 
+void        rasterize_tri(t_env *env, t_mesh *obj)
+{
+    t_triangle  triproj;
+    int         j;
+    int         color;
+
+    matrix_world(env, obj);
+    j = -1;
+    while (++j < obj->size)
+    {
+        triproj = obj->tris[j];
+        pass_data(&triproj, obj->tris[j]);
+        triproj.mesh_id = env->mesh_id;
+        matrix_mult_triangle(env->mlist.matworld, &triproj);
+        color = obj->color;
+        if (normalize(env, triproj, &color) == 1)
+            projection(env, triproj, color);
+    }
+}
+
 void        engine_3d(t_env *env)
 {
     int         i;
-    int         j;
+    t_thread    thread;
     t_triangle  triprojected;
     t_mesh      *obj;
-    int         color;
 
     //do_camera rot/move
     matrix_view(env);
+    if (env->obj_on_world == -1)
+        return ;
     env->mesh_id = -1;
     i = -1;
     while (++i < env->obj_on_world)
@@ -111,18 +132,7 @@ void        engine_3d(t_env *env)
         env->mesh_id++;
         if (!(obj = (t_mesh*)ft_listfind(&env->world_obj, i)))
             ft_exit(env, "DooM: list find echec\n", 0);
-        matrix_world(env, obj);
-        j = -1;
-        while (++j < obj->size)
-        {
-            triprojected = obj->tris[j];
-            pass_data(&triprojected, obj->tris[j]);
-            triprojected.mesh_id = i;
-            matrix_mult_triangle(env->mlist.matworld, &triprojected);
-            color = obj->color;
-            if (normalize(env, triprojected, &color) == 1)
-                projection(env, triprojected, color);
-        }
+        rasterize_tri(env, obj);
     }
     rasterizer(env, &env->to_clip);
     clear_dyntab(&env->to_clip);
