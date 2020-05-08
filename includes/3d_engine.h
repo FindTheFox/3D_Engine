@@ -85,31 +85,6 @@ typedef struct      s_clip
     float       d[3];
     float       t;
 }                   t_clip;
-
-typedef struct      s_thread
-{
-    void            *env;
-    pthread_t       thread;
-    t_dyntab        tris;
-    int             start;
-    int             end;
-    int             i;
-    int             id;
-    Uint8           mode;
-}                   t_thread;
-
-typedef struct      s_fill 
-{
-    int           yend;
-    int           xend;
-    int           ystart;
-    int           xstart;
-    float         m0;
-    float         m1;
-    float         x1;
-    float         x0;
-}                   t_fill;
-
 typedef struct      s_vlist
 {
     t_vec           vcamera;
@@ -135,6 +110,37 @@ typedef struct      s_mlist
     t_matrix        camrotx;
 }                   t_mlist;
 
+typedef struct      s_thread
+{
+    void            *env;
+    pthread_t       thread;
+    t_mesh          *obj;
+    t_dyntab        tris;
+    int             start;
+    int             end;
+    int             i;
+    int             id;
+    Uint8           mode;
+    t_dyntab        to_clip;
+    t_dyntab        to_raster;
+    t_dyntab        clip_tab[4];
+    t_mlist         mlist;
+    t_vlist         vlist;
+}                   t_thread;
+
+typedef struct      s_fill 
+{
+    int           yend;
+    int           xend;
+    int           ystart;
+    int           xstart;
+    float         m0;
+    float         m1;
+    float         x1;
+    float         x0;
+}                   t_fill;
+
+
 
 typedef struct              s_color
 {
@@ -159,7 +165,7 @@ typedef struct              s_usr
     int                     opt_mesh;
     int                     shift;
     unsigned int            platform;
-    void                    (*f[5])(void *);
+    void                    *(*f[5])(void *);
     Uint8                   mode;
     bool                    mouse_ptr;
     bool                    draw_line;
@@ -238,12 +244,13 @@ void        init_data(t_env *e);
 void        init_world(t_env *e);
 void        set_matrice(t_env *e);
 void        sdl_render(t_env *e);
+int         allocate_clip_tab(t_dyntab arr[4]);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
 void        matrix_view(t_env *e);
-void        matrix_world(t_env *e, t_mesh *obj);
-int         lumiere(t_env *e, t_vec normal, int *color);
+void        matrix_world(t_thread *t, t_mesh *obj);
+int         lumiere(t_thread *t, t_vec normal, int *color);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);
@@ -251,11 +258,11 @@ void        pass_data(t_triangle *t1, t_triangle t2);
 **  Platforming
 */
 
-void                gameplay(void *env);
-void                forge(void *env);
-void                menu_option(void *env);
-void                menu_pause(void *env);
-void                menu_start(void *env);
+void                *gameplay(void *env);
+void                *forge(void *env);
+void                *menu_option(void *env);
+void                *menu_pause(void *env);
+void                *menu_start(void *env);
 
 /*
 **  Clipping
@@ -263,7 +270,7 @@ void                menu_start(void *env);
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle *in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
-void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
+void        clip_mesh(t_thread *thread, t_dyntab *to_clip, t_dyntab *to_raster);
 
 /*
 **Matrice calcul and init
@@ -350,7 +357,9 @@ int         colorset(t_env *e, int i);
 **Threading
 */
 
-void            thread_init(t_env *e, t_thread *thread);
+void        thread_init(t_env *e, t_thread *thread, t_dyntab *to_raster);
+void        obj_thread(t_env *e, t_thread *threads, void *f(void *));
+
 
 /*
 ** Object Manip

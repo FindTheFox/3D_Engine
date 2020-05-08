@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 00:59:09 by user42            #+#    #+#             */
-/*   Updated: 2020/05/07 17:36:13 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 03:29:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	write_pixel(t_env *env, t_filltex *fill, t_triangle *t, int dist[3])
 	{
 		if (t->tex == 1 && (sp = obj->img))
 			color = get_pixel(sp, fill->tex_u / fill->tex_w, fill->tex_v / fill->tex_w);
-			//printf("ok\n");	
 		else
 			color = t->color;
 		env->depth_buff[dist[2]].w = fill->tex_w;

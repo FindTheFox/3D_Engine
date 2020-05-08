@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 03:48:50 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 01:58:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ static void        setup(t_env *env, int ac, char **av)
 int         main(int ac, char **av)
 {
     t_env   env;
- 
+
     ft_memset(&env, 0, sizeof(t_env));
     setup(&env, ac, av);
     env.end = 1;
     while (env.end)
     {
         framerate(&env);
-        (env.usr.f[env.usr.platform])((void*)&env);
+        env.usr.f[env.usr.platform]((void*)&env);
     }
     return (0);
 }
