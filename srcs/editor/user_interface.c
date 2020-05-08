@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:25:38 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/06 21:10:07 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/08 20:27:09 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 static void	mesh_choice(t_env *e)
 {
+	int j;
+	int max;
+	t_meshd meshd;
+	int k;
+
+//	printf("################ mesh_choice ################\n");
+	j = 0;
+	max = 0;
+	k = 0;
 	if (compare_keyb(e, SDL_SCANCODE_DOWN))
 	{
 		if (e->ed.mesh_len <= 8)
@@ -25,6 +34,26 @@ static void	mesh_choice(t_env *e)
 		}
 		else
 		{
+			if (e->ed.mesh_choice == 7 && compare_keyb(e, SDL_SCANCODE_DOWN))
+			{
+				e->ed.i++;
+				j = e->ed.i;
+				max = (e->ed.mesh_len % 7) - 1;
+/*				if (e->ed.mesh_len > e->ed.i + 7)
+					max = e->ed.i + 7;
+				else
+					max = e->ed.mesh_len - e->ed.i;*/
+				while (j <= e->ed.i + 7 && e->ed.i <= max)
+				{
+					meshd.name = e->mesh[j].name;
+					meshd.id = e->mesh[j].id;
+					e->ed.meshd_tab[k] = meshd;
+//					printf("%d\n", e->ed.i);
+					j++;
+					k++;
+				}
+				printf("==============\n");
+			}
 			if (e->ed.mesh_choice < 7)
 				e->ed.mesh_choice++;
 		}
@@ -41,7 +70,7 @@ static void	mesh_choice(t_env *e)
 				e->ed.mesh_choice = 7;
 		}
 	}
-	printf("%d\n", e->ed.mesh_choice);
+	printf("%s && %d && choice == %d\n", e->ed.meshd_tab[e->ed.mesh_choice].name, e->ed.meshd_tab[e->ed.mesh_choice].id, e->ed.mesh_choice);
 }
 
 static void	list_choice(t_env *e)
@@ -92,16 +121,26 @@ static void display_list(t_env *e)
 {
 	int		ui_min;
 	int		list_h;
-	t_mesh	*obj;
-	char	*mesh_tab[8];
 	int		i;
-	
+	int max;
+	t_meshd	meshd;
+
+//	printf("################ display ################\n");
+	i = 0;
+	if (e->ed.mesh_len > 8)
+		max = 8;
+	else
+		max = e->ed.mesh_len;
+/*	if (!(e->ed.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->ed.mesh_len - 1)))
+		ft_exit(e, "Mesh info alloc error", 0);
 	while(i < e->ed.mesh_len)
 	{
-		mesh_tab[i] = e->mesh[i].name;
+		meshd.name = e->mesh[i].name;
+		meshd.id = e->mesh[i].id;
+		e->ed.meshd_tab[i] = meshd;
+//		printf("%d\n", i);
 		i++;
-	}
-	i = 0;
+	}*/
 	if (e->ed.mesh_len)
 	{
 		if (e->ed.mesh_len <= 8)
@@ -117,19 +156,12 @@ static void display_list(t_env *e)
 
 static void	editor_ui(t_env *e)
 {
-//	SDL_Rect rect;
 	int ui_min;
-//	SDL_Surface *test;
 
 	ui_min = W_W - (W_W / 3);
 	draw_v(e);
 	draw_area(e, 40, (ui_min + 40), 20, ((ui_min / 3)), 0xffffff);
 	list_choice(e);
-/*	test = IMG_Load("includes/assets/tiles/cursor.bmp");
-	rect.x = 0;
-	rect.y = 0;
-	rect.w = 1280;
-	rect.h = 720;*/
 	e->ed.over_y = 65 + 30 * e->ed.mesh_choice;
 	if (compare_keyb(e, SDL_SCANCODE_RETURN))
 		e->ed.display = (e->l_choice == WEAPON) ? 1 : 0;

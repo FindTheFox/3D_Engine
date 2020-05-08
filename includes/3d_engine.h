@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 20:09:31 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/08 15:45:43 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,14 +237,23 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
+typedef struct				s_meshd
+{
+	char					*name;
+	int						id;
+}							t_meshd;
+
 typedef	struct				s_editor
 {
 	int						display;
 	int						*selected_id;
+	int						i;
 	int						test;
 	int						mesh_len;
 	int						mesh_choice;
 	int						over_y;
+	t_mesh					mesh_tab[8];
+	t_meshd					*meshd_tab;
 }							t_editor;
 
 /*
