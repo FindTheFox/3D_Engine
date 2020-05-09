@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/08 20:07:29 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/09 23:19:15 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void init_editor(t_env *e)
 
 	e->ed.test = 1;
 	e->ed.mesh_len = 0;
-	fd = open("./obj.doom", O_RDONLY);
+	fd = open("./obj.doom2", O_RDONLY);
 	get_next_line(fd, &line);
 	close(fd);
 	obj_list = ft_strsplit(line, ' ');
@@ -56,4 +56,5 @@ void init_editor(t_env *e)
 //		printf("%d\n", i);
 		i++;
 	}
+//	e->ed.selected = ft_lstnew(NULL, 0);
 }

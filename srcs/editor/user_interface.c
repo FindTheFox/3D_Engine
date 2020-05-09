@@ -6,11 +6,18 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:25:38 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/08 20:27:09 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/09 23:19:39 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
+
+static t_list *create_list(t_env *e, t_list **list)
+{
+	t_list *tmp;
+
+	return (&(*tmp));
+}
 
 static void	mesh_choice(t_env *e)
 {
@@ -19,7 +26,6 @@ static void	mesh_choice(t_env *e)
 	t_meshd meshd;
 	int k;
 
-//	printf("################ mesh_choice ################\n");
 	j = 0;
 	max = 0;
 	k = 0;
@@ -39,20 +45,14 @@ static void	mesh_choice(t_env *e)
 				e->ed.i++;
 				j = e->ed.i;
 				max = (e->ed.mesh_len % 7) - 1;
-/*				if (e->ed.mesh_len > e->ed.i + 7)
-					max = e->ed.i + 7;
-				else
-					max = e->ed.mesh_len - e->ed.i;*/
 				while (j <= e->ed.i + 7 && e->ed.i <= max)
 				{
 					meshd.name = e->mesh[j].name;
 					meshd.id = e->mesh[j].id;
 					e->ed.meshd_tab[k] = meshd;
-//					printf("%d\n", e->ed.i);
 					j++;
 					k++;
 				}
-				printf("==============\n");
 			}
 			if (e->ed.mesh_choice < 7)
 				e->ed.mesh_choice++;
@@ -64,13 +64,34 @@ static void	mesh_choice(t_env *e)
 			e->ed.mesh_choice--;
 		else
 		{
-			if (e->ed.mesh_len <= 8)
-				e->ed.mesh_choice = e->ed.mesh_len - 1;
-			else
-				e->ed.mesh_choice = 7;
+			if (e->ed.mesh_choice == 0)
+			{
+				if (e->ed.i == 0)
+				{
+					if (e->ed.mesh_len <= 8)
+						e->ed.mesh_choice = e->ed.mesh_len - 1;
+					else
+						e->ed.mesh_choice = 7;
+				}
+				else
+				{
+					e->ed.i--;
+					j = e->ed.i;
+					k = 0;
+					while (j <= e->ed.i + 7 && e->ed.i >= 0)
+					{
+						meshd.name = e->mesh[j].name;
+						meshd.id = e->mesh[j].id;
+						e->ed.meshd_tab[k] = meshd;
+						j++;
+						k++;
+					}
+				}
+			}
 		}
 	}
-	printf("%s && %d && choice == %d\n", e->ed.meshd_tab[e->ed.mesh_choice].name, e->ed.meshd_tab[e->ed.mesh_choice].id, e->ed.mesh_choice);
+	//	printf("%s && %d && choice == %d\n", e->ed.meshd_tab[e->ed.mesh_choice].name, e->ed.meshd_tab[e->ed.mesh_choice].id, e->ed.mesh_choice);
+	//	printf("%d && choice == %d\n", e->ed.meshd_tab[e->ed.mesh_choice].id, e->ed.mesh_choice);
 }
 
 static void	list_choice(t_env *e)
@@ -124,22 +145,21 @@ static void display_list(t_env *e)
 	int		i;
 	int max;
 	t_meshd	meshd;
-
-//	printf("################ display ################\n");
+	
 	i = 0;
 	if (e->ed.mesh_len > 8)
 		max = 8;
 	else
 		max = e->ed.mesh_len;
-/*	if (!(e->ed.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->ed.mesh_len - 1)))
+	/*	if (!(e->ed.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->ed.mesh_len - 1)))
 		ft_exit(e, "Mesh info alloc error", 0);
-	while(i < e->ed.mesh_len)
-	{
+		while(i < e->ed.mesh_len)
+		{
 		meshd.name = e->mesh[i].name;
 		meshd.id = e->mesh[i].id;
 		e->ed.meshd_tab[i] = meshd;
-//		printf("%d\n", i);
-		i++;
+	//		printf("%d\n", i);
+	i++;
 	}*/
 	if (e->ed.mesh_len)
 	{
@@ -157,6 +177,8 @@ static void display_list(t_env *e)
 static void	editor_ui(t_env *e)
 {
 	int ui_min;
+	t_list *tmp;
+	t_list *prout;
 
 	ui_min = W_W - (W_W / 3);
 	draw_v(e);
@@ -170,6 +192,20 @@ static void	editor_ui(t_env *e)
 		display_list(e);
 		mesh_choice(e);
 		draw_area(e, e->ed.over_y, (ui_min + 50), 30, ((ui_min / 3)), 0xff00ff);
+		if (compare_keyb(e, SDL_SCANCODE_SPACE))
+		{
+			tmp = e->ed.selected;
+			tmp = ft_lstnew("\0", e->ed.meshd_tab[e->ed.mesh_choice].id);
+			ft_lstadd(&e->ed.selected, tmp);
+			tmp = e->ed.selected;
+			while (tmp)
+			{
+				printf("%d\n", (int)tmp->content_size);
+				tmp = tmp->next;
+			}
+			printf("################\n");
+		}
+		//			e->ed.selected_mesh[0] = e->ed.meshd_tab[e->ed.mesh_choice].id;
 	}
 }
 

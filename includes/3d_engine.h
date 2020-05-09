@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/08 15:45:43 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/09 23:14:45 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,14 +246,13 @@ typedef struct				s_meshd
 typedef	struct				s_editor
 {
 	int						display;
-	int						*selected_id;
 	int						i;
 	int						test;
 	int						mesh_len;
 	int						mesh_choice;
 	int						over_y;
-	t_mesh					mesh_tab[8];
 	t_meshd					*meshd_tab;
+	t_list					*selected;
 }							t_editor;
 
 /*
