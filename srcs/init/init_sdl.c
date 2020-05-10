@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:27:32 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 16:51:27 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/10 09:48:37 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void            init_sdl(t_env *env)
     if (!(env->rend = SDL_CreateRenderer(env->window, -1, SDL_RENDERER_ACCELERATED)))
         ft_exit(env, "create renderer fail", 0);
     env->winsurf = SDL_CreateRGBSurface(0, W_W, W_H, 32, 0, 0, 0, 0);
+	TTF_Init();
 	SDL_PumpEvents();
 	env->keyb_curr = (Uint8 *)SDL_GetKeyboardState(NULL);
 	SDL_SetRelativeMouseMode(SDL_TRUE);

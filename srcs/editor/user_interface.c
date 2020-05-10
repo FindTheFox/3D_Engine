@@ -6,17 +6,57 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:25:38 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/09 23:19:39 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/10 13:50:49 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-static t_list *create_list(t_env *e, t_list **list)
+static void display_name(t_env *e, int x, int y, char *name)
+{
+	TTF_Font	*font;
+	SDL_Surface *text;
+	SDL_Color	color;
+	SDL_Rect	pos;
+	int ui_min;
+	int i;
+
+
+	ui_min = W_W - (W_W / 3);
+	i = 0;
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	color.a = 255;
+	if (!(font = TTF_OpenFont("./includes/assets/fonts/OpenSans-Regular.ttf", 15)))
+		printf("%s\n", TTF_GetError());
+	text = TTF_RenderText_Solid(font, name, color);
+	pos.x = x;
+	pos.y = y;
+	SDL_BlitSurface(text, NULL, e->winsurf, &pos);
+	TTF_CloseFont(font);
+}
+
+static void create_list(t_env *e)
 {
 	t_list *tmp;
 
-	return (&(*tmp));
+	tmp = e->ed.selected;
+	while (tmp)
+	{
+		if ((int)tmp->content_size == e->ed.mesh_choice)
+			return ;
+		tmp = tmp->next;
+	}
+	tmp = ft_lstnew("\0", e->ed.meshd_tab[e->ed.mesh_choice].id);
+	ft_lstadd(&e->ed.selected, tmp);
+	tmp = e->ed.selected;
+	while (tmp)
+	{
+		printf("%d\n", (int)tmp->content_size);
+		tmp = tmp->next;
+	}
+	printf("################\n");
 }
 
 static void	mesh_choice(t_env *e)
@@ -42,7 +82,8 @@ static void	mesh_choice(t_env *e)
 		{
 			if (e->ed.mesh_choice == 7 && compare_keyb(e, SDL_SCANCODE_DOWN))
 			{
-				e->ed.i++;
+				if (e->ed.i < (e->ed.mesh_len % 7))
+					e->ed.i++;
 				j = e->ed.i;
 				max = (e->ed.mesh_len % 7) - 1;
 				while (j <= e->ed.i + 7 && e->ed.i <= max)
@@ -145,22 +186,12 @@ static void display_list(t_env *e)
 	int		i;
 	int max;
 	t_meshd	meshd;
-	
+
 	i = 0;
 	if (e->ed.mesh_len > 8)
 		max = 8;
 	else
 		max = e->ed.mesh_len;
-	/*	if (!(e->ed.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->ed.mesh_len - 1)))
-		ft_exit(e, "Mesh info alloc error", 0);
-		while(i < e->ed.mesh_len)
-		{
-		meshd.name = e->mesh[i].name;
-		meshd.id = e->mesh[i].id;
-		e->ed.meshd_tab[i] = meshd;
-	//		printf("%d\n", i);
-	i++;
-	}*/
 	if (e->ed.mesh_len)
 	{
 		if (e->ed.mesh_len <= 8)
@@ -177,9 +208,12 @@ static void display_list(t_env *e)
 static void	editor_ui(t_env *e)
 {
 	int ui_min;
-	t_list *tmp;
-	t_list *prout;
+	int i;
 
+	i = 0;
+	int pos;
+
+	pos = 65;
 	ui_min = W_W - (W_W / 3);
 	draw_v(e);
 	draw_area(e, 40, (ui_min + 40), 20, ((ui_min / 3)), 0xffffff);
@@ -192,20 +226,15 @@ static void	editor_ui(t_env *e)
 		display_list(e);
 		mesh_choice(e);
 		draw_area(e, e->ed.over_y, (ui_min + 50), 30, ((ui_min / 3)), 0xff00ff);
-		if (compare_keyb(e, SDL_SCANCODE_SPACE))
+		while (i < 8)
 		{
-			tmp = e->ed.selected;
-			tmp = ft_lstnew("\0", e->ed.meshd_tab[e->ed.mesh_choice].id);
-			ft_lstadd(&e->ed.selected, tmp);
-			tmp = e->ed.selected;
-			while (tmp)
-			{
-				printf("%d\n", (int)tmp->content_size);
-				tmp = tmp->next;
-			}
-			printf("################\n");
+			display_name(e, (ui_min + 70), pos, e->ed.meshd_tab[i].name);
+			pos = pos + 30;
+			i++;
 		}
-		//			e->ed.selected_mesh[0] = e->ed.meshd_tab[e->ed.mesh_choice].id;
+		i = 0;
+		if (compare_keyb(e, SDL_SCANCODE_SPACE))
+			create_list(e);
 	}
 }
 
