@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:45:51 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/12 09:10:29 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/12 11:31:28 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_forge
 {
 	int			display;
 	int			i;
-	int			test;
+	int			initialized;
 	int			mesh_len;
 	int			mesh_choice;
 	int			over_y;

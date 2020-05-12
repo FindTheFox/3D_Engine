@@ -6,33 +6,39 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/12 09:23:54 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/12 11:49:19 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-void init_forge(t_env *e)
+static char **obj_file_parse(t_env *e)
 {
 	int fd;
-	char *line;
 	char **obj_list;
-	int i;
-	int mi;
-	t_meshd meshd;
+	char *line;
 
-	e->f.test = 1;
-	e->f.mesh_len = 0;
 	fd = open("./obj.doom", O_RDONLY);
 	get_next_line(fd, &line);
+	free(line);
 	close(fd);
 	obj_list = ft_strsplit(line, ' ');
 	while (obj_list[e->f.mesh_len])
 		e->f.mesh_len++;
-	if (!(e->mesh = (t_mesh *)malloc(sizeof(t_mesh) * e->f.mesh_len)))
-		ft_exit(e, "Mesh Alloc Error", 0);
+	return (obj_list);
+}
+
+static void	create_mesh_tab(t_env *e)
+{
+	int i;
+	int mi;
+	char **obj_list;
+	
+	obj_list = obj_file_parse(e);
 	i = 0;
 	mi = 0;
+	if (!(e->mesh = (t_mesh *)malloc(sizeof(t_mesh) * e->f.mesh_len)))
+		ft_exit(e, "Mesh Alloc Error", 0);
 	while (i < e->f.mesh_len)
 	{
 		e->mesh_id = mi;
@@ -40,11 +46,21 @@ void init_forge(t_env *e)
 		e->mesh[mi].color = colorset(e, mi);
 		e->mesh[mi].name = obj_list[i];
 		e->mesh[mi].id = mi;
-//		printf("%s && %d\n", e->mesh[mi].name, e->mesh[mi].id);
 		mi++;
 		i++;
 	}
+	// free obj_list
+}
+
+void init_forge(t_env *e)
+{
+	int i;
+	t_meshd meshd;
+
+	e->f.initialized = 1;
+//	e->f.mesh_len = 0;
 	i = 0;
+	create_mesh_tab(e);
 	if (!(e->f.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->f.mesh_len - 1)))
 		ft_exit(e, "Mesh info alloc error", 0);
 	while(i < e->f.mesh_len)
@@ -52,8 +68,7 @@ void init_forge(t_env *e)
 		meshd.name = e->mesh[i].name;
 		meshd.id = e->mesh[i].id;
 		e->f.meshd_tab[i] = meshd;
-//		printf("%d\n", i);
 		i++;
+		// free meshd ?
 	}
-//	e->f.selected = ft_lstnew(NULL, 0);
 }

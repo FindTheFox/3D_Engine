@@ -34,7 +34,7 @@ SRCS_FILE	=	main.c \
 				init/init_world.c \
 				tools.c \
 				platform/select_platform.c \
-				forge/user_interface.c \
+				forge/forge_ui.c \
 				forge/list_component.c \
 				forge/forge_utils.c
 
