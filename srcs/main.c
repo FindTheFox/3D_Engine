@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 18:47:51 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/12 09:01:18 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int         main(int ac, char **av)
 	while (env.end)
 	{
 		framerate(&env);
-		key_events(&env);
 		(env.usr.f[env.usr.platform])((void*)&env);
 	}
 	return (0);

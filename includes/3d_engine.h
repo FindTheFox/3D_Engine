@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/09 23:14:45 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/12 09:12:35 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include "key.h"
 # include "texturing.h"
+# include "forge.h"
 
 # define W_W 1280
 # define W_H 720
@@ -59,14 +60,6 @@ typedef enum		e_state
 	OPTION,
 	FORGE
 }					t_state;
-
-typedef enum		e_list_choice
-{
-	WEAPON = 0,
-	TOOL,
-	ROOM,
-	OUT
-}					t_list_choice;
 
 typedef struct      s_image
 {
@@ -237,24 +230,6 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
-typedef struct				s_meshd
-{
-	char					*name;
-	int						id;
-}							t_meshd;
-
-typedef	struct				s_editor
-{
-	int						display;
-	int						i;
-	int						test;
-	int						mesh_len;
-	int						mesh_choice;
-	int						over_y;
-	t_meshd					*meshd_tab;
-	t_list					*selected;
-}							t_editor;
-
 /*
 ** Structure Principale
 */
@@ -311,7 +286,7 @@ typedef struct              s_env
 	int						l_choice;
 	Uint8                   *keyb_curr;
 	Uint8                   keyb_prev[283];
-	t_editor				ed;
+	t_forge					f;
 }                           t_env;
 
 /*
@@ -324,7 +299,7 @@ void        ft_exit(t_env *env, char *s, int flag);
 void        init_cube(t_env *env);
 void        init_sdl(t_env *env);
 void        init_data(t_env *e);
-void        init_editor(t_env *env);
+void        init_forge(t_env *env);
 void        init_world(t_env *e);
 void        set_matrice(t_env *e);
 void        sdl_render(t_env *e);
@@ -337,7 +312,6 @@ int         lumiere(t_env *e, t_vec normal, int *color);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);
-void		state_route(t_env *env);
 
 /*
 **  Platforming
@@ -425,7 +399,7 @@ void        back_to_env(t_env *e, t_vec vec[3], int i);
 void        user_events(t_env *e);
 void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
-void		key_events(t_env *env);
+void		forge_events(t_env *env);
 int			compare_keyb(t_env *e, int key);
 
 /*
@@ -447,7 +421,13 @@ void            thread_init(t_env *e, t_thread *thread);
 **Editor
 */
 
-void			editor(t_env *e);
+void			forge_run(t_env *e);
+void			forge_run(t_env *e);
+void			create_list(t_env *e);
+void			draw_list_component(t_env *e);
+void			draw_v(t_env *e);
+void			draw_area(t_env *e, int raw_start, int col_start, int h, int w, Uint32 color);
+
 void            printmatrix(t_matrix m);
 
 #endif
