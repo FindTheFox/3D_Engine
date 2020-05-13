@@ -18,11 +18,8 @@ static void display_names(t_env *e, int x, int y, char *name)
 	SDL_Surface	*text;
 	SDL_Color	color;
 	SDL_Rect	pos;
-	int 		ui_min;
 	int			i;
 
-
-	ui_min = W_W - (W_W / 3);
 	i = 0;
 	color.r = 0;
 	color.g = 0;
@@ -37,54 +34,42 @@ static void display_names(t_env *e, int x, int y, char *name)
 	TTF_CloseFont(font);
 }
 
-
-static void display_list(t_env *e)
+static void display_content(t_env *e, t_int start, t_int size, int len)
 {
-	int		ui_min;
 	int		list_h;
 	int		i;
 	int		max;
-	t_meshd	meshd;
+	int		pos;
 
+	pos = start.y + 35;
 	i = 0;
-	if (e->f.mesh_len > 8)
+	if (len > 8)
 		max = 8;
 	else
-		max = e->f.mesh_len;
+		max = len;
 	if (e->f.mesh_len)
 	{
 		if (e->f.mesh_len <= 8)
-			list_h = e->f.mesh_len * 30;
+			list_h = e->f.mesh_len * size.y;
 		else
-			list_h = 8 * 30;
+			list_h = 8 * size.y;
 	}
 	else
-		list_h = 8 * 30;
-	ui_min = W_W - (W_W / 3);
-	draw_area(e, 65, (ui_min + 50), list_h, ((ui_min / 3)), 0xffffff);
+		list_h = 8 * size.y;
+	draw_area(e, start.y + 35, start.x + 10, list_h, size.x, 0xffffff);
+	draw_area(e, e->f.over_y, (start.x + 10), size.y, size.x, 0xff00ff);
+	while (i < max)
+	{
+		display_names(e, start.x + 30, pos, e->f.meshd_tab[i].name);
+		pos = pos + 30;
+		i++;
+	}
 }
 
-void	draw_list_component(t_env *e)
+void	draw_list_component(t_env *e, t_int start, t_int size, int len)
 {
-	int	ui_min;
-	int	i;
-	int	pos;
-
-	i = 0;
-	pos = 65;
-	ui_min = W_W - (W_W / 3);
-	draw_area(e, 40, (ui_min + 40), 20, ((ui_min / 3)), 0xffffff);
-	e->f.over_y = 65 + 30 * e->f.mesh_choice;
+	draw_area(e, start.y, start.x, size.y, size.x, 0xffffff);
+	e->f.over_y = (start.y + 35) + (size.y * e->f.mesh_choice);
 	if (e->f.display)
-	{
-		display_list(e);
-		draw_area(e, e->f.over_y, (ui_min + 50), 30, ((ui_min / 3)), 0xff00ff);
-		while (i < 8)
-		{
-			display_names(e, (ui_min + 70), pos, e->f.meshd_tab[i].name);
-			pos = pos + 30;
-			i++;
-		}
-		i = 0;
-	}
+		display_content(e, start, size, len);
 }

@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:45:51 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/12 11:31:28 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/13 13:03:43 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct	s_meshd
 	int			id;
 }				t_meshd;
 
+typedef struct	s_int
+{
+	int			x;
+	int			y;
+}				t_int;
+
 typedef struct	s_forge
 {
 	int			display;
@@ -37,6 +43,7 @@ typedef struct	s_forge
 	int			mesh_len;
 	int			mesh_choice;
 	int			over_y;
+	int			ui_start;
 	t_meshd		*meshd_tab;
 	t_list		*selected;
 }				t_forge;

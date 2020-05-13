@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:26:33 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/12 09:06:30 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/13 18:14:23 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void create_list(t_env *e)
 	tmp = e->f.selected;
 	while (tmp)
 	{
-		if ((int)tmp->content_size == e->f.mesh_choice)
+		if ((int)tmp->content_size == e->f.meshd_tab[e->f.mesh_choice].id)
 			return ;
 		tmp = tmp->next;
 	}
@@ -60,7 +60,7 @@ void draw_v(t_env *e)
 
 	i = 0;
 	ui_min =  W_W - (W_W / 3);
-	while (i <= W_H)
+	while (i < W_H)
 	{
 		put_pixel(e, ui_min, i, 0xffffff);
 		i++;

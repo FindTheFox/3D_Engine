@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/12 11:49:19 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:56:05 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static char **obj_file_parse(t_env *e)
 
 	fd = open("./obj.doom", O_RDONLY);
 	get_next_line(fd, &line);
-	free(line);
 	close(fd);
 	obj_list = ft_strsplit(line, ' ');
 	while (obj_list[e->f.mesh_len])
@@ -58,7 +57,7 @@ void init_forge(t_env *e)
 	t_meshd meshd;
 
 	e->f.initialized = 1;
-//	e->f.mesh_len = 0;
+	e->f.mesh_len = 0;
 	i = 0;
 	create_mesh_tab(e);
 	if (!(e->f.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->f.mesh_len - 1)))
