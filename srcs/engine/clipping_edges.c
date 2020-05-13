@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping_edges.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:41:15 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/08 02:31:15 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/07 21:27:57 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void                    clip_edges(t_dyntab *to_raster, t_triangle t, int point)
     }
 }
 
-static void             init_to_raster(t_thread *thread, t_dyntab *to_raster, t_triangle t)
+static void             init_to_raster(t_env *e, t_dyntab *to_raster, t_triangle t)
 {
     t_triangle  *tmp;
     int         point;
@@ -61,23 +61,23 @@ static void             init_to_raster(t_thread *thread, t_dyntab *to_raster, t_
         return ;
     }
     point = -1;
-    clip_edges(&thread->clip_tab[0], t, ++point);
+    clip_edges(&e->clip_tab[0], t, ++point);
     while (++point < 4)
     {
         i = -1;
-        while (++i < thread->clip_tab[point - 1].cell_nb)
-            clip_edges(&thread->clip_tab[point], *(t_triangle *)dyaddress(&thread->clip_tab[point - 1], i), point);
-        clear_dyntab(&thread->clip_tab[point - 1]);
+        while (++i < e->clip_tab[point - 1].cell_nb)
+            clip_edges(&e->clip_tab[point], *(t_triangle *)dyaddress(&e->clip_tab[point - 1], i), point);
+        clear_dyntab(&e->clip_tab[point - 1]);
 
     }
-    tmp = (t_triangle*)dyaddress(&thread->clip_tab[3], 0);
+    tmp = (t_triangle*)dyaddress(&e->clip_tab[3], 0);
     i = -1;
-    while (++i < thread->clip_tab[3].cell_nb)
-        push_dyntab(to_raster, dyaddress(&thread->clip_tab[3], i), 0);
-    clear_dyntab(&thread->clip_tab[3]);
+    while (++i < e->clip_tab[3].cell_nb)
+        push_dyntab(to_raster, dyaddress(&e->clip_tab[3], i), 0);
+    clear_dyntab(&e->clip_tab[3]);
 }    
 
-void            clip_mesh(t_thread *thread, t_dyntab *to_clip, t_dyntab *to_raster)
+void            clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster)
 {
     t_triangle  *t;
     int         i;
@@ -86,7 +86,7 @@ void            clip_mesh(t_thread *thread, t_dyntab *to_clip, t_dyntab *to_rast
     while (i < to_clip->cell_nb)
     {
         t = (t_triangle*)dyaddress(to_clip, i);
-        init_to_raster(thread, to_raster, *t);
+        init_to_raster(e, to_raster, *t);
         i++;
     }
 }

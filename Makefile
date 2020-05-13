@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/05/07 05:51:53 by saneveu          ###   ########.fr        #
+#    Updated: 2020/05/13 18:36:32 by saneveu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ INCDIR	=	./includes
 HEADER	=	$(addprefix $(INCDIR)/,$(INC_FILE))
 
 # compiler
-CC		=	gcc #-g -fsanitize=address
+CC		=	gcc -g -fsanitize=address
 CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
