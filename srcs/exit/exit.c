@@ -31,7 +31,9 @@ void        ft_exit(t_env *env, char *s, int flag)
     if (env->window)
         SDL_DestroyWindow(env->window);
     //free_mesh(env);
+    TTF_CloseFont(env->menu.font);
     SDL_Quit();
+    TTF_Quit();
     if (s)
         ft_putstr_fd(s, 2);
     exit(flag == 1 ? EXIT_SUCCESS : EXIT_FAILURE);

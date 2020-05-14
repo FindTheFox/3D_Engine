@@ -21,14 +21,22 @@ static void     init_menu(t_env *env)
         printf("%s", TTF_GetError());
         exit(0);
     }
+    env->menu.font = TTF_OpenFont("includes/assets/AmazDooMLeft.ttf", 40);
+    if(!(env->menu.text = TTF_RenderText_Solid(env->menu.font, "ESC to RAGEQUIT", env->menu.textColor)))
+        {
+           printf("%s\n", TTF_GetError());
+        }
+    env->menu.button = IMG_Load("includes/assets/tiles/buttonMenu.png");
+    if(!env->menu.button) 
+        printf("IMG_Load: %s\n", IMG_GetError());
     //RECUPERATION DE MES IMAGES POUR LES MENUS
-    if (!(env->menu.menu1 = SDL_LoadBMP("includes/assets/menus/Doom-menu.bmp")))
+    if (!(env->menu.menu1 = SDL_LoadBMP("includes/assets/menus/doom_menu.bmp")))
         ft_exit(env, "SDL_LoadBMP fail1", 0);
 
-    if (!(env->menu.menu2 = SDL_LoadBMP("includes/assets/menus/Doom-pause.bmp")))
+    if (!(env->menu.menu2 = SDL_LoadBMP("includes/assets/menus/doom_pause.bmp")))
         ft_exit(env, "SDL_LoadBMP fail2", 0);
 
-    if (!(env->menu.menu3 = SDL_LoadBMP("includes/assets/menus/Doom-settings.bmp")))
+    if (!(env->menu.menu3 = SDL_LoadBMP("includes/assets/menus/doom_settings.bmp")))
         ft_exit(env, "SDL_LoadBMP fail3", 0);
 }
 

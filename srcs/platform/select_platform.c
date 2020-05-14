@@ -28,6 +28,7 @@ void                menu_pause(void *env)
 
     e = (t_env *)env;
     pause_menu(e);
+    event_MainMenu(env);
     sdl_render(env);
 }
 

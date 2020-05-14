@@ -232,6 +232,7 @@ typedef struct      s_menu
     SDL_Surface             *menu1;
     SDL_Surface             *menu2;
     SDL_Surface             *menu3;
+    TTF_Font                *font;
 }                   t_menu;
 
 /*
@@ -277,6 +278,7 @@ typedef struct              s_env
     t_line                  line;
     t_image                 txt[NTXT];
     SDL_MouseMotionEvent    mouse;
+    SDL_MouseButtonEvent    clicks;
     SDL_Window              *window;
     SDL_Event               event;
     SDL_Renderer            *rend;

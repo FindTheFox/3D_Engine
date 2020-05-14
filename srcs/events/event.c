@@ -66,6 +66,10 @@ void         key_tab(t_env *e)
         e->key[NUM9] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.type == SDL_MOUSEMOTION)
         e->key[MOUSE] = 1;
+    else if (e->event.button.button == SDL_BUTTON_LEFT)
+        e->key[LCLICK] = e->event.type == SDL_MOUSEBUTTONDOWN ? 1 : 0;
+    else if (e->event.button.button == SDL_BUTTON_RIGHT)
+        e->key[RCLICK] = e->event.type == SDL_MOUSEBUTTONDOWN ? 1 : 0;
 
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_KP_ENTER)
         e->key[PAD_ENTER] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -89,16 +93,12 @@ void                event(t_env *env)
 {
     while (SDL_PollEvent(&env->event))
     {
-        /*if (env->event.key.keysym.scancode == SDL_SCANCODE_0
+        if (env->event.key.keysym.scancode == SDL_SCANCODE_M
 		&& env->event.type == SDL_KEYDOWN)
         {
             //printf("MENU\n");
-            while(menu(env, MAIN_MENU) != 1)
-                {
-                    printf("menu\n");
-                    sdl_render(env);
-                }
-        }*/
+            env->usr.platform = PAUSE;
+        }
         if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
         || env->event.type == SDL_QUIT)
