@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/13 13:47:08 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/15 09:01:23 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,7 +424,7 @@ void            thread_init(t_env *e, t_thread *thread);
 void			forge_run(t_env *e);
 void			forge_run(t_env *e);
 void			create_list(t_env *e);
-void			draw_list_component(t_env *e, t_int start, t_int size, int len);
+void			draw_list_component(t_env *e, t_int start, t_int size, int len, char *title);
 void			draw_v(t_env *e);
 void			draw_area(t_env *e, int raw_start, int col_start, int h, int w, Uint32 color);
 

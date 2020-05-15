@@ -12,7 +12,7 @@
 
 #include "../../includes/3d_engine.h"
 
-static void display_names(t_env *e, int x, int y, char *name)
+static void display_name(t_env *e, int y, int x, char *name)
 {
 	TTF_Font	*font;
 	SDL_Surface	*text;
@@ -60,15 +60,16 @@ static void display_content(t_env *e, t_int start, t_int size, int len)
 	draw_area(e, e->f.over_y, (start.x + 10), size.y, size.x, 0xff00ff);
 	while (i < max)
 	{
-		display_names(e, start.x + 30, pos, e->f.meshd_tab[i].name);
+		display_name(e, pos, start.x + 30, e->f.meshd_tab[i].name);
 		pos = pos + 30;
 		i++;
 	}
 }
 
-void	draw_list_component(t_env *e, t_int start, t_int size, int len)
+void	draw_list_component(t_env *e, t_int start, t_int size, int len, char *title)
 {
 	draw_area(e, start.y, start.x, size.y, size.x, 0xffffff);
+	display_name(e, start.y + 5, start.x + 5, title);
 	e->f.over_y = (start.y + 35) + (size.y * e->f.mesh_choice);
 	if (e->f.display)
 		display_content(e, start, size, len);
