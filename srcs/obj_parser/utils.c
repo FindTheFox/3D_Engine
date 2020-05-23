@@ -12,6 +12,22 @@
 
 #include "../../includes/obj_parser.h"
 
+void free_lst(t_list *lst)
+{
+	t_list *tmp;
+
+	if (lst == NULL)
+		printf("List already done\n");
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		if (lst == NULL)
+			printf("List ended\n");
+		free(tmp);
+	}
+}
+
 float **create_array_from_list(t_list *lst, int size, int content_length)
 {
 	float **array_lst;
@@ -33,8 +49,14 @@ float **create_array_from_list(t_list *lst, int size, int content_length)
 		}
 		tmp = lst;
 		lst = lst->next;
+		if (lst == NULL)
+			printf("Lst ended, size = %i\n",size);
+		free(tmp->content);
 		free(tmp);
 	}
+	if (lst == NULL)
+		printf("Lst ended2\n");
+	free_lst(lst);
 	return (array_lst);
 }
 
