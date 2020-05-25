@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 15:41:37 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/08 00:24:21 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/25 16:37:05 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,15 @@ void            drag_and_drop(t_env *e, t_mesh *obj, float x, float y)
     }
 }
 
-void            pop_obj(t_env *e, t_mesh *push)
+void            pop_obj(t_env *e, t_mesh *push, t_vec pos)
 {
     push->id = e->obj_on_world;
     e->obj_on_world += 1;
     print_objlist(e->world_obj);
-    printf("DELETE: %s\n", push->name);
+    printf("POP: %s\n", push->name);
     e->world_obj = ft_list_push_back(e->world_obj, push, sizeof(t_mesh));
     ft_listindex(e->world_obj);
+	place_obj(push, pos);
 }
 
 void            remove_obj(t_env *e, int id)

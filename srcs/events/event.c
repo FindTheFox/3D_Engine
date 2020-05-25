@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 01:29:36 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/18 12:48:14 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,8 @@ void                event(t_env *env)
     SDL_SetRelativeMouseMode(env->usr.mouse_motion);
     while (SDL_PollEvent(&env->event))
     {
-        if (env->event.key.keysym.scancode == SDLK_m
-		&& env->event.type == SDL_KEYDOWN)
-            printf("MENU\n");
-            //menu(env->winsurf, 2);
-        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
-		&& env->event.type == SDL_KEYDOWN)
-        || env->event.type == SDL_QUIT)
+        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+		&& env->event.type == SDL_KEYDOWN) || env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);
         key_tab(env);
     }

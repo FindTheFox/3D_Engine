@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 22:31:20 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/07 00:51:55 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/19 18:29:37 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef struct      s_mesh
     t_vec           dir;
     int             color;
     SDL_Surface     *img;               //FREE ?
-    char            *name;         
+    char            *name;
     int             id;
+	int				layer;
 }                   t_mesh;
 
 void            place_obj(t_mesh *obj, t_vec pos);

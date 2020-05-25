@@ -34,6 +34,9 @@ SRCS_FILE	=	main.c \
 				init/init_world.c \
 				obj_utils/obj_utils.c \
 				obj_utils/obj_list.c \
+				init/init_game.c \
+				game/game_loop.c \
+				game/player.c
 
 
 OBJ_DIRS =		engine \
@@ -41,4 +44,5 @@ OBJ_DIRS =		engine \
 				events \
 				vectors \
 				obj_parser \
-				matrices
+				matrices \
+				game

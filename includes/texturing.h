@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 23:43:35 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/06 01:41:06 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/18 13:01:53 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "3d_engine.h"
 # include "../libft/includes/libft.h"
-//# include "../../includes/3dengine.h"
 
 typedef struct      s_filltex
 {

@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 16:47:17 by user42            #+#    #+#             */
-/*   Updated: 2020/05/07 21:33:31 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/19 18:55:00 by qbenaroc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void            dev_event(t_env *env)
         else if (env->key[INSERT])
         {
             obj = &env->mesh[env->usr.new_obj];
-            pop_obj(env, obj);
+            pop_obj(env, obj, vectoradd(env->vlist.vcamera, env->vlist.lookdir));
             env->key[INSERT] = 0;
         }
         else if (env->key[PAGEUP])

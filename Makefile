@@ -6,7 +6,7 @@
 #    By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/04 18:53:52 by saneveu           #+#    #+#              #
-#    Updated: 2020/05/13 18:36:32 by saneveu          ###   ########.fr        #
+#    Updated: 2020/05/19 18:21:18 by qbenaroc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ INCDIR	=	./includes
 HEADER	=	$(addprefix $(INCDIR)/,$(INC_FILE))
 
 # compiler
-CC		=	gcc -g -fsanitize=address
+CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
@@ -59,8 +59,7 @@ all: 		obj $(FT_LIB) $(NAME)
 
 obj:
 			mkdir -p $(OBJDIR)
-			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform $(OBJDIR)/obj_utils
-
+			mkdir -p $(OBJDIR)/engine $(OBJDIR)/exit $(OBJDIR)/events $(OBJDIR)/vectors $(OBJDIR)/obj_parser $(OBJDIR)/matrices $(OBJDIR)/init $(OBJDIR)/platform $(OBJDIR)/obj_utils $(OBJDIR)/game
 
 $(FT_LIB):
 			@$(MAKE) -j8 -C $(FT)
