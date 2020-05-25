@@ -34,13 +34,15 @@ static void display_name(t_env *e, int y, int x, char *name)
 	TTF_CloseFont(font);
 }
 
-static void display_content(t_env *e, t_int start, t_int size, int len)
+static void display_content(t_env *e, t_int start, int len)
 {
 	int		list_h;
 	int		i;
 	int		max;
 	int		pos;
+	t_int	size;
 
+	size.x = 300;
 	pos = start.y + 35;
 	i = 0;
 	if (len > 8)
@@ -56,11 +58,13 @@ static void display_content(t_env *e, t_int start, t_int size, int len)
 	}
 	else
 		list_h = 8 * size.y;
-	draw_area(e, start.y + 35, start.x + 10, list_h, size.x, 0xffffff);
-	draw_area(e, e->f.over_y, (start.x + 10), size.y, size.x, 0xff00ff);
+	size.y = 30 * max;
+	draw_area(e, start.y + 35, start.x + 10, size, 0xffffff);
+	size.y = 30;
+	draw_area(e, e->f.over_y, (start.x + 10), size, 0xff00ff);
 	while (i < max)
 	{
-		display_name(e, pos, start.x + 30, e->f.meshd_tab[i].name);
+		display_name(e, pos, start.x + 30, "test");
 		pos = pos + 30;
 		i++;
 	}
@@ -68,9 +72,10 @@ static void display_content(t_env *e, t_int start, t_int size, int len)
 
 void	draw_list_component(t_env *e, t_int start, t_int size, int len, char *title)
 {
-	draw_area(e, start.y, start.x, size.y, size.x, 0xffffff);
+//	Uint32 color;
+//	draw_area(e, start.y, start.x, size, 0x0fffff);
 	display_name(e, start.y + 5, start.x + 5, title);
 	e->f.over_y = (start.y + 35) + (size.y * e->f.mesh_choice);
-	if (e->f.display)
-		display_content(e, start, size, len);
+//	if (e->f.display)
+		display_content(e, start, len);
 }

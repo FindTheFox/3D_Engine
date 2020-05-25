@@ -6,17 +6,17 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:26:33 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/13 18:14:23 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/05/24 16:06:53 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-void create_list(t_env *e)
+/*void create_list(t_env *e, void needle, void source, t_list list)
 {
 	t_list *tmp;
 
-	tmp = e->f.selected;
+	tmp = list;
 	while (tmp)
 	{
 		if ((int)tmp->content_size == e->f.meshd_tab[e->f.mesh_choice].id)
@@ -25,26 +25,26 @@ void create_list(t_env *e)
 	}
 	tmp = ft_lstnew("\0", e->f.meshd_tab[e->f.mesh_choice].id);
 	ft_lstadd(&e->f.selected, tmp);
-	tmp = e->f.selected;
+	tmp = list;
 	while (tmp)
 	{
 		printf("%d\n", (int)tmp->content_size);
 		tmp = tmp->next;
 	}
 	printf("################\n");
-}
+}*/
 
-void draw_area(t_env *e, int row_start, int col_start, int h, int w, Uint32 color)
+void draw_area(t_env *e, int row_start, int col_start, t_int size, Uint32 color)
 {
 	int x;
 	int y;
 
 	y = row_start;
 	x = col_start;
-	while (y <= row_start + h)
+	while (y <= row_start + size.y)
 	{
 		x = (col_start);
-		while (x <= (col_start + w))
+		while (x <= (col_start + size.x))
 		{
 			put_pixel(e, x, y, color);
 			x++;

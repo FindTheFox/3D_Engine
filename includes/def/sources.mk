@@ -36,7 +36,8 @@ SRCS_FILE	=	main.c \
 				platform/select_platform.c \
 				forge/forge_ui.c \
 				forge/list_component.c \
-				forge/forge_utils.c
+				forge/forge_utils.c \
+				forge/forge_utils_list.c
 
 OBJ_DIRS =		engine \
 				exit \

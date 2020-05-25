@@ -23,6 +23,7 @@ static void type_choice(t_env *e)
 	}
 	if (compare_keyb(e, SDL_SCANCODE_RETURN))
 		e->f.display = (e->l_choice == WEAPON) ? 1 : 0;
+//	printf("%d\n", e->l_choice);
 }
 
 static void mesh_choice(t_env *e)
@@ -98,7 +99,7 @@ static void mesh_choice(t_env *e)
 		}
 	}
 	if (compare_keyb(e, SDL_SCANCODE_SPACE))
-		create_list(e);
+		save_mesh(e);
 }
 
 
