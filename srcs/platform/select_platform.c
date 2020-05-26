@@ -37,8 +37,9 @@ void                menu_option(void *env)
     t_env *e;
 
     e = (t_env *)env;
-    //menu(e, CONTROLS_MENU);
-    //sdl_render(env);
+    option_menu(env);
+    event_MainMenu(env);
+    sdl_render(env);
 }
 
 void                forge(void *env)

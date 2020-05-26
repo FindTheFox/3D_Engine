@@ -397,6 +397,7 @@ uint32_t	get_color(SDL_Surface *img, int x, int y);
 int		    menu(t_env *env, int menu);
 void        main_menu(t_env *env);
 void        pause_menu(t_env *env);
+void        option_menu(t_env *env);
 void        event_MainMenu(t_env *env);
 void        key_tab(t_env *e);
 
