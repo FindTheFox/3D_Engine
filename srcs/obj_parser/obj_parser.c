@@ -136,13 +136,11 @@ t_mesh	obj_parser(char *file, t_env *e)
 	while (get_next_line(fd, &line) > 0)
 		if (read_line_key(line, &key_list) == 1)
 			break;
-	//free(line);
 	create_triangle_list(&key_list);
 	close(fd);
 	fd = open(file, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 		read_face_line(line, &key_list, e->mesh_id);
-	//free(line);
 	free_tabs(&key_list);
 	obj.tris = key_list.tris;
 	obj.size = key_list.tris_curr_id;

@@ -50,7 +50,7 @@ float **create_array_from_list(t_list *lst, int size, int content_length)
 		tmp = lst;
 		lst = lst->next;
 		if (lst == NULL)
-			printf("Lst ended, size = %i\n",size);
+			printf("Lst ended, size = %i\n", size);
 		free(tmp->content);
 		free(tmp);
 	}

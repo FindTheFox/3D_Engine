@@ -23,6 +23,13 @@ typedef struct      s_vec
     float   w;
 }                   t_vec;
 
+typedef struct  s_hitbox
+{
+    t_vec       min;
+    t_vec       max;
+}               t_hitbox;
+
+
 typedef struct      s_vec2d
 {
     float   u;
@@ -52,7 +59,8 @@ typedef struct      s_mesh
     t_vec           dir;
     int             color;
     SDL_Surface     *img;               //FREE ?
-    char            *name;         
+    char            *name;
+    t_hitbox        hitbox;      
     int             id;
 }                   t_mesh;
 
