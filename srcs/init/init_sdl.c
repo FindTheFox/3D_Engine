@@ -22,10 +22,15 @@ static void     init_menu(t_env *env)
         exit(0);
     }
     env->menu.font = TTF_OpenFont("includes/assets/AmazDooMLeft.ttf", 40);
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+    {
+        printf("%s\n", Mix_GetError());
+    }
     if(!(env->menu.text = TTF_RenderText_Solid(env->menu.font, "ESC to RAGEQUIT", env->menu.textColor)))
-        {
-           printf("%s\n", TTF_GetError());
-        }
+    {
+        printf("%s\n", TTF_GetError());
+    }
+    env->songs.menu_song = Mix_LoadMUS("includes/sons/menu.mp3");
     env->menu.button = IMG_Load("includes/assets/tiles/buttonMenu.png");
     if(!env->menu.button) 
         printf("IMG_Load: %s\n", IMG_GetError());

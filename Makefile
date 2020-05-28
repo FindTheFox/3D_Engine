@@ -44,7 +44,7 @@ CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Ofast #-march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
-	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
+	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image -lSDL_mixer
 	DIRSDL	=	
 else
 	SDL		=	-F ~/Library/Frameworks -framework SDL2 -framework SDL2_ttf -framework SDL2_image

@@ -14,6 +14,7 @@
 # define CUBE3D_H
 
 # include "../SDL/SDL.h"
+# include "../SDL/SDL_mixer.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include <pthread.h>
@@ -218,6 +219,11 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
+typedef struct      s_songs
+{
+    Mix_Music     *menu_song;
+}                   t_songs;
+
 typedef struct      s_menu
 {
     SDL_Surface     *button;
@@ -269,7 +275,8 @@ typedef struct              s_env
     t_mlist                 mlist;
     t_fill                  fill;
     t_mesh                  *mesh;
-    t_menu                  menu; 
+    t_menu                  menu;
+    t_songs                 songs; 
     int                     nbmesh;
     int                     mesh_id;
     t_usr                   usr;

@@ -33,6 +33,7 @@ void        ft_exit(t_env *env, char *s, int flag)
     //free_mesh(env);
     TTF_CloseFont(env->menu.font);
     SDL_Quit();
+    Mix_CloseAudio();
     TTF_Quit();
     if (s)
         ft_putstr_fd(s, 2);

@@ -30,6 +30,7 @@ void    main_menu(t_env *env)
 {
     env->menu.textColor = (SDL_Color){0, 0, 0, 0};
 
+    Mix_PlayMusic(env->songs.menu_song, 1);
     SDL_FillRect(env->winsurf, NULL, 0x00000000);
     if(SDL_BlitSurface(env->menu.menu1, NULL, env->winsurf, NULL) == -1)
         printf("error blitsurface");
@@ -59,7 +60,7 @@ void       pause_menu(t_env *env)
     makebutton(env, "RESUME", env->menu.button1Pos);
             
     env->menu.button2Pos.y = (env->winsurf->h + BUTTON_MARGE) / 2;
-    makebutton(env, "OPTIONS", env->menu.button2Pos);    
+    makebutton(env, "OPTIONS", env->menu.button2Pos);  
 }
 
 void    option_menu(t_env *env)
@@ -112,7 +113,6 @@ void    option_menu(t_env *env)
     env->menu.button1Pos.y = env->winsurf->h - env->menu.button->h;
     env->menu.button1Pos.x = env->winsurf->w - env->menu.button->w;
     makebutton(env, "BACK", env->menu.button1Pos);
-    //SDL_BlitSurface(env->menu.button, NULL, env->winsurf, &env->menu.button1Pos);
     SDL_FreeSurface(text);
 }
 
