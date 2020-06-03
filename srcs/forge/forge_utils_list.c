@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 16:05:35 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/25 12:42:08 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/02 22:51:12 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 	printf("################\n");
 }*/
 
-void save_mesh(t_env *e)
+/*void save_mesh(t_env *e)
 {
 	t_list *tmp;
 
@@ -70,10 +70,10 @@ void save_mesh(t_env *e)
 	tmp = ft_lstnew("\0", e->f.meshd_tab[e->f.mesh_choice].id);
 	ft_lstadd(&e->f.selected, tmp);
 	tmp = e->f.selected;
-	/*	while (tmp)
+		while (tmp)
 		{
 		printf("%d\n", (int)tmp->content_size);
 		tmp = tmp->next;
 		}
-		printf("################\n");*/
-}
+		printf("################\n");
+}*/

@@ -26,7 +26,7 @@ static void type_choice(t_env *e)
 //	printf("%d\n", e->l_choice);
 }
 
-static void mesh_choice(t_env *e)
+/*static void mesh_choice(t_env *e)
 {
 	int		j;
 	int		max;
@@ -100,7 +100,7 @@ static void mesh_choice(t_env *e)
 	}
 	if (compare_keyb(e, SDL_SCANCODE_SPACE))
 		save_mesh(e);
-}
+}*/
 
 
 static void	copy_keyboard_state(Uint8 *keyb_curr, Uint8 keyb_prev[283])
@@ -129,5 +129,5 @@ void	forge_events(t_env *e)
 	SDL_PumpEvents();
 	e->keyb_curr = (Uint8 *)SDL_GetKeyboardState(NULL);
 	type_choice(e);
-	mesh_choice(e);
+//	mesh_choice(e);
 }

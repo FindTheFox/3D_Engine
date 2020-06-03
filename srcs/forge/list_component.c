@@ -12,7 +12,7 @@
 
 #include "../../includes/3d_engine.h"
 
-static void display_name(t_env *e, int y, int x, char *name)
+void display_name(t_env *e, int y, int x, char *name)
 {
 	TTF_Font	*font;
 	SDL_Surface	*text;
@@ -34,7 +34,7 @@ static void display_name(t_env *e, int y, int x, char *name)
 	TTF_CloseFont(font);
 }
 
-static void display_content(t_env *e, t_int start, int len)
+static void display_content(t_env *e, t_int start, t_button *button)
 {
 	int		list_h;
 	int		i;
@@ -45,10 +45,10 @@ static void display_content(t_env *e, t_int start, int len)
 	size.x = 300;
 	pos = start.y + 35;
 	i = 0;
-	if (len > 8)
+	if (button->content.elem_num > 8)
 		max = 8;
 	else
-		max = len;
+		max = button->content.elem_num;
 	if (e->f.mesh_len)
 	{
 		if (e->f.mesh_len <= 8)
@@ -64,18 +64,18 @@ static void display_content(t_env *e, t_int start, int len)
 	draw_area(e, e->f.over_y, (start.x + 10), size, 0xff00ff);
 	while (i < max)
 	{
-		display_name(e, pos, start.x + 30, "test");
+		display_name(e, pos, start.x + 30, button->content.meshd_tab[i].name);
 		pos = pos + 30;
 		i++;
 	}
 }
 
-void	draw_list_component(t_env *e, t_int start, t_int size, int len, char *title)
+void	draw_list_component(t_env *e, t_int start, t_int size, t_button *button)
 {
 //	Uint32 color;
 //	draw_area(e, start.y, start.x, size, 0x0fffff);
-	display_name(e, start.y + 5, start.x + 5, title);
+//	display_name(e, start.y + 5, start.x + 5, title);
 	e->f.over_y = (start.y + 35) + (size.y * e->f.mesh_choice);
 //	if (e->f.display)
-		display_content(e, start, len);
+		display_content(e, start, button);
 }

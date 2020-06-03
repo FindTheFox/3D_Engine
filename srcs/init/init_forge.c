@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/25 19:57:18 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/03 16:50:12 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,31 +93,60 @@ static void	create_mesh_tab(t_env *e)
 		e->mesh[mi] = obj_parser(objs[i], e);
 		e->mesh[mi].color = colorset(e, mi);
 		e->mesh[mi].name = ft_strsub(objs[i], 11, ft_strlen(objs[i]) - 11);
-		e->mesh[mi].id = ft_atoi(e->mesh[mi].name);
+//		e->mesh[mi].id = ft_atoi(e->mesh[mi].name);
 		mi++;
 		i++;
 	}
 }
 
-void init_forge(t_env *e)
+void get_content(t_env *e, t_button *button)
 {
 	int i;
+	int j;
 	t_meshd meshd;
+	char str[2];
 
-	e->f.initialized = 1;
-	e->f.mesh_len = 0;
 	i = 0;
-	create_mesh_tab(e);
-	if (!(e->f.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * e->f.mesh_len - 1)))
-		ft_exit(e, "Mesh info alloc error", 0);
-	while(i < e->f.mesh_len)
+	j = 0;
+/*	while (tmp)
 	{
-		meshd.name = e->mesh[i].name;
-		meshd.id = e->mesh[i].id;
-		e->f.meshd_tab[i] = meshd;
+		if (tmp->cat == cat)
+			break;
+		tmp = tmp->next;
+	}*/
+	while (e->mesh[i].name && i < e->f.mesh_len)
+	{
+//		printf("%c && %d\n", e->mesh[i].name[0], button->cat);
+		str[0] = (e->mesh[i].name)[0];
+		str[1] = '\0';
+		if (ft_atoi(str) == button->cat)
+			button->content.elem_num++;
+		i++;
+	}
+//	printf("%d\n", tmp->content.elem_num);
+	i = 0;
+	if (!(button->content.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * button->content.elem_num - 1)))
+		ft_exit(e, "Mesh info alloc error", 0);
+	while(i < e->f.mesh_len && j < button->content.elem_num)
+	{
+		str[0] = (e->mesh[i].name)[0];
+		str[1] = '\0';
+		if (ft_atoi(str) == button->cat)
+		{
+			meshd.name = e->mesh[i].name;
+			meshd.id = j;
+			button->content.meshd_tab[j] = meshd;
+			j++;
+		}
 		i++;
 		// free meshd ?
 	}
-	button_init(e, (W_W - (W_W / 3) + 40), 40, 0, 3);
-	button_init(e, (W_W - (W_W / 3) + 40), 80, 1, 3);
+}
+
+void init_forge(t_env *e)
+{
+	e->f.initialized = 1;
+	create_mesh_tab(e);
+	button_init(e, (W_W - (W_W / 3) + 40), 40, 1, "Weapon");
+	button_init(e, (W_W - (W_W / 3) + 40), 80, 2, "Humanoid");
 }

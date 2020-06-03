@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:45:51 by brpinto           #+#    #+#             */
-/*   Updated: 2020/05/24 17:39:14 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/03 16:50:37 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef enum	e_l_choice
 {
-				WEAPON = 0,
+				WEAPON = 1,
 				HUMANOID,
 				ROOM,
 				OUT
@@ -35,15 +35,22 @@ typedef struct	s_int
 	int			y;
 }				t_int;
 
+typedef struct		s_bcontent
+{
+	int				elem_num;
+	t_meshd			*meshd_tab;
+}					t_bcontent;
+
 typedef struct		s_button
 {
+	char			*title;
 	int				x;
 	int				y;
 	int				w;
 	int				h;
 	int				cat;
-	int				elem_num;
 	int				display;
+	t_bcontent		content;
 	struct s_button	*next;
 }				t_button;
 
@@ -57,7 +64,7 @@ typedef struct	s_forge
 	int			over_y;
 	int			button_hover;
 	int			ui_start;
-	t_meshd		*meshd_tab;
+//	t_meshd		*meshd_tab;
 	t_list		*selected;
 	t_button	*buttons;
 }				t_forge;
