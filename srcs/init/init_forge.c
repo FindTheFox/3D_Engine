@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 11:23:41 by brpinto           #+#    #+#             */
-/*   Updated: 2020/06/03 16:50:12 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/05 11:23:47 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ void get_content(t_env *e, t_button *button)
 			button->content.elem_num++;
 		i++;
 	}
+	if (button->content.elem_num > 8)
+		button->content.maxh = 8;
+	else
+		button->content.maxh = button->content.elem_num;
 //	printf("%d\n", tmp->content.elem_num);
 	i = 0;
 	if (!(button->content.meshd_tab = (t_meshd *)malloc(sizeof(t_meshd) * button->content.elem_num - 1)))

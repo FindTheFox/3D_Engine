@@ -12,18 +12,79 @@
 
 #include "../../includes/3d_engine.h"
 
-static void type_choice(t_env *e)
-{
-	if(compare_keyb(e, SDL_SCANCODE_TAB))
-	{
-		if (e->l_choice < ROOM)
-			e->l_choice++;
-		else
-			e->l_choice = 0;
-	}
-	if (compare_keyb(e, SDL_SCANCODE_RETURN))
-		e->f.display = (e->l_choice == WEAPON) ? 1 : 0;
+/*static void type_choice(t_env *e)
+  {
+  if(compare_keyb(e, SDL_SCANCODE_TAB))
+  {
+  if (e->l_choice < ROOM)
+  e->l_choice++;
+  else
+  e->l_choice = 0;
+  }
+  if (compare_keyb(e, SDL_SCANCODE_RETURN))
+  e->f.display = (e->l_choice == WEAPON) ? 1 : 0;
 //	printf("%d\n", e->l_choice);
+}*/
+
+static void mesh_choice(t_env *e)
+{
+	t_button *list;
+	int max;
+	int j;
+	int k;
+	t_meshd meshd;
+
+	max = 0;
+	j = 0;
+	k = 0;
+	list = e->f.buttons;
+	while (list)
+	{
+		if (list->display == 1)
+			break;
+		list = list->next;
+	}
+	if (e->event.type == SDL_MOUSEWHEEL)
+	{
+		if (list->display)
+		{
+			if (list->content.elem_num > 8)
+			{
+				if (e->event.wheel.y > 0)
+				{
+					if (e->f.i < (list->content.elem_num % 7))
+						e->f.i++;
+					j = e->f.i;
+					max = (list->content.elem_num % 7) - 1;
+					while (j <= e->f.i + 7 && e->f.i <= max)
+					{
+						meshd.name = e->mesh[j].name;
+						meshd.id = e->mesh[j].id;
+						list->content.meshd_tab[k] = meshd;
+						j++;
+						k++;
+					}
+				}
+				if (e->event.wheel.y < 0)
+				{
+					if (e->f.i > 0)
+					{
+						e->f.i--;
+						j = e->f.i;
+						k = 0;
+						while (j <= e->f.i + 7 && e->f.i >= 0)
+						{
+							meshd.name = e->mesh[j].name;
+							meshd.id = e->mesh[j].id;
+							list->content.meshd_tab[k] = meshd;
+							j++;
+							k++;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /*static void mesh_choice(t_env *e)
@@ -88,7 +149,7 @@ static void type_choice(t_env *e)
 					k = 0;
 					while (j <= e->f.i + 7 && e->f.i >= 0)
 					{
-						meshd.name = e->mesh[j].name;
+						 meshd.name = e->mesh[j].name;
 						meshd.id = e->mesh[j].id;
 						e->f.meshd_tab[k] = meshd;
 						j++;
@@ -126,8 +187,8 @@ int	compare_keyb(t_env *e, int key)
 void	forge_events(t_env *e)
 {
 	copy_keyboard_state(e->keyb_curr, e->keyb_prev);
-	SDL_PumpEvents();
+//	SDL_PumpEvents();
 	e->keyb_curr = (Uint8 *)SDL_GetKeyboardState(NULL);
-	type_choice(e);
-//	mesh_choice(e);
+	//	type_choice(e);
+	mesh_choice(e);
 }

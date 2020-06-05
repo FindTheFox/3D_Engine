@@ -49,15 +49,6 @@ static void display_content(t_env *e, t_int start, t_button *button)
 		max = 8;
 	else
 		max = button->content.elem_num;
-	if (e->f.mesh_len)
-	{
-		if (e->f.mesh_len <= 8)
-			list_h = e->f.mesh_len * size.y;
-		else
-			list_h = 8 * size.y;
-	}
-	else
-		list_h = 8 * size.y;
 	size.y = 30 * max;
 	draw_area(e, start.y + 35, start.x + 10, size, 0xffffff);
 	size.y = 30;

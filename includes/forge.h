@@ -6,7 +6,7 @@
 /*   By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 08:45:51 by brpinto           #+#    #+#             */
-/*   Updated: 2020/06/03 16:50:37 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/04 15:31:30 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_int
 typedef struct		s_bcontent
 {
 	int				elem_num;
+	int				maxh;
 	t_meshd			*meshd_tab;
 }					t_bcontent;
 
