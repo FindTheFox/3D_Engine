@@ -12,7 +12,7 @@
 
 #include "../../includes/3d_engine.h"
 
-static void         key_tab(t_env *e)
+void             key_tab(t_env *e)
 {
     if (e->event.key.keysym.scancode == SDL_SCANCODE_W)
         e->key[W] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -30,6 +30,8 @@ static void         key_tab(t_env *e)
         e->key[R] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_F)
         e->key[F] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_TAB)
+        e->key[TAB] = e->event.type == SDL_KEYDOWN ? 1 : 0;
 
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_SPACE)
         e->key[SPACE] = e->event.type == SDL_KEYDOWN ? 1 : 0;
@@ -124,16 +126,14 @@ void                event(t_env *env)
     SDL_SetRelativeMouseMode(env->usr.mouse_motion);
     while (SDL_PollEvent(&env->event))
     {
-        if (env->event.key.keysym.scancode == SDLK_m
-		&& env->event.type == SDL_KEYDOWN)
-            printf("MENU\n");
-            //menu(env->winsurf, 2);
-        else if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
+        if ((env->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE
 		&& env->event.type == SDL_KEYDOWN)
         || env->event.type == SDL_QUIT)
             ft_exit(env, "fini\n", 1);
         key_tab(env);
     }
+    if (env->key[TAB])
+        env->usr.platform = PAUSE;
     camera_event(env);
     mesh_rot_event(env, env->usr.select_mesh);
     user_events(env);

@@ -13,7 +13,7 @@
 #ifndef KEY_H
 # define KEY_H
 
-# define KEY_NB 47
+# define KEY_NB 48
 
 # define W 0
 # define A 1
@@ -66,5 +66,6 @@
 # define INSERT 44
 # define PAGEUP 45
 # define PAGEDOWN 46
+# define TAB 47
 
 #endif // !KEY_H

@@ -17,7 +17,9 @@ void                menu_start(void *env)
     t_env *e;
 
     e = (t_env *)env;
-    
+    main_menu(e);
+    event_MainMenu(env);
+    sdl_render(env);
 }
 
 void                menu_pause(void *env)
@@ -25,7 +27,9 @@ void                menu_pause(void *env)
     t_env *e;
 
     e = (t_env *)env;
-
+    pause_menu(e);
+    event_MainMenu(env);
+    sdl_render(env);
 }
 
 void                menu_option(void *env)
@@ -33,7 +37,9 @@ void                menu_option(void *env)
     t_env *e;
 
     e = (t_env *)env;
-
+    option_menu(env);
+    event_MainMenu(env);
+    sdl_render(env);
 }
 
 void                forge(void *env)

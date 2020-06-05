@@ -16,7 +16,7 @@ static void     init_usr(t_env *e)
 {
     int i;
 
-    e->usr.platform = GAME;
+    e->usr.platform = MENU;
     e->usr.mouse_ptr = 0;
     e->usr.draw_line = 0;
     e->usr.fill_text = 1;

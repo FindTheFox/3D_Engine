@@ -14,6 +14,7 @@
 # define CUBE3D_H
 
 # include "../SDL/SDL.h"
+# include "../SDL/SDL_mixer.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include <pthread.h>
@@ -47,6 +48,10 @@
 # define PAUSE 2
 # define OPTION 3
 # define FORGE 4
+
+# define GAMING 0
+# define DEV 1
+# define TEST 2
 
 typedef struct      s_image
 {
@@ -171,11 +176,34 @@ typedef struct              s_usr
     int                     new_obj;
 }                           t_usr;
 
+typedef struct      s_songs
+{
+    Mix_Music     *menu_song;
+}                   t_songs;
+
+typedef struct      s_menu
+{
+    SDL_Surface     *button;
+    SDL_Surface     *text;
+    SDL_Surface     *saveScreen;
+    SDL_Rect        button1Pos;
+    SDL_Rect        button2Pos;
+    SDL_Rect        button3Pos;
+    SDL_Rect        textPos;
+    SDL_Color       textColor;
+    SDL_Color       bgColor;
+    SDL_Surface             *menu1;
+    SDL_Surface             *menu2;
+    SDL_Surface             *menu3;
+    TTF_Font                *font;
+}                   t_menu;
 /*
 ** Structure Principale
 */
 typedef struct              s_env
 {
+    t_menu                  menu;
+    t_songs                 songs;
     bool                    end;
     float                   ytheta;
     float                   xtheta;
@@ -213,6 +241,7 @@ typedef struct              s_env
     t_rgba                  rgba;
     t_line                  line;
     t_image                 txt[NTXT];
+    SDL_MouseButtonEvent    clicks;
     SDL_MouseMotionEvent    mouse;
     SDL_Window              *window;
     SDL_Event               event;
@@ -360,6 +389,19 @@ void            remove_obj(t_env *e, int id);
 void            pop_obj(t_env *e, t_mesh *push);
 void            select_save_obj(t_env *e, int id);
 void        print_objlist(t_list *l);
+
+/*
+** Menus
+*/
+int		    menu(t_env *env, int menu);
+void        main_menu(t_env *env);
+void        pause_menu(t_env *env);
+void        option_menu(t_env *env);
+void        event_MainMenu(t_env *env);
+void        key_tab(t_env *e);
+
+
+
 
 void            printmatrix(t_matrix m);
 

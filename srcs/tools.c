@@ -40,10 +40,10 @@ void        reset_pbuffer(t_env *e)
     x = 0;
     while (x < PX_NB - 4)
     {
-        e->depth_buff[x].w = -INFINITY;
-        e->depth_buff[x + 1].w = -INFINITY;
-        e->depth_buff[x + 2].w = -INFINITY;
-        e->depth_buff[x + 3].w = -INFINITY;
+        e->depth_buff[x].w = -100000;
+        e->depth_buff[x + 1].w = -100000;
+        e->depth_buff[x + 2].w = -100000;
+        e->depth_buff[x + 3].w = -100000;
         x += 4;
     }
 }

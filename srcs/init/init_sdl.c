@@ -16,24 +16,26 @@ static void     init_menu(t_env *env)
 {
     SDL_Surface *tmp;
 
+    if(TTF_Init() == -1)
+        ft_exit(env, (char*)TTF_GetError(), 0);
+    env->menu.font = TTF_OpenFont("includes/assets/AmazDooMLeft.ttf", 40);
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+        ft_exit(env, (char*)Mix_GetError(), 0);
+    if(!(env->menu.text = TTF_RenderText_Solid(env->menu.font, "ESC to RAGEQUIT", env->menu.textColor)))
+        ft_exit(env, (char*)TTF_GetError(), 0);
+    env->songs.menu_song = Mix_LoadMUS("includes/sons/menu.mp3");
+    env->menu.button = IMG_Load("includes/assets/tiles/buttonMenu.png");
+    if(!env->menu.button) 
+        ft_exit(env, (char*)IMG_GetError(), 0);
     //RECUPERATION DE MES IMAGES POUR LES MENUS
-    if (!(tmp = SDL_LoadBMP("Doom-menu.bmp")))
+    if (!(env->menu.menu1 = SDL_LoadBMP("includes/assets/menus/doom_menu.bmp")))
         ft_exit(env, "SDL_LoadBMP fail1", 0);
-    if (!(env->menu1 = SDL_CreateTextureFromSurface(env->rend, tmp)))
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
-    SDL_FreeSurface(tmp);
 
-    if (!(tmp = SDL_LoadBMP("Doom-pause.bmp")))
+    if (!(env->menu.menu2 = SDL_LoadBMP("includes/assets/menus/doom_pause.bmp")))
         ft_exit(env, "SDL_LoadBMP fail2", 0);
-    if (!(env->menu2 = SDL_CreateTextureFromSurface(env->rend, tmp)))
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
-    SDL_FreeSurface(tmp);
 
-    if (!(tmp = SDL_LoadBMP("Doom-settings.bmp")))
+    if (!(env->menu.menu3 = SDL_LoadBMP("includes/assets/menus/doom_settings.bmp")))
         ft_exit(env, "SDL_LoadBMP fail3", 0);
-    if (!(env->menu3 = SDL_CreateTextureFromSurface(env->rend, tmp)))
-        ft_exit(env, "SDL_CreateTextureFromSurface fail", 0);
-    SDL_FreeSurface(tmp);
 }
 
 void            init_sdl(t_env *env)
@@ -48,4 +50,5 @@ void            init_sdl(t_env *env)
     if (!(env->rend = SDL_CreateRenderer(env->window, -1, SDL_RENDERER_ACCELERATED)))
         ft_exit(env, "create renderer fail", 0);
     env->winsurf = SDL_CreateRGBSurface(0, W_W, W_H, 32, 0, 0, 0, 0);
+    init_menu(env);
 }
