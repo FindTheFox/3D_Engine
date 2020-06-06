@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:33:38 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 02:55:03 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/05 20:18:58 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,26 @@ void        put_pixel_txt(t_env *e, int pos, int color)
 
     if (pos > PX_NB)
         return ;
-    //pos *= 4;
     pixels = (unsigned int *)e->winsurf->pixels;
     pixels[pos] = color;
 }
 
 uint32_t		get_pixel(SDL_Surface *img, float tx, float ty)
 {
-	uint8_t			*p;
+	int 			*p;
     int             color;
 	int             sx;
     int             sy;
-
+    int             pos;    
     if (tx > 1 || ty > 1 || tx < 0 || ty < 0)
 		return (0);
     sx = tx * img->w;
     sy = ty * img->h;
-    p = (uint8_t *)img->pixels + sy * img->pitch
-	    + sx * img->format->BytesPerPixel;
-	return (p[2] | p[1] << 8 | p[0] << 16 | 255 << 24);
+    pos = (abs((int)(sy - 1))) * img->w + sx;
+    p = (int*)img->pixels;
+    color = p[pos];
+
+	return (color);
 }
 
 void        draw_triangle(t_env *e, t_triangle t)

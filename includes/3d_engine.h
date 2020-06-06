@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/06/05 17:22:52 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/06 14:35:26 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include "key.h"
 # include "texturing.h"
 # include "forge.h"
+# include "object.h"
+# include "matrice.h"
 
 # define W_W 1280
 # define W_H 720
@@ -42,29 +44,16 @@
 # define CONTROLS_MENU 3
 # define BUTTON_MARGE 6
 
-/*# define MENU 0
+# define MENU 0
 # define GAME 1
 # define PAUSE 2
 # define OPTION 3
 # define FORGE 4
-*/
 
-# define GAMING 0
-# define DEV 1
-# define TEST 2
-
-typedef enum		e_state
-{
-	MENU = 0,
-	GAME,
-	PAUSE,
-	OPTION,
-	FORGE
-}					t_state;
 
 typedef struct      s_image
 {
-    SDL_Surface     *sprite;
+	SDL_Surface     *sprite;
 }                   t_image;
 
 typedef struct      s_line
@@ -80,231 +69,191 @@ typedef struct      s_line
 
 typedef struct      s_rgba
 {
-    Uint8 r;
-    Uint8 g;
-    Uint8 b;
-    Uint8 a;
+	Uint8 r;
+	Uint8 g;
+	Uint8 b;
+	Uint8 a;
 }                   t_rgba;
-
-typedef struct      s_vec
-{
-    float   x;
-    float   y;
-    float   z;
-    float   w;
-}                   t_vec;
-
-typedef struct      s_vec2d
-{
-    float   u;
-    float   v;
-    float   w;
-}                   t_vec2d;
 
 typedef struct      s_clip
 {
-    t_vec       in[3];
-    t_vec2d     tx_in[3];
-    t_vec       out[3];
-    t_vec2d     tx_out[3];
-    int         inside;
-    int         tx_inside;
-    int         outside;
-    int         tx_outside;
-    float       d[3];
-    float       t;
+	t_vec       in[3];
+	t_vec2d     tx_in[3];
+	t_vec       out[3];
+	t_vec2d     tx_out[3];
+	int         inside;
+	int         tx_inside;
+	int         outside;
+	int         tx_outside;
+	float       d[3];
+	float       t;
 }                   t_clip;
-
-typedef struct      s_thread
-{
-    void            *env;
-    pthread_t       thread;
-    t_dyntab        tris;
-    int             start;
-    int             end;
-    int             i;
-    int             id;
-    Uint8           mode;
-}                   t_thread;
-
-typedef struct      s_triangle
-{
-    t_vec           p[3];
-    t_vec2d         tx[3];
-    Uint8           tex;
-    int             color;
-    int             mesh_id;
-    int             screen_pos;
-    int             tri_id;
-}                   t_triangle;
-
-typedef struct      s_matrix
-{
-    float           m[4][4];
-}                   t_matrix;
-
-typedef struct      s_mesh
-{
-    t_triangle      *tris;
-    int             size;
-    float           ztheta;
-    float           ytheta;
-    float           xtheta;
-    t_matrix        mattrans;
-    t_vec           dir;
-    int             color;
-    SDL_Surface     *img;
-    char            *name;         //FREE ?
-	int				id;
-}                   t_mesh;
-
-
-typedef struct      s_fill 
-{
-    int           yend;
-    int           xend;
-    int           ystart;
-    int           xstart;
-    float         m0;
-    float         m1;
-    float         x1;
-    float         x0;
-}                   t_fill;
-
 typedef struct      s_vlist
 {
-    t_vec           vcamera;
-    t_vec           light_dir;
-    t_vec           voff_set;
-    t_vec           up;
-    t_vec           lookdir;
-    t_vec           target;
-    t_vec           right;
-    t_vec           forward;
+	t_vec           vcamera;
+	t_vec           light_dir;
+	t_vec           voff_set;
+	t_vec           up;
+	t_vec           lookdir;
+	t_vec           target;
+	t_vec           right;
+	t_vec           forward;
 }                   t_vlist;
 
 typedef struct      s_mlist
 {
-    t_matrix        matproj;
-    t_matrix        matrotz;
-    t_matrix        matrotx;
-    t_matrix        matroty;
-    t_matrix        mattranslate;
-    t_matrix        matview;
-    t_matrix        matworld;
-    t_matrix        camroty;
-    t_matrix        camrotx;
+	t_matrix        matproj;
+	t_matrix        matrotz;
+	t_matrix        matrotx;
+	t_matrix        matroty;
+	t_matrix        mattranslate;
+	t_matrix        matview;
+	t_matrix        matworld;
+	t_matrix        camroty;
+	t_matrix        camrotx;
 }                   t_mlist;
+
+typedef struct      s_thread
+{
+	void            *env;
+	pthread_t       thread;
+	t_mesh          *obj;
+	t_dyntab        tris;
+	int             start;
+	int             end;
+	int             i;
+	int             id;
+	Uint8           mode;
+	t_dyntab        to_clip;
+	t_dyntab        to_raster;
+	t_dyntab        clip_tab[4];
+	t_mlist         mlist;
+	t_vlist         vlist;
+}                   t_thread;
+
+typedef struct      s_fill
+{
+	int           yend;
+	int           xend;
+	int           ystart;
+	int           xstart;
+	float         m0;
+	float         m1;
+	float         x1;
+	float         x0;
+}                   t_fill;
+
 
 
 typedef struct              s_color
 {
-    int                     *tab;
+	int                     *tab;
 }                           t_color;
 
 typedef struct              s_dbuff
 {
-    float                   w;
-    int                     mesh_id;
-    int                     tri_id;
-    int                     color;
+	float                   w;
+	int                     mesh_id;
+	int                     tri_id;
+	int                     color;
 }                           t_dbuff;
 
 /*
-** Structure of User utilisation
-*/
+ ** Structure of User utilisation
+ */
 
 typedef struct              s_usr
 {
-    int                     select_mesh;
-    int                     opt_mesh;
-    int                     shift;
-    unsigned int            platform;
-    void                    (*f[5])(void *);
-    Uint8                   mode;
-    bool                    mouse_ptr;
-    bool                    draw_line;
-    bool                    fill_text;
-    bool                    fps;
-    bool                    forge;
-    bool                    color;
-    bool                    mouse_motion;
+	int                     select_mesh;
+	int                     opt_mesh;
+	int                     shift;
+	unsigned int            platform;
+	void                    *(*f[5])(void *);
+	Uint8                   mode;
+	bool                    mouse_ptr;
+	bool                    draw_line;
+	bool                    fill_text;
+	bool                    fps;
+	bool                    forge;
+	bool                    color;
+	bool                    mouse_motion;
+	int                     new_obj;
 }                           t_usr;
 
 typedef struct      s_songs
 {
-    Mix_Music     *menu_song;
+	Mix_Music     *menu_song;
 }                   t_songs;
 
 typedef struct      s_menu
 {
-    SDL_Surface     *button;
-    SDL_Surface     *text;
-    SDL_Surface     *saveScreen;
-    SDL_Rect        button1Pos;
-    SDL_Rect        button2Pos;
-    SDL_Rect        button3Pos;
-    SDL_Rect        textPos;
-    SDL_Color       textColor;
-    SDL_Color       bgColor;
-    SDL_Surface             *menu1;
-    SDL_Surface             *menu2;
-    SDL_Surface             *menu3;
-    TTF_Font                *font;
+	SDL_Surface     *button;
+	SDL_Surface     *text;
+	SDL_Surface     *saveScreen;
+	SDL_Rect        button1Pos;
+	SDL_Rect        button2Pos;
+	SDL_Rect        button3Pos;
+	SDL_Rect        textPos;
+	SDL_Color       textColor;
+	SDL_Color       bgColor;
+	SDL_Surface             *menu1;
+	SDL_Surface             *menu2;
+	SDL_Surface             *menu3;
+	TTF_Font                *font;
 }                   t_menu;
 
 /*
-** Structure Principale
-*/
+ ** Structure Principale
+ */
 typedef struct              s_env
 {
-    bool                    end;
-    float                   ytheta;
-    float                   xtheta;
-    float                   ztheta;
-    float                   theta;
-    float                   zoom;
-    float                   fNear;
-    float                   fFar;
-    float                   fFov;
-    float                   fAspectRatio;
-    float                   fFovRad;
-    float                   fps;
-    float                   time;
-    float                   frametime;
-    float                   yaw;
-    float                   xaw;
-    t_dbuff                 *depth_buff;
-    int                     *pixel_buff;
-    int                     wx;
-    int                     wy;
-    int                     key[KEY_NB];
-    t_dyntab                clip_tab[4];
-    t_dyntab                to_clip;
-    t_dyntab                to_raster;
-    t_vlist                 vlist;
-    t_mlist                 mlist;
-    t_fill                  fill;
-    t_mesh                  *mesh;
-    t_menu                  menu;
-    t_songs                 songs; 
-    int                     nbmesh;
-    int                     mesh_id;
-    t_dyntab                world_obj;
-    int                     obj_on_world;
-    t_usr                   usr;
-    t_color                 color;
-    t_rgba                  rgba;
-    t_line                  line;
-    t_image                 txt[NTXT];
-    SDL_MouseMotionEvent    mouse;
-    SDL_MouseButtonEvent    clicks;
-    SDL_Window              *window;
-    SDL_Event               event;
-    SDL_Renderer            *rend;
-    SDL_Texture             *screen;
-    SDL_Surface             *winsurf;
-    SDL_Surface             *tmp;
+	bool                    end;
+	float                   ytheta;
+	float                   xtheta;
+	float                   ztheta;
+	float                   theta;
+	float                   zoom;
+	float                   fNear;
+	float                   fFar;
+	float                   fFov;
+	float                   fAspectRatio;
+	float                   fFovRad;
+	float                   fps;
+	float                   time;
+	float                   frametime;
+	float                   yaw;
+	float                   xaw;
+	t_dbuff                 *depth_buff;
+	int                     *pixel_buff;
+	int                     wx;
+	int                     wy;
+	int                     key[KEY_NB];
+	t_dyntab                clip_tab[4];
+	t_dyntab                to_clip;
+	t_dyntab                to_raster;
+	t_vlist                 vlist;
+	t_mlist                 mlist;
+	t_fill                  fill;
+	t_mesh                  *mesh;
+	t_menu                  menu;
+	t_songs                 songs; 
+	int                     nbmesh;
+	int                     mesh_id;
+	t_list                  *world_obj;
+	int                     obj_on_world;
+	t_usr                   usr;
+	t_color                 color;
+	t_rgba                  rgba;
+	t_line                  line;
+	t_image                 txt[NTXT];
+	SDL_MouseMotionEvent    mouse;
+	SDL_MouseButtonEvent    clicks;
+	SDL_Window              *window;
+	SDL_Event               event;
+	SDL_Renderer            *rend;
+	SDL_Texture             *screen;
+	SDL_Surface             *winsurf;
+	SDL_Surface             *tmp;
 	int						state;
 	int						l_choice;
 	Uint8                   *keyb_curr;
@@ -313,8 +262,8 @@ typedef struct              s_env
 }                           t_env;
 
 /*
-**  Global
-*/
+ **  Global
+ */
 
 void        file_parser(t_env *e, char *file, int mi);
 void        engine_3d(t_env *env);
@@ -326,37 +275,38 @@ void        init_forge(t_env *env);
 void        init_world(t_env *e);
 void        set_matrice(t_env *e);
 void        sdl_render(t_env *e);
+int         allocate_clip_tab(t_dyntab arr[4]);
 void        init_dynamic_tab(t_env *e);
 void        rasterizer(t_env *e, t_dyntab *to_clip);
 t_mesh      obj_parser(char *file, t_env *e);
 void        matrix_view(t_env *e);
-void        matrix_world(t_env *e, t_mesh *obj);
-int         lumiere(t_env *e, t_vec normal, int *color);
+void        matrix_world(t_thread *t, t_mesh *obj);
+int         lumiere(t_thread *t, t_vec normal, int *color);
 void        center(t_vec *out);
 void        reset_pbuffer(t_env *e);
 void        pass_data(t_triangle *t1, t_triangle t2);
 
 /*
-**  Platforming
-*/
+ **  Platforming
+ */
 
-void                gameplay(void *env);
-void                forge(void *env);
-void                menu_option(void *env);
-void                menu_pause(void *env);
-void                menu_start(void *env);
+void                *gameplay(void *env);
+void                *forge(void *env);
+void                *menu_option(void *env);
+void                *menu_pause(void *env);
+void                *menu_start(void *env);
 
 /*
-**  Clipping
-*/
+ **  Clipping
+ */
 
 int         clip_triangle_by_plane(t_vec plane_n, t_vec plane_p, t_triangle *in, t_triangle out[2]);
 void        take_texture_vec(t_triangle *v1, t_triangle v2);
 void        clip_mesh(t_env *e, t_dyntab *to_clip, t_dyntab *to_raster);
 
 /*
-**Matrice calcul and init
-*/
+ **Matrice calcul and init
+ */
 
 void            init_matrix_proj(t_env *e);
 void            init_matrix_rotx(t_matrix *m, float theta);
@@ -370,8 +320,8 @@ void			pointatmatrix(t_matrix *matrix, t_vec pos, t_vec target, t_vec up);
 void            matrix_mult_triangle(t_matrix m, t_triangle *tri);
 
 /*
-**Vector calcul
-*/
+ **Vector calcul
+ */
 
 t_vec           matrix_mult_vector(t_matrix m, t_vec i);
 t_vec           vectoradd(t_vec v1, t_vec v2);
@@ -385,9 +335,10 @@ float           vectorlen(t_vec v);
 float           distance_to_plane(t_vec plane_p, t_vec plane_n, t_vec p);
 t_vec           vec_inter_plane(t_vec vec[2], t_vec linestart, t_vec lineend, float *t_out);
 void            swap_vec(t_vec *v1, t_vec *v2);
+
 /*
-**Triangle Draw
-*/
+ **Triangle Draw
+ */
 
 void        fill_triangle(t_env *e, t_triangle *tri, int color);
 void        draw_triangle(t_env *e, t_triangle t);
@@ -396,11 +347,12 @@ void        put_pixel(t_env *e, int x, int y, int color);
 void        put_pixel_txt(t_env *e, int pos, int color);
 
 /*
-**Fill texture
-*/
+ **Fill texture
+ */
 
 void            fill_triangle_texture(t_env *e, t_triangle t);
 uint32_t		get_pixel(SDL_Surface *surface, float tx, float ty);
+uint32_t		get_pixel_txt(SDL_Surface *img, float tx, float ty);
 
 
 void	set_line_bounds_bot(t_filltex *fill, t_triangle t, float currents[2]);
@@ -412,8 +364,8 @@ void	starting_swap(t_triangle *t);
 
 
 /*
-**Events
-*/
+ **Events
+ */
 
 void        event(t_env *env);
 void        camera_event(t_env *e);
@@ -430,25 +382,27 @@ void        pause_menu(t_env *env);
 void        option_menu(t_env *env);
 void        event_MainMenu(t_env *env);
 void        key_tab(t_env *e);
+void        drag_and_drop(t_env *e, t_mesh *obj, float x, float y);
 
 /*
-**Color
-*/
+ **Color
+ */
 
-t_rgba      hex_to_rgba(int c);
-int         rgba_to_hex(t_rgba rgba);
+SDL_Color   hex_to_rgba(int c);
+int         rgba_to_hex(SDL_Color rgba);
 int         color_shading(int color, float shade);
 int         colorset(t_env *e, int i);
 
 /*
-**Threading
-*/
+ **Threading
+ */
 
 void            thread_init(t_env *e, t_thread *thread);
+void        obj_thread(t_env *e, t_thread *threads, void *f(void *));
 
 /*
-**Editor
-*/
+ **Editor
+ */
 
 void			forge_run(t_env *e);
 void			forge_run(t_env *e);
@@ -459,6 +413,16 @@ void			draw_area(t_env *e, int raw_start, int col_start, t_int size, Uint32 colo
 void			button_init(t_env *e, int x, int y, int cat, char *title);
 void			display_name(t_env *e, int y, int x, char *name);
 void			get_content(t_env *env, t_button *button);
+
+
+/*
+ ** Object Manip
+ */
+
+void            remove_obj(t_env *e, int id);
+void            pop_obj(t_env *e, t_mesh *push);
+void            select_save_obj(t_env *e, int id);
+void        print_objlist(t_list *l);
 
 void            printmatrix(t_matrix m);
 

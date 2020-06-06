@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 02:31:07 by saneveu           #+#    #+#             */
-/*   Updated: 2020/06/05 17:26:56 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/06 14:18:29 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,35 @@ void         key_tab(t_env *e)
         e->key[F2] = e->event.type == SDL_KEYDOWN ? 1 : 0;
     else if (e->event.key.keysym.scancode == SDL_SCANCODE_F3)
         e->key[F3] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
+	else if (e->event.key.keysym.scancode == SDL_SCANCODE_F4)
+        e->key[F4] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F5)
+        e->key[F5] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+        else if (e->event.key.keysym.scancode == SDL_SCANCODE_F6)
+        e->key[F6] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F7)
+        e->key[F7] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F8)
+        e->key[F8] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F9)
+        e->key[F9] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F10)
+        e->key[F10] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F11)
+        e->key[F11] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_F12)
+        e->key[F12] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_DELETE)
+        e->key[DEL] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_INSERT)
+        e->key[INSERT] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_PAGEUP)
+        e->key[PAGEUP] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+    else if (e->event.key.keysym.scancode == SDL_SCANCODE_PAGEDOWN)
+        e->key[PAGEDOWN] = e->event.type == SDL_KEYDOWN ? 1 : 0;
+
 }
 
 /*static void editor_events(t_env *e)

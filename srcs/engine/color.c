@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 00:45:42 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 02:06:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/04 20:21:15 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-int         rgba_to_hex(t_rgba rgba)
+int         rgba_to_hex(SDL_Color rgba)
 {
     return ((rgba.r * 256 * 256) + (rgba.g * 256) + rgba.b);
 }
 
-t_rgba      hex_to_rgba(int c)
+SDL_Color   hex_to_rgba(int c)
 {
-    t_rgba rgba;
+    SDL_Color rgba;
 
     rgba.r = c / (256 * 256);
 	rgba.g = (c / 256) % 256;
@@ -29,7 +29,7 @@ t_rgba      hex_to_rgba(int c)
 
 int         color_shading(int color, float shade)
 {
-    t_rgba c;
+    SDL_Color c;
 
     c = hex_to_rgba(color);
     c.r *= shade;

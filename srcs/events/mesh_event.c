@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 16:14:18 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 00:47:41 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/05/08 00:34:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static void                switch_i_mesh(t_env *e, t_mesh *obj)
 {
     if (e->key[NUM0])
     {
-        if (e->usr.select_mesh < e->obj_on_world)
+        if (e->usr.select_mesh < e->obj_on_world - 1)
             ++e->usr.select_mesh;
         else
             e->usr.select_mesh = 0;
-        printf("Selected MESH: %s\n", e->mesh[e->usr.select_mesh].name);
+        if (!(obj = (t_mesh*)ft_listfind(&e->world_obj, e->usr.select_mesh)))
+            ft_exit(e, "DooM: echec obj access\n", 0);
+        ft_putstr("Selected MESH:   ");
+        ft_putendl(obj->name);
         e->key[NUM0] = 0;
     }
 }
@@ -45,6 +48,8 @@ static void         move_event(t_env *e, t_mesh *obj)
     vectormult(forward, 0.5);
     right = vectormult((t_vec){forward.z, 0, -forward.x, forward.w}, 0.5f);
     vectormult(right, 0.5);
+    //printf("2X : %f      Y: %f       Z: %f\n", right.x, right.y, right.z);
+    
     if (e->key[NUM8])
         obj->dir = vectoradd(obj->dir, forward);
     if (e->key[NUM5])
@@ -86,11 +91,12 @@ void                mesh_rot_event(t_env *e, int index_mesh)
     obj = NULL;
     if (e->usr.forge)
     {
-        if (!(obj = dyaddress(&e->world_obj, index_mesh)))
-            ft_exit(e, "DooM: Pull obj in dyntab failed\n", 0);
-        switch_i_mesh(e, obj);
-        switch_mesh_mod(e);
-        e->usr.opt_mesh == 0 ? move_event(e, obj) : 0; 
-        e->usr.opt_mesh == 1 ? rot_event(e, obj) : 0;
+        if ((obj = ft_listfind(&e->world_obj, index_mesh)))
+        {
+            switch_i_mesh(e, obj);
+            switch_mesh_mod(e);
+            e->usr.opt_mesh == 0 ? move_event(e, obj) : 0; 
+            e->usr.opt_mesh == 1 ? rot_event(e, obj) : 0;
+        }
     }
 }

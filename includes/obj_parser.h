@@ -20,6 +20,7 @@ typedef struct s_attr_lst
 	float		**vert;
 	float		**text;
 	float		**norm;
+	int			textured;
 }				t_attr_lst;
 
 void		create_triangle_list(t_attr_lst *key_list);

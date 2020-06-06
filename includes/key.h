@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   key.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 00:20:52 by user42            #+#    #+#             */
-/*   Updated: 2020/04/30 00:25:48 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/07 01:30:31 by saneveu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEY_H
 # define KEY_H
 
-# define KEY_NB 43
+# define KEY_NB 47
 
 # define W 0
 # define A 1
@@ -61,5 +61,10 @@
 # define F10 40
 # define F11 41
 # define F12 42
+
+# define DEL 43
+# define INSERT 44
+# define PAGEUP 45
+# define PAGEDOWN 46
 
 #endif // !KEY_H

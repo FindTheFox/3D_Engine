@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   3Dengine.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:18:31 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/04 01:05:29 by saneveu          ###   ########.fr       */
+/*   Updated: 2020/06/06 14:40:15 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/3d_engine.h"
 
-void        texture_perspective(t_env *env, t_triangle *t)
+void        texture_perspective(t_triangle *t)
 {
     t->tx[0].u /= t->p[0].w;
     t->tx[1].u /= t->p[1].w;
@@ -27,27 +27,23 @@ void        texture_perspective(t_env *env, t_triangle *t)
     t->tx[2].w = 1.0f / t->p[2].w;
 }
 
-void        projection2(t_env *env, t_triangle triclip, int color)
+void        projection2(t_thread *t, t_triangle triclip, int color)
 {
     t_triangle triproj;
 
-    matrix_mult_triangle(env->mlist.matproj, &triclip);
-
-    //take_texture_vec(&triprojected, tview);
-    //pass_data(&triprojected, tview);
+    matrix_mult_triangle(t->mlist.matproj, &triclip);
 
     triproj = triclip;
-
-    texture_perspective(env, &triproj);
+    texture_perspective(&triproj);
     
     triproj.p[0] = vectordiv(triproj.p[0], triproj.p[0].w);
     triproj.p[1] = vectordiv(triproj.p[1], triproj.p[1].w);
     triproj.p[2] = vectordiv(triproj.p[2], triproj.p[2].w); 
 
     //Scale
-    triproj.p[0] = vectoradd(triproj.p[0], env->vlist.voff_set);
-    triproj.p[1] = vectoradd(triproj.p[1], env->vlist.voff_set);
-    triproj.p[2] = vectoradd(triproj.p[2], env->vlist.voff_set);
+    triproj.p[0] = vectoradd(triproj.p[0], t->vlist.voff_set);
+    triproj.p[1] = vectoradd(triproj.p[1], t->vlist.voff_set);
+    triproj.p[2] = vectoradd(triproj.p[2], t->vlist.voff_set);
 
     //X/Y are inverted ?
     //triproj.p[0] = vectormult(triproj.p[0], -1.0f);
@@ -57,30 +53,28 @@ void        projection2(t_env *env, t_triangle triclip, int color)
     center(&triproj.p[0]);
     center(&triproj.p[1]);
     center(&triproj.p[2]);
+    
     triproj.color = color;
-    if (push_dynarray(&env->to_clip, &triproj, false))
-        ft_exit(env, "push dynamic tab to_clip fail", 0);
+    if (push_dyntab(&t->to_clip, &triproj, false))
+        ft_exit((t_env*)&t->env, "push dynamic tab to_clip fail", 0);
 }
 
-void        projection(t_env *env, t_triangle triprojected, int color)
+void        projection(t_thread *t, t_triangle triprojected, int color)
 {
     t_triangle  clip[2];
     t_triangle  tview;
     int         i;
     int         nclip;
 
-    matrix_mult_triangle(env->mlist.matview, &triprojected);
-    //take_texture_vec(&tview, triprojected);
-    //pass_data(&tview, triprojected);
-
+    matrix_mult_triangle(t->mlist.matview, &triprojected);
     nclip = clip_triangle_by_plane((t_vec){0,0,0.5f,1.0f}, (t_vec){0,0,0.1,1.0f}, &triprojected, clip);
 
     i = -1;
     while (++i < nclip)
-        projection2(env, clip[i], color);
+        projection2(t, clip[i], color);
 }
 
-static int        normalize(t_env *e, t_triangle tri, int *color)
+static int        normalize(t_thread *t, t_triangle tri, int *color)
 {
     t_vec   normal;
     t_vec   line1;
@@ -91,42 +85,62 @@ static int        normalize(t_env *e, t_triangle tri, int *color)
     line2 = vectorsub(tri.p[2], tri.p[0]);
     normal = vectorcrossprod(line1, line2);
     normal = vectornormal(normal);
-    vcamray = vectorsub(tri.p[0], e->vlist.vcamera);
+    vcamray = vectorsub(tri.p[0], t->vlist.vcamera);
     if (vectorproduct(normal, vcamray) < 0)
     {
-        lumiere(e, normal, color);
+        lumiere(t, normal, color);
         return (1);
     }
     return (0);
 }
 
+void        *project_tri(void *thread)
+{
+    t_env       *e;
+    t_thread    *t;
+    t_triangle  triproj;
+    int         j;
+    int         color;
+
+    t = (t_thread*)thread;
+    e = (t_env*)t->env;
+    matrix_world(t, t->obj);
+    j = -1;
+    while (++j < t->obj->size)
+    {
+        triproj = t->obj->tris[j];
+        pass_data(&triproj, t->obj->tris[j]);
+        triproj.mesh_id = t->obj->id;
+        matrix_mult_triangle(t->mlist.matworld, &triproj);
+        color = t->obj->color;
+        if (normalize(t, triproj, &color) == 1)
+            projection(t, triproj, color);
+    }
+    clip_mesh(e, &t->to_clip, &t->to_raster);
+    rasterizer(e, &t->to_raster);
+}
+
 void        engine_3d(t_env *env)
 {
     int         i;
-    int         j;
-    t_triangle  triprojected;
     t_mesh      *obj;
-    int         color;
+    t_thread    threads[env->obj_on_world];
+    t_thread    t;
 
     //do_camera rot/move
     matrix_view(env);
+    if (env->obj_on_world == -1)
+        return ;
+    //env->mesh_id = -1;
+    //if (!(obj = (t_mesh*)ft_listfind(&env->world_obj, i)))
+    //    ft_exit(env, "DooM: list find echec\n", 0);
     i = -1;
-    while (++i < env->obj_on_world)
-    {
-        env->mesh_id = i;
-        obj = (t_mesh*)dyaddress(&env->world_obj, i);
-        matrix_world(env, obj);
-        j = -1;
-        while (++j < obj->size)
-        {
-            triprojected = obj->tris[j];
-            triprojected.tri_id = j;
-            matrix_mult_triangle(env->mlist.matworld, &triprojected);
-            color = obj->color;
-            if (normalize(env, triprojected, &color) == 1)
-                projection(env, triprojected, color);
-        }
-    }
-    rasterizer(env, &env->to_clip);
-    clear_dynarray(&env->to_clip);
+    obj_thread(env, threads, project_tri);
+    //swhile (++i < env->obj_on_world)
+    //s{
+    //s    printf("rasterize obj : %d\n", i);
+    //s    rasterizer(env, &threads[i].to_clip);
+    //s    free_dyntab(&threads[i].to_clip);
+    //s    free_dyntab(&threads[i].to_raster);
+    //s}
 }

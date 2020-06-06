@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:59:44 by saneveu           #+#    #+#             */
-/*   Updated: 2020/06/05 17:23:59 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/06 14:15:00 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void     framerate(t_env *e)
 {
-	float           oldtime;
-	int             fps;
+    float           oldtime;
+    int             fps;
 
-	oldtime = e->time;
-	e->time = SDL_GetTicks();
-	e->theta = (e->time - oldtime) / 1000;
-	fps = 1.0 / e->theta;
-	if (e->usr.fps)
-		printf("FPS: %d\n", fps);
-	SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
+    oldtime = e->time;
+    e->time = SDL_GetTicks();
+    e->theta = (e->time - oldtime) / 1000;
+    fps = 1.0 / e->theta;
+    if (e->usr.fps)
+        printf("FPS: %d\n", fps);
+    SDL_GetWindowPosition(e->window, &e->wx, &e->wy);
 }
 
 static void        setup(t_env *env, int ac, char **av)
@@ -63,7 +63,7 @@ static void        setup(t_env *env, int ac, char **av)
 
 int         main(int ac, char **av)
 {
-	t_env   env;
+    t_env   env;
 
 	ft_memset(&env, 0, sizeof(t_env));
 	setup(&env, ac, av);

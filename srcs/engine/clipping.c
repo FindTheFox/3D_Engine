@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:46:17 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 03:25:03 by user42           ###   ########.fr       */
+/*   Updated: 2020/06/06 14:20:18 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,13 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     if (clip->inside == 1 && clip->outside == 2)
     {
         small_triangle(*clip, out, vec);       
-        out[0].color = 0x0000ff;
-        out[0].tex = in.tex;
-        out[0].mesh_id = in.mesh_id;
-        out[0].screen_pos = in.screen_pos;
-        out[1].color = 0x00ff00;
-        out[1].tex = in.tex;
-        out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);
+        pass_data(&out[1], in);
         return (1);
     }
     else if (clip->inside == 2 && clip->outside == 1)
     {
         quad_triangle(*clip, out, vec);
-        out[0].color = 0xff0000;
-        out[0].tex = in.tex;
-        out[0].mesh_id = in.mesh_id;
-        out[0].screen_pos = in.screen_pos;
-        out[1].color = 0x00ff00;
-        out[1].tex = in.tex;
-        out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);
         pass_data(&out[1], in);
         return (2);
@@ -102,6 +89,7 @@ void        sort_triangle(t_clip *clip, t_triangle in)
         {
             clip->in[clip->inside++] = in.p[i];
             clip->tx_in[clip->tx_inside++] = in.tx[i];
+            //printf("IN X: %f     Y: %f      Z: %f\n", clip->tx_in[clip->tx_inside - 1].u, clip->tx_in[clip->tx_inside - 1].u, clip->tx_in[clip->tx_inside - 1].w);
         }
         else
         {
@@ -132,8 +120,5 @@ int         clip_triangle_by_plane(t_vec plane_p, t_vec plane_n, t_triangle *in,
         return (1);
     }
     else
-    {
-        ret = make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, *in);
-        return(ret);
-    }
+        return(make_triangle_clipped(&clip, out, (t_vec[2]){plane_p, plane_n}, *in));
 }

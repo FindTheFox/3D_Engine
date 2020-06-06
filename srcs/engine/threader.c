@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:26:55 by saneveu           #+#    #+#             */
-/*   Updated: 2020/05/02 01:49:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/06/06 14:33:50 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
     t_thread    thread[NB_THREAD];
     int         i;
 
-    clip_mesh(e, to_clip, &e->to_raster);
-    // thread_init(e);
+	clip_mesh(e, to_clip, &e->to_raster);
     i = 0;
     while (i < NB_THREAD)
     {
@@ -66,18 +65,53 @@ void            rasterizer(t_env *e, t_dyntab *to_clip)
     i = 0;
     while (i < NB_THREAD)
     {
+        //printf("RASTER THREAD JOIN\n");
         pthread_join(thread[i].thread, NULL);
         i++;
     }
-    /*
-    while (i < e->to_raster.cell_nb)
+    
+    //while (i < e->to_raster.cell_nb)
+    //{
+    //    t = (t_triangle *)dyaddress(&e->to_raster, i);
+    //    //printf("color %x\n", t->color);
+    //    //fill_triangle(e, t, t->color);
+    //    fill_triangle_texture(e, *t);
+    //    //draw_triangle(e, *t);
+    //    i++;
+    //}
+    
+}
+
+static  void    obj_thread_init(t_env *e, t_thread *t, void *f(void *))
+{
+    if (!(t->obj = (t_mesh*)ft_listfind(&e->world_obj, t->id)))
+            ft_exit(e, "DooM: list find echec\n", 0);
+    if (allocate_clip_tab(t->clip_tab)
+        || init_dyntab(&t->to_clip, sizeof(t_triangle), MIN_TO_RASTER)
+        || init_dyntab(&t->to_raster, sizeof(t_triangle), MIN_TO_RASTER))
+        ft_exit(e, "dynamic array init fail", 0);
+    t->env = e;
+    t->start = t->id;
+    t->end = t->start + 1;
+    t->mlist = e->mlist;
+    t->vlist = e->vlist;
+    if (pthread_create(&t->thread, NULL, f, (void *)t))
+        ft_exit(e, "thread create platforming failed\n", 0);
+}
+
+void        obj_thread(t_env *e, t_thread *threads, void *f(void *))
+{
+    int i;
+    //t_thread    threads[e->obj_on_world];
+
+    i = -1;
+    while (++i < e->obj_on_world)
     {
-        t = (t_triangle *)dyaddress(&e->to_raster, i);
-        //printf("color %x\n", t->color);
-        fill_triangle(e, t, t->color);
-        //fill_triangle_texture(e, *t);
-        //draw_triangle(e, *t);
-        i++;
+        //printf("THREAD OBJ : %d\n", i);
+        threads[i].id = i;
+        obj_thread_init(e, &threads[i], f);
     }
-    */
+    i = -1;
+    while (++i < e->obj_on_world)
+        pthread_join(threads[i].thread, NULL);
 }

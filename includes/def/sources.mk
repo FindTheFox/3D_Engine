@@ -38,7 +38,9 @@ SRCS_FILE	=	main.c \
 				forge/forge_utils.c \
 				forge/forge_utils_list.c \
 				events/menu2.c \
-				platform/select_platform.c
+				platform/select_platform.c \
+				obj_utils/obj_utils.c \
+				obj_utils/obj_list.c
 
 OBJ_DIRS =		engine \
 				exit \
