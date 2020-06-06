@@ -6,7 +6,7 @@
 /*   By: saneveu <saneveu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 20:57:46 by saneveu           #+#    #+#             */
-/*   Updated: 2020/06/03 13:07:43 by brpinto          ###   ########.fr       */
+/*   Updated: 2020/06/05 17:22:52 by brpinto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUBE3D_H
 
 # include "../SDL/SDL.h"
+# include "../SDL/SDL_mixer.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
 # include <pthread.h>
@@ -230,6 +231,28 @@ typedef struct              s_usr
     bool                    mouse_motion;
 }                           t_usr;
 
+typedef struct      s_songs
+{
+    Mix_Music     *menu_song;
+}                   t_songs;
+
+typedef struct      s_menu
+{
+    SDL_Surface     *button;
+    SDL_Surface     *text;
+    SDL_Surface     *saveScreen;
+    SDL_Rect        button1Pos;
+    SDL_Rect        button2Pos;
+    SDL_Rect        button3Pos;
+    SDL_Rect        textPos;
+    SDL_Color       textColor;
+    SDL_Color       bgColor;
+    SDL_Surface             *menu1;
+    SDL_Surface             *menu2;
+    SDL_Surface             *menu3;
+    TTF_Font                *font;
+}                   t_menu;
+
 /*
 ** Structure Principale
 */
@@ -263,6 +286,8 @@ typedef struct              s_env
     t_mlist                 mlist;
     t_fill                  fill;
     t_mesh                  *mesh;
+    t_menu                  menu;
+    t_songs                 songs; 
     int                     nbmesh;
     int                     mesh_id;
     t_dyntab                world_obj;
@@ -273,14 +298,12 @@ typedef struct              s_env
     t_line                  line;
     t_image                 txt[NTXT];
     SDL_MouseMotionEvent    mouse;
+    SDL_MouseButtonEvent    clicks;
     SDL_Window              *window;
     SDL_Event               event;
     SDL_Renderer            *rend;
     SDL_Texture             *screen;
     SDL_Surface             *winsurf;
-    SDL_Texture             *menu1;
-    SDL_Texture             *menu2;
-    SDL_Texture             *menu3;
     SDL_Surface             *tmp;
 	int						state;
 	int						l_choice;
@@ -401,6 +424,12 @@ void        dev_event(t_env *env);
 uint32_t	get_color(SDL_Surface *img, int x, int y);
 void		forge_events(t_env *env);
 int			compare_keyb(t_env *e, int key);
+int		    menu(t_env *env, int menu);
+void        main_menu(t_env *env);
+void        pause_menu(t_env *env);
+void        option_menu(t_env *env);
+void        event_MainMenu(t_env *env);
+void        key_tab(t_env *e);
 
 /*
 **Color

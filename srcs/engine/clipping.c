@@ -60,11 +60,11 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     if (clip->inside == 1 && clip->outside == 2)
     {
         small_triangle(*clip, out, vec);       
-        out[0].color = in.color;//0x0000ff;
+        out[0].color = 0x0000ff;
         out[0].tex = in.tex;
         out[0].mesh_id = in.mesh_id;
         out[0].screen_pos = in.screen_pos;
-        out[1].color = in.color;//0x00ff00;
+        out[1].color = 0x00ff00;
         out[1].tex = in.tex;
         out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);
@@ -73,11 +73,11 @@ int                 make_triangle_clipped(t_clip *clip, t_triangle out[2], t_vec
     else if (clip->inside == 2 && clip->outside == 1)
     {
         quad_triangle(*clip, out, vec);
-        out[0].color = in.color;//0xff0000;
+        out[0].color = 0xff0000;
         out[0].tex = in.tex;
         out[0].mesh_id = in.mesh_id;
         out[0].screen_pos = in.screen_pos;
-        out[1].color = in.color;//0x00ff00;
+        out[1].color = 0x00ff00;
         out[1].tex = in.tex;
         out[1].mesh_id = in.mesh_id;
         pass_data(&out[0], in);

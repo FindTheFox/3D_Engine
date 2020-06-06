@@ -6,7 +6,7 @@
 #    By: brpinto <brpinto@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 17:14:35 by brpinto           #+#    #+#              #
-#    Updated: 2020/05/13 18:16:36 by brpinto          ###   ########.fr        #
+#    Updated: 2020/06/05 17:29:18 by brpinto          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CC		=	gcc #-g -fsanitize=address
 CFLAGS	=	-Ofast -march=native #-Wall -Wextra -Werror
 
 ifeq ($(OS), Linux)
-	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
+	SDL		=	`sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image #-lSDL_mixer
 	DIRSDL	=	
 else
 	SDL		=	-F ~/Library/Frameworks -framework SDL2 -framework SDL2_ttf -framework SDL2_image
