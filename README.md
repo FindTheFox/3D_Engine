@@ -3,7 +3,7 @@ Project game Doom-Nukem like, for 42 school Paris
 
 
 ## Built
-  C language, SDL2 library
+  3D_engine in C language, SDL2 library
 
 
 ## Utilisation
